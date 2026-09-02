@@ -20,7 +20,7 @@ authors = [
   { name = "Yanone" },
 ]
 maintainers = [
-  { name = "Felipe Sanches", email = "juca@members.fsf.org" },
+  { name = "Jens Kutilek", email = "webmail@kutilek.de" },
 ]
 
 dependencies = [
