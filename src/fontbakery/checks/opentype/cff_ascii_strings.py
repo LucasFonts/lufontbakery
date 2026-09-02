@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -13,10 +13,13 @@ def check_cff_ascii_strings(cff_analysis):
     """Does the font's CFF table top dict strings fit into the ASCII range?"""
 
     if cff_analysis.string_not_ascii is None:
-        yield FAIL, Message(
-            "cff-unable-to-decode",
-            "Unable to decode CFF table, possibly due to out"
-            " of ASCII range strings. Please check table strings.",
+        yield (
+            FAIL,
+            Message(
+                "cff-unable-to-decode",
+                "Unable to decode CFF table, possibly due to out"
+                " of ASCII range strings. Please check table strings.",
+            ),
         )
     elif cff_analysis.string_not_ascii:
         detailed_info = ""
@@ -25,8 +28,11 @@ def check_cff_ascii_strings(cff_analysis):
                 f"\n\n\t - {key}: {string.encode('latin-1').decode('utf-8')}"
             )
 
-        yield FAIL, Message(
-            "cff-string-not-in-ascii-range",
-            f"The following CFF TopDict strings"
-            f" are not in the ASCII range: {detailed_info}",
+        yield (
+            FAIL,
+            Message(
+                "cff-string-not-in-ascii-range",
+                f"The following CFF TopDict strings"
+                f" are not in the ASCII range: {detailed_info}",
+            ),
         )

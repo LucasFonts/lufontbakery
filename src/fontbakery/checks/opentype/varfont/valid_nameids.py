@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -39,10 +39,13 @@ def check_valid_nameids(ttFont, has_name_table):
     for nameid in invalid_axis_nameids:
         name = ("name" in ttFont and ttFont["name"].getDebugName(nameid)) or "Unnamed"
 
-        yield FAIL, Message(
-            f"invalid-axis-nameid:{nameid}",
-            f"Axis name ID {nameid} ({name}) is out of range."
-            f" It must be greater than 255 and less than 32768.",
+        yield (
+            FAIL,
+            Message(
+                f"invalid-axis-nameid:{nameid}",
+                f"Axis name ID {nameid} ({name}) is out of range."
+                f" It must be greater than 255 and less than 32768.",
+            ),
         )
 
     font_postscript_nameids = [
@@ -57,10 +60,13 @@ def check_valid_nameids(ttFont, has_name_table):
     for nameid in invalid_postscript_nameids:
         name = ("name" in ttFont and ttFont["name"].getDebugName(nameid)) or "Unnamed"
 
-        yield FAIL, Message(
-            f"invalid-postscript-nameid:{nameid}",
-            f"PostScript name ID {nameid} ({name}) is out of range."
-            f" It must be greater than 255 and less than 32768, or 6 or 0xFFFF.",
+        yield (
+            FAIL,
+            Message(
+                f"invalid-postscript-nameid:{nameid}",
+                f"PostScript name ID {nameid} ({name}) is out of range."
+                f" It must be greater than 255 and less than 32768, or 6 or 0xFFFF.",
+            ),
         )
 
     font_subfam_nameids = [inst.subfamilyNameID for inst in ttFont["fvar"].instances]
@@ -73,8 +79,11 @@ def check_valid_nameids(ttFont, has_name_table):
     for nameid in invalid_subfam_nameids:
         name = ("name" in ttFont and ttFont["name"].getDebugName(nameid)) or "Unnamed"
 
-        yield FAIL, Message(
-            f"invalid-subfamily-nameid:{nameid}",
-            f"Instance subfamily name ID {nameid} ({name}) is out of range."
-            f" It must be greater than 255 and less than 32768.",
+        yield (
+            FAIL,
+            Message(
+                f"invalid-subfamily-nameid:{nameid}",
+                f"Instance subfamily name ID {nameid} ({name}) is out of range."
+                f" It must be greater than 255 and less than 32768.",
+            ),
         )

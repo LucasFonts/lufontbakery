@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import show_inconsistencies
 
 
@@ -20,9 +20,12 @@ def check_metadata_copyright(family_metadata, config):
     for font in family_metadata.fonts:
         copyrights[font.copyright].append(font.filename)
     if len(copyrights) > 1:
-        yield FAIL, Message(
-            "inconsistency",
-            "METADATA.pb: Copyright field value is inconsistent across the family.\n"
-            "The following copyright values were found:\n\n"
-            + show_inconsistencies(copyrights, config),
+        yield (
+            FAIL,
+            Message(
+                "inconsistency",
+                "METADATA.pb: Copyright field value is inconsistent across the family.\n"
+                "The following copyright values were found:\n\n"
+                + show_inconsistencies(copyrights, config),
+            ),
         )

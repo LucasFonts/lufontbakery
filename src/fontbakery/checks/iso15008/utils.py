@@ -4,7 +4,6 @@ from beziers.point import Point
 
 from fontbakery.utils import exit_with_install_instructions
 
-
 DISCLAIMER = """
         (Note that passing this check does not guarantee compliance with ISO-15008.)
 """

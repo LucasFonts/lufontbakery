@@ -1,4 +1,4 @@
-from fontbakery.prelude import SKIP, FAIL, PASS, Message, check
+from fontbakery.prelude import FAIL, PASS, SKIP, Message, check
 
 
 @check(
@@ -28,16 +28,22 @@ def check_axes_match(ttFont, remote_style):
         axis_min, axis_max = axis_range
         remote_axis_min, remote_axis_max = remote_axis_range
         if axis_min > remote_axis_min:
-            yield FAIL, Message(
-                "axis-min-out-of-range",
-                f"Axis '{axis}' min value is out of range."
-                f" Expected '{remote_axis_min}', got '{axis_min}'.",
+            yield (
+                FAIL,
+                Message(
+                    "axis-min-out-of-range",
+                    f"Axis '{axis}' min value is out of range."
+                    f" Expected '{remote_axis_min}', got '{axis_min}'.",
+                ),
             )
         if axis_max < remote_axis_max:
-            yield FAIL, Message(
-                "axis-max-out-of-range",
-                f"Axis {axis} max value is out of range."
-                f" Expected {remote_axis_max}, got {axis_max}.",
+            yield (
+                FAIL,
+                Message(
+                    "axis-max-out-of-range",
+                    f"Axis {axis} max value is out of range."
+                    f" Expected {remote_axis_max}, got {axis_max}.",
+                ),
             )
 
     if missing_axes:

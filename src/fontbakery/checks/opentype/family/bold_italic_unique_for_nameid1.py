@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -47,10 +47,13 @@ def check_family_bold_italic_unique_for_nameid1(RIBBI_ttFonts):
     counter = Counter(family_name_and_bold_italic)
     for (family_name, bold_italic), count in counter.items():
         if count > 1:
-            yield FAIL, Message(
-                "unique-fsselection",
-                f"Family '{family_name}' has {count} fonts"
-                f" (should be no more than 1) with the"
-                f" same OS/2.fsSelection bold & italic settings:"
-                f" {bold_italic}",
+            yield (
+                FAIL,
+                Message(
+                    "unique-fsselection",
+                    f"Family '{family_name}' has {count} fonts"
+                    f" (should be no more than 1) with the"
+                    f" same OS/2.fsSelection bold & italic settings:"
+                    f" {bold_italic}",
+                ),
             )

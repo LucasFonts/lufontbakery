@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -21,24 +21,27 @@ def check_integer_ppem_if_hinted(ttFont):
     """PPEM must be an integer on hinted fonts."""
 
     if not ttFont["head"].flags & (1 << 3):
-        yield FAIL, Message(
-            "bad-flags",
-            (
-                "This is a hinted font, so it must have bit 3 set on the flags of"
-                " the head table, so that PPEM values will be rounded into an"
-                " integer value.\n"
-                "\n"
-                "This can be accomplished by using the 'gftools fix-hinting' command:\n"
-                "\n"
-                "```\n"
-                "# create virtualenv\n"
-                "python3 -m venv venv"
-                "\n"
-                "# activate virtualenv\n"
-                "source venv/bin/activate"
-                "\n"
-                "# install gftools\n"
-                "pip install git+https://www.github.com/googlefonts/gftools\n"
-                "```\n"
+        yield (
+            FAIL,
+            Message(
+                "bad-flags",
+                (
+                    "This is a hinted font, so it must have bit 3 set on the flags of"
+                    " the head table, so that PPEM values will be rounded into an"
+                    " integer value.\n"
+                    "\n"
+                    "This can be accomplished by using the 'gftools fix-hinting' command:\n"
+                    "\n"
+                    "```\n"
+                    "# create virtualenv\n"
+                    "python3 -m venv venv"
+                    "\n"
+                    "# activate virtualenv\n"
+                    "source venv/bin/activate"
+                    "\n"
+                    "# install gftools\n"
+                    "pip install git+https://www.github.com/googlefonts/gftools\n"
+                    "```\n"
+                ),
             ),
         )

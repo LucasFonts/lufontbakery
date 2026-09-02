@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, SKIP, Message
+from fontbakery.prelude import FAIL, SKIP, Message, check
 from fontbakery.utils import get_advance_width_for_char
 
 
@@ -16,7 +16,10 @@ def check_htmx_comma_period(ttFont):
     if comma is None or period is None:
         yield SKIP, "No comma and/or period"
     elif comma != period:
-        yield FAIL, Message(
-            "comma-period",
-            f"Advance width of comma ({comma}) != advance width of period {period}",
+        yield (
+            FAIL,
+            Message(
+                "comma-period",
+                f"Advance width of comma ({comma}) != advance width of period {period}",
+            ),
         )

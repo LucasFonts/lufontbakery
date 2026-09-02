@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -19,8 +19,9 @@ def check_name_postscript_vs_cff(ttFont):
     """CFF table FontName must match name table ID 6 (PostScript name)."""
     cff_names = ttFont["CFF "].cff.fontNames
     if len(cff_names) != 1:
-        yield FAIL, Message(
-            "cff-name-error", "Unexpected number of font names in CFF table."
+        yield (
+            FAIL,
+            Message("cff-name-error", "Unexpected number of font names in CFF table."),
         )
         return
 
@@ -29,8 +30,11 @@ def check_name_postscript_vs_cff(ttFont):
         if entry.nameID == NameID.POSTSCRIPT_NAME:
             postscript_name = entry.toUnicode()
             if postscript_name != cff_name:
-                yield FAIL, Message(
-                    "ps-cff-name-mismatch",
-                    f"Name table PostScript name '{postscript_name}' "
-                    f"does not match CFF table FontName '{cff_name}'.",
+                yield (
+                    FAIL,
+                    Message(
+                        "ps-cff-name-mismatch",
+                        f"Name table PostScript name '{postscript_name}' "
+                        f"does not match CFF table FontName '{cff_name}'.",
+                    ),
                 )

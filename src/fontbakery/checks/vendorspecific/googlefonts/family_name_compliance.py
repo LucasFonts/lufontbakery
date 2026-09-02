@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, PASS, FAIL
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -52,18 +52,24 @@ def check_family_name_compliance(ttFont):
                 continue
             if exception in family_name:
                 known_exception = True
-                yield PASS, Message(
-                    "known-camelcase-exception",
-                    "Family name is a known exception to the CamelCase rule.",
+                yield (
+                    PASS,
+                    Message(
+                        "known-camelcase-exception",
+                        "Family name is a known exception to the CamelCase rule.",
+                    ),
                 )
                 break
 
         if not known_exception:
-            yield FAIL, Message(
-                "camelcase",
-                f'"{family_name}" is a CamelCased name.'
-                f" To solve this, simply use spaces"
-                f" instead in the font name.",
+            yield (
+                FAIL,
+                Message(
+                    "camelcase",
+                    f'"{family_name}" is a CamelCased name.'
+                    f" To solve this, simply use spaces"
+                    f" instead in the font name.",
+                ),
             )
 
     # Abbreviations
@@ -78,32 +84,44 @@ def check_family_name_compliance(ttFont):
                 continue
             if exception in family_name:
                 known_exception = True
-                yield PASS, Message(
-                    "known-abbreviation-exception",
-                    "Family name is a known exception to the abbreviation rule.",
+                yield (
+                    PASS,
+                    Message(
+                        "known-abbreviation-exception",
+                        "Family name is a known exception to the abbreviation rule.",
+                    ),
                 )
                 break
 
         if not known_exception:
             # Allow SC ending
             if not family_name.endswith("SC"):
-                yield FAIL, Message(
-                    "abbreviation", f'"{family_name}" contains an abbreviation.'
+                yield (
+                    FAIL,
+                    Message(
+                        "abbreviation", f'"{family_name}" contains an abbreviation.'
+                    ),
                 )
 
     # Allowed characters
     forbidden_characters = re.findall(r"[^a-zA-Z0-9 ]", family_name)
     if forbidden_characters:
         forbidden_characters = "".join(sorted(list(set(forbidden_characters))))
-        yield FAIL, Message(
-            "forbidden-characters",
-            f'"{family_name}" contains the following characters'
-            f' which are not allowed: "{forbidden_characters}".',
+        yield (
+            FAIL,
+            Message(
+                "forbidden-characters",
+                f'"{family_name}" contains the following characters'
+                f' which are not allowed: "{forbidden_characters}".',
+            ),
         )
 
     # Starts with uppercase
     if not bool(re.match(r"^[A-Z]", family_name)):
-        yield FAIL, Message(
-            "starts-with-not-uppercase",
-            f'"{family_name}" doesn\'t start with an uppercase letter.',
+        yield (
+            FAIL,
+            Message(
+                "starts-with-not-uppercase",
+                f'"{family_name}" doesn\'t start with an uppercase letter.',
+            ),
         )

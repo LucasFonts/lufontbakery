@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -27,17 +27,23 @@ def check_metadata_filenames(fonts, family_directory, family_metadata):
     ]
     for font_metadata in family_metadata.fonts:
         if font_metadata.filename not in font_filenames:
-            yield FAIL, Message(
-                "file-not-found",
-                f'Filename "{font_metadata.filename}" is listed on METADATA.pb'
-                f" but an actual font file with that name was not found.",
+            yield (
+                FAIL,
+                Message(
+                    "file-not-found",
+                    f'Filename "{font_metadata.filename}" is listed on METADATA.pb'
+                    f" but an actual font file with that name was not found.",
+                ),
             )
         metadata_filenames.append(font_metadata.filename)
 
     for font in font_filenames:
         if font not in metadata_filenames:
-            yield FAIL, Message(
-                "file-not-declared",
-                f'Filename "{font}" is not declared'
-                f" on METADATA.pb as a font.filename entry.",
+            yield (
+                FAIL,
+                Message(
+                    "file-not-declared",
+                    f'Filename "{font}" is not declared'
+                    f" on METADATA.pb as a font.filename entry.",
+                ),
             )

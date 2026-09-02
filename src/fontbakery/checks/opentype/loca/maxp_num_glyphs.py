@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -16,6 +16,9 @@ from fontbakery.prelude import check, Message, FAIL
 def check_loca_maxp_num_glyphs(ttFont):
     """Does the number of glyphs in the loca table match the maxp table?"""
     if len(ttFont["loca"]) < (ttFont["maxp"].numGlyphs + 1):
-        yield FAIL, Message(
-            "corrupt", 'Corrupt "loca" table or wrong numGlyphs in "maxp" table.'
+        yield (
+            FAIL,
+            Message(
+                "corrupt", 'Corrupt "loca" table or wrong numGlyphs in "maxp" table.'
+            ),
         )

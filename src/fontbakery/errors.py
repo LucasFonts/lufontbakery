@@ -18,8 +18,7 @@ class FailedConditionError(FontBakeryRunnerError):
 
     def __init__(self, condition, error, *args):
         message = (
-            f"The condition {condition} had an error:"
-            f" {type(error).__name__}: {error}"
+            f"The condition {condition} had an error: {type(error).__name__}: {error}"
         )
         self.condition = condition
         self.error = error
@@ -44,7 +43,7 @@ class MissingConditionError(FontBakeryRunnerError):
 
 class FailedDependenciesError(FontBakeryRunnerError):
     def __init__(self, check, error, *args):
-        message = f"The check {check} had an error:" f" {type(error).__name__}: {error}"
+        message = f"The check {check} had an error: {type(error).__name__}: {error}"
         self.check = check
         self.error = error
         self.traceback = "".join(traceback.format_tb(error.__traceback__))

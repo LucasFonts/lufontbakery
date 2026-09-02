@@ -1,6 +1,6 @@
 import math
 
-from fontbakery.prelude import check, FAIL, SKIP, Message
+from fontbakery.prelude import FAIL, SKIP, Message, check
 from fontbakery.utils import get_advance_width_for_char
 
 
@@ -61,7 +61,10 @@ def check_htmx_whitespace_advances(ttFont, config, glyph_metrics_stats):
         from fontbakery.utils import pretty_print_list
 
         formatted_list = "\t* " + pretty_print_list(config, problems, sep="\n\t* ")
-        yield FAIL, Message(
-            "bad-whitespace-advances",
-            f"The following glyphs had wrong advance widths:\n{formatted_list}",
+        yield (
+            FAIL,
+            Message(
+                "bad-whitespace-advances",
+                f"The following glyphs had wrong advance widths:\n{formatted_list}",
+            ),
         )

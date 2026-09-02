@@ -1,6 +1,6 @@
 from difflib import Differ
 
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -43,12 +43,15 @@ def check_license_OFL_body_text(license_contents):
 
     if changed_lines:
         output = "\n\n".join(changed_lines)
-        yield WARN, Message(
-            "incorrect-ofl-body-text",
-            "The OFL.txt body text is incorrect. Please use "
-            "https://github.com/googlefonts/Unified-Font-Repository"
-            "/blob/main/OFL.txt as a template. "
-            "You should only modify the first line.\n\n"
-            "Lines changed:\n\n"
-            f"{output}\n\n",
+        yield (
+            WARN,
+            Message(
+                "incorrect-ofl-body-text",
+                "The OFL.txt body text is incorrect. Please use "
+                "https://github.com/googlefonts/Unified-Font-Repository"
+                "/blob/main/OFL.txt as a template. "
+                "You should only modify the first line.\n\n"
+                "Lines changed:\n\n"
+                f"{output}\n\n",
+            ),
         )

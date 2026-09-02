@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -27,11 +27,15 @@ def check_metadata_valid_nameid25(font, style):
 
     if "Italic" in style and font.is_variable_font:
         if not get_name(ttFont, 25).endswith("Italic"):
-            yield FAIL, Message(
-                "nameid25-missing-italic",
-                'Name ID 25 must end with "Italic" for Italic fonts.',
+            yield (
+                FAIL,
+                Message(
+                    "nameid25-missing-italic",
+                    'Name ID 25 must end with "Italic" for Italic fonts.',
+                ),
             )
         if " " in get_name(ttFont, 25):
-            yield FAIL, Message(
-                "nameid25-has-spaces", "Name ID 25 must not contain spaces."
+            yield (
+                FAIL,
+                Message("nameid25-has-spaces", "Name ID 25 must not contain spaces."),
             )

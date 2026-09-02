@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -61,7 +61,10 @@ def check_unsupported_tables(ttFont):
 
     if unsupported_tables:
         unsupported_list = "".join(f"* {tag}\n" for tag in unsupported_tables)
-        yield FAIL, Message(
-            "unsupported-tables",
-            f"The following unsupported font tables were found:\n\n{unsupported_list}",
+        yield (
+            FAIL,
+            Message(
+                "unsupported-tables",
+                f"The following unsupported font tables were found:\n\n{unsupported_list}",
+            ),
         )

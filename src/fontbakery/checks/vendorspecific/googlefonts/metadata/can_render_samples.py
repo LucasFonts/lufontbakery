@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 from fontbakery.utils import (
     can_shape,
     exit_with_install_instructions,
@@ -28,10 +28,13 @@ def check_metadata_can_render_samples(ttFont, family_metadata):
     languages = LoadLanguages()
     for lang in family_metadata.languages:
         if lang not in languages:
-            yield WARN, Message(
-                "no-sample-string",
-                f"Aparently there's no sample strings for"
-                f" '{lang}' in the gflanguages package.",
+            yield (
+                WARN,
+                Message(
+                    "no-sample-string",
+                    f"Aparently there's no sample strings for"
+                    f" '{lang}' in the gflanguages package.",
+                ),
             )
             continue
 
@@ -53,7 +56,10 @@ def check_metadata_can_render_samples(ttFont, family_metadata):
             sample_text = sample_text.replace("\n", "").replace("\u200b", "")
 
             if not can_shape(ttFont, sample_text):
-                yield FAIL, Message(
-                    "sample-text",
-                    f'Font can\'t render "{lang}" sample text:\n"{sample_text}"\n',
+                yield (
+                    FAIL,
+                    Message(
+                        "sample-text",
+                        f'Font can\'t render "{lang}" sample text:\n"{sample_text}"\n',
+                    ),
                 )

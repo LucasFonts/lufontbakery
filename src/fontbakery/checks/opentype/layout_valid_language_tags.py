@@ -1,6 +1,6 @@
 from opentypespec.tags import LANGUAGE_TAGS
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import language_tags
 
 
@@ -21,8 +21,11 @@ def check_layout_valid_language_tags(ttFont):
         if tag not in LANGUAGE_TAGS.keys():
             bad_tags.add(tag)
     if bad_tags:
-        yield FAIL, Message(
-            "bad-language-tags",
-            "The following invalid language tags were found in the font: "
-            + ", ".join(sorted(bad_tags)),
+        yield (
+            FAIL,
+            Message(
+                "bad-language-tags",
+                "The following invalid language tags were found in the font: "
+                + ", ".join(sorted(bad_tags)),
+            ),
         )

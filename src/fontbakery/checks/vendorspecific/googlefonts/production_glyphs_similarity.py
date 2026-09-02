@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, WARN
+from fontbakery.prelude import WARN, check
 
 
 @check(
@@ -63,7 +63,10 @@ def check_production_glyphs_similarity(ttFont, api_gfonts_ttFont, config):
             config, sorted(bad_glyphs), sep="\n\t* "
         )
 
-        yield WARN, (
-            "Following glyphs differ greatly from"
-            f" Google Fonts version:\n{formatted_list}"
+        yield (
+            WARN,
+            (
+                "Following glyphs differ greatly from"
+                f" Google Fonts version:\n{formatted_list}"
+            ),
         )

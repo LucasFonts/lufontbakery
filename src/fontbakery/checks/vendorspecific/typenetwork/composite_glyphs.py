@@ -1,6 +1,6 @@
 import string
 
-from fontbakery.prelude import check, Message, PASS, WARN
+from fontbakery.prelude import PASS, WARN, Message, check
 
 
 @check(
@@ -24,11 +24,15 @@ def check_composite_glyphs(ttFont):
 
     percentageOfNotCompositeGlyphs = round(len(failed) * 100 / numberOfGlyphs)
     if percentageOfNotCompositeGlyphs > 50:
-        yield WARN, Message(
-            "low-composites",
-            f"{percentageOfNotCompositeGlyphs}% of the glyphs are not composites.",
+        yield (
+            WARN,
+            Message(
+                "low-composites",
+                f"{percentageOfNotCompositeGlyphs}% of the glyphs are not composites.",
+            ),
         )
     else:
-        yield PASS, (
-            f"{100-percentageOfNotCompositeGlyphs}% of the glyphs are composites."
+        yield (
+            PASS,
+            (f"{100 - percentageOfNotCompositeGlyphs}% of the glyphs are composites."),
         )

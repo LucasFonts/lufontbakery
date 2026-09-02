@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, INFO, PASS
+from fontbakery.prelude import FAIL, INFO, PASS, Message, check
 from fontbakery.utils import bullet_list
 
 
@@ -78,10 +78,13 @@ def check_required_tables(ttFont, config, is_variable_font):
 
     optional_tables = [opt for opt in OPTIONAL_TABLES if opt in font_tables]
     if optional_tables:
-        yield INFO, Message(
-            "optional-tables",
-            "This font contains the following optional tables:\n\n"
-            f"{bullet_list(config, optional_tables)}",
+        yield (
+            INFO,
+            Message(
+                "optional-tables",
+                "This font contains the following optional tables:\n\n"
+                f"{bullet_list(config, optional_tables)}",
+            ),
         )
 
     if is_variable_font:
@@ -107,10 +110,13 @@ def check_required_tables(ttFont, config, is_variable_font):
         missing_tables.append("glyf")
 
     if missing_tables:
-        yield FAIL, Message(
-            "required-tables",
-            "This font is missing the following required tables:\n\n"
-            f"{bullet_list(config, missing_tables)}",
+        yield (
+            FAIL,
+            Message(
+                "required-tables",
+                "This font is missing the following required tables:\n\n"
+                f"{bullet_list(config, missing_tables)}",
+            ),
         )
     else:
         yield PASS, "Font contains all required tables."

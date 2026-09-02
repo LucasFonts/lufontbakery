@@ -23,10 +23,13 @@ def check_varfont_STAT_axis_record_for_each_axis(ttFont, config):
     STAT_axes = set(a.AxisTag for a in ttFont["STAT"].table.DesignAxisRecord.Axis)
     missing_axes = fvar_axes - STAT_axes
     if len(missing_axes) > 0:
-        yield FAIL, Message(
-            "missing-axis-records",
-            f"STAT table is missing Axis Records for the following axes:\n\n"
-            f"{bullet_list(config, sorted(missing_axes))}",
+        yield (
+            FAIL,
+            Message(
+                "missing-axis-records",
+                f"STAT table is missing Axis Records for the following axes:\n\n"
+                f"{bullet_list(config, sorted(missing_axes))}",
+            ),
         )
     else:
         yield PASS, "STAT table has all necessary Axis Records."

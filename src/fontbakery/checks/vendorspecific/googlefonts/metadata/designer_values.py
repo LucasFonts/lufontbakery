@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -19,9 +19,12 @@ def check_metadata_designer_values(family_metadata):
     METADATA.pb must be separated by commas."""
 
     if "/" in family_metadata.designer:
-        yield FAIL, Message(
-            "slash",
-            f"Font designer field contains a forward slash"
-            f" '{family_metadata.designer}'."
-            f" Please use commas to separate multiple names instead.",
+        yield (
+            FAIL,
+            Message(
+                "slash",
+                f"Font designer field contains a forward slash"
+                f" '{family_metadata.designer}'."
+                f" Please use commas to separate multiple names instead.",
+            ),
         )

@@ -21,17 +21,21 @@ from fontbakery.utils import get_glyph_name
 )
 def check_arabic_high_hamza(ttFont):
     """Check that glyph for U+0674 ARABIC LETTER HIGH HAMZA is not a mark."""
-    from fontTools.pens.areaPen import AreaPen
     from copy import deepcopy
+
+    from fontTools.pens.areaPen import AreaPen
 
     ARABIC_LETTER_HAMZA = 0x0621
     ARABIC_LETTER_HIGH_HAMZA = 0x0674
 
     cmap = ttFont.getBestCmap()
     if ARABIC_LETTER_HIGH_HAMZA not in cmap:
-        yield SKIP, Message(
-            "glyphs-missing",
-            "This check will only run on fonts that have U+0674 glyph",
+        yield (
+            SKIP,
+            Message(
+                "glyphs-missing",
+                "This check will only run on fonts that have U+0674 glyph",
+            ),
         )
         return
 
@@ -39,15 +43,21 @@ def check_arabic_high_hamza(ttFont):
         class_def = ttFont["GDEF"].table.GlyphClassDef.classDefs
         name = get_glyph_name(ttFont, ARABIC_LETTER_HIGH_HAMZA)
         if name in class_def and class_def[name] == 3:
-            yield FAIL, Message(
-                "mark-in-gdef",
-                f'"{name}" is defined in GDEF as a mark (class 3).',
+            yield (
+                FAIL,
+                Message(
+                    "mark-in-gdef",
+                    f'"{name}" is defined in GDEF as a mark (class 3).',
+                ),
             )
 
     if ARABIC_LETTER_HAMZA not in cmap:
-        yield SKIP, Message(
-            "glyphs-missing",
-            "This check will only run on fonts that have both glyphs U+0621 and U+0674",
+        yield (
+            SKIP,
+            Message(
+                "glyphs-missing",
+                "This check will only run on fonts that have both glyphs U+0621 and U+0674",
+            ),
         )
         return
 
@@ -70,9 +80,12 @@ def check_arabic_high_hamza(ttFont):
     high_hamza_area = area_pen.value
 
     if abs((high_hamza_area - hamza_area) / hamza_area) > 0.1:
-        yield WARN, Message(
-            "glyph-area",
-            "The arabic letter high hamza (U+0674) should have roughly"
-            " the same size the arabic letter hamza (U+0621) while raised"
-            " above baseline, but a different glyph outline area was detected.",
+        yield (
+            WARN,
+            Message(
+                "glyph-area",
+                "The arabic letter high hamza (U+0674) should have roughly"
+                " the same size the arabic letter hamza (U+0621) while raised"
+                " above baseline, but a different glyph outline area was detected.",
+            ),
         )

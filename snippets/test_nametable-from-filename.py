@@ -14,8 +14,9 @@
 # limitations under the License.
 #
 # See AUTHORS.txt for the list of Authors and LICENSE.txt for the License.
-import unittest
 import os
+import unittest
+
 from fontTools.ttLib import TTFont
 
 script = __import__("fontbakery-nametable-from-filename")

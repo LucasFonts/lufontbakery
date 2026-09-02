@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, condition, Message, WARN
+from fontbakery.prelude import WARN, Message, check, condition
 from fontbakery.testable import Font
 
 

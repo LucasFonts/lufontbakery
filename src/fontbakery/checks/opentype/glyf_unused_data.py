@@ -1,6 +1,6 @@
 from fontTools.ttLib import TTLibError
 
-from fontbakery.prelude import check, Message, FAIL, PASS
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -23,12 +23,15 @@ def check_glyf_unused_data(ttFont):
         diff = actual_glyphs - expected_glyphs
 
         if diff < 0:
-            yield FAIL, Message(
-                "unreachable-data",
-                f"Glyf table has unreachable data at the end of the table."
-                f" Expected glyf table length {expected_glyphs} (from loca"
-                f" table), got length {actual_glyphs}"
-                f" (difference: {diff})",
+            yield (
+                FAIL,
+                Message(
+                    "unreachable-data",
+                    f"Glyf table has unreachable data at the end of the table."
+                    f" Expected glyf table length {expected_glyphs} (from loca"
+                    f" table), got length {actual_glyphs}"
+                    f" (difference: {diff})",
+                ),
             )
         elif not diff:  # negative diff -> exception below
             yield PASS, "There is no unused data at the end of the glyf table."
@@ -36,12 +39,15 @@ def check_glyf_unused_data(ttFont):
             raise Exception("Bug: fontTools did not raise an expected exception.")
     except TTLibError as error:
         if "not enough 'glyf' table data" in format(error):
-            yield FAIL, Message(
-                "missing-data",
-                f"Loca table references data beyond"
-                f" the end of the glyf table."
-                f" Expected glyf table length {expected_glyphs}"
-                f" (from loca table).",
+            yield (
+                FAIL,
+                Message(
+                    "missing-data",
+                    f"Loca table references data beyond"
+                    f" the end of the glyf table."
+                    f" Expected glyf table length {expected_glyphs}"
+                    f" (from loca table).",
+                ),
             )
         else:
             raise Exception("Bug: Unexpected fontTools exception.")

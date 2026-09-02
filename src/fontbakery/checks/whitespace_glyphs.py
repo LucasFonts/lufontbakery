@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, PASS
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -22,9 +22,12 @@ def check_whitespace_glyphs(ttFont, missing_whitespace_chars):
     failed = False
     for wsc in missing_whitespace_chars:
         failed = True
-        yield FAIL, Message(
-            f"missing-whitespace-glyph-{wsc}",
-            f"Whitespace glyph missing for codepoint {wsc}.",
+        yield (
+            FAIL,
+            Message(
+                f"missing-whitespace-glyph-{wsc}",
+                f"Whitespace glyph missing for codepoint {wsc}.",
+            ),
         )
 
     if not failed:

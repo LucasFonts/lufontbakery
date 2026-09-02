@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -25,10 +25,13 @@ def check_family_equal_font_versions(ttFonts):
             versions_list += "* {}: {}\n".format(
                 v.reader.file.name, fontfile_versions[v]
             )
-        yield WARN, Message(
-            "mismatch",
-            f"Version info differs among font"
-            f" files of the same font project.\n"
-            f"These were the version values found:\n"
-            f"{versions_list}",
+        yield (
+            WARN,
+            Message(
+                "mismatch",
+                f"Version info differs among font"
+                f" files of the same font project.\n"
+                f"These were the version values found:\n"
+                f"{versions_list}",
+            ),
         )

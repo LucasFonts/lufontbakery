@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import pretty_print_list
 
 
@@ -20,16 +20,22 @@ def check_metadata_consistent_axis_enumeration(family_metadata, ttFont, config):
     extra = sorted(md_axes - fvar_axes)
 
     if missing:
-        yield FAIL, Message(
-            "missing-axes",
-            f"The font variation axes {pretty_print_list(config, missing)}"
-            f" are present in the font's fvar table but are not"
-            f" declared on the METADATA.pb file.",
+        yield (
+            FAIL,
+            Message(
+                "missing-axes",
+                f"The font variation axes {pretty_print_list(config, missing)}"
+                f" are present in the font's fvar table but are not"
+                f" declared on the METADATA.pb file.",
+            ),
         )
 
     if extra:
-        yield FAIL, Message(
-            "extra-axes",
-            f"The METADATA.pb file lists font variation axes that"
-            f" are not supported but this family: {pretty_print_list(config, extra)}",
+        yield (
+            FAIL,
+            Message(
+                "extra-axes",
+                f"The METADATA.pb file lists font variation axes that"
+                f" are not supported but this family: {pretty_print_list(config, extra)}",
+            ),
         )

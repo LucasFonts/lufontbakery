@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 from fontbakery.testable import Font
 
 
@@ -47,11 +47,14 @@ def check_description_family_update(font, network, config):
     """
     remote_description = github_gfonts_description(font, network, config)
     if remote_description == font.description:
-        yield WARN, Message(
-            "description-not-updated",
-            "The DESCRIPTION.en_us.html file in this family has not changed"
-            " in comparison to the latest font release on the"
-            " google/fonts github repo.\n"
-            "Please consider mentioning note-worthy improvements made"
-            " to the family recently.",
+        yield (
+            WARN,
+            Message(
+                "description-not-updated",
+                "The DESCRIPTION.en_us.html file in this family has not changed"
+                " in comparison to the latest font release on the"
+                " google/fonts github repo.\n"
+                "Please consider mentioning note-worthy improvements made"
+                " to the family recently.",
+            ),
         )

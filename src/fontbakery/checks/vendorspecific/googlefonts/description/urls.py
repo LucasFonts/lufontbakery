@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -23,17 +23,23 @@ def check_description_urls(description_and_article_html):
             link_text = a_href.text
             if not link_text:
                 if a_href.attrib:
-                    yield FAIL, Message(
-                        "empty-link-text",
-                        f"The following anchor in the {source} has empty text content:\n\n"
-                        f"{a_href.attrib}\n",
+                    yield (
+                        FAIL,
+                        Message(
+                            "empty-link-text",
+                            f"The following anchor in the {source} has empty text content:\n\n"
+                            f"{a_href.attrib}\n",
+                        ),
                     )
                 continue
 
             if link_text.startswith("http://") or link_text.startswith("https://"):
-                yield FAIL, Message(
-                    "prefix-found",
-                    'Please remove the "http(s)://" prefix from the text content'
-                    f" of the following anchor:\n\n{link_text}",
+                yield (
+                    FAIL,
+                    Message(
+                        "prefix-found",
+                        'Please remove the "http(s)://" prefix from the text content'
+                        f" of the following anchor:\n\n{link_text}",
+                    ),
                 )
                 continue

@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, INFO
 from fontbakery.constants import NameID
+from fontbakery.prelude import INFO, Message, check
 
 
 @check(
@@ -84,10 +84,10 @@ def check_family_naming_recommendations(ttFont):
         table += "|:----- |:----- |:-------------- |\n"
         for bad in bad_entries:
             table += "| {} | {} | {} |\n".format(bad["field"], bad["value"], bad["rec"])
-        yield INFO, Message(
-            "bad-entries",
-            f"Font does not follow "
-            f"some family naming recommendations:\n"
-            f"\n"
-            f"{table}",
+        yield (
+            INFO,
+            Message(
+                "bad-entries",
+                f"Font does not follow some family naming recommendations:\n\n{table}",
+            ),
         )

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -56,32 +56,41 @@ def check_varfont_valid_default_instance_nameids(ttFont, has_name_table):
                 postscript_nameid = "0xFFFF"
 
             if name17 and subfam_name != font_subfam_name:
-                yield FAIL, Message(
-                    "invalid-default-instance-subfamily-name",
-                    f"{subfam_name!r} instance has the same coordinates as the default"
-                    f" instance; its subfamily name should be {font_subfam_name!r}.\n\n"
-                    f"Note: It is alternatively possible that Name ID 17 is incorrect,"
-                    f" and should be set to the default instance subfamily name, {subfam_name!r},"
-                    f" rather than '{name17!r}'. If the default instance is {subfam_name!r},"
-                    f" NameID 17 is probably the problem.",
+                yield (
+                    FAIL,
+                    Message(
+                        "invalid-default-instance-subfamily-name",
+                        f"{subfam_name!r} instance has the same coordinates as the default"
+                        f" instance; its subfamily name should be {font_subfam_name!r}.\n\n"
+                        f"Note: It is alternatively possible that Name ID 17 is incorrect,"
+                        f" and should be set to the default instance subfamily name, {subfam_name!r},"
+                        f" rather than '{name17!r}'. If the default instance is {subfam_name!r},"
+                        f" NameID 17 is probably the problem.",
+                    ),
                 )
 
             if not name17 and subfam_name != font_subfam_name:
-                yield FAIL, Message(
-                    "invalid-default-instance-subfamily-name",
-                    f"{subfam_name!r} instance has the same coordinates as the default"
-                    f" instance; its subfamily name should be {font_subfam_name!r}.\n\n"
-                    f"Note: If the default instance really is meant to be called {subfam_name!r},"
-                    f" the problem may be that the font lacks NameID 17, which should"
-                    f" probably be present and set to {subfam_name!r}.",
+                yield (
+                    FAIL,
+                    Message(
+                        "invalid-default-instance-subfamily-name",
+                        f"{subfam_name!r} instance has the same coordinates as the default"
+                        f" instance; its subfamily name should be {font_subfam_name!r}.\n\n"
+                        f"Note: If the default instance really is meant to be called {subfam_name!r},"
+                        f" the problem may be that the font lacks NameID 17, which should"
+                        f" probably be present and set to {subfam_name!r}.",
+                    ),
                 )
 
             # Validate the postScriptNameID string only if
             # at least one instance record includes it
             if font_includes_ps_nameid and postscript_name != name6:
-                yield FAIL, Message(
-                    "invalid-default-instance-postscript-name",
-                    f"{subfam_name!r} instance has the same coordinates as the default"
-                    f" instance; its postscript name should be {name6!r}, instead of"
-                    f" {postscript_name!r}.",
+                yield (
+                    FAIL,
+                    Message(
+                        "invalid-default-instance-postscript-name",
+                        f"{subfam_name!r} instance has the same coordinates as the default"
+                        f" instance; its postscript name should be {name6!r}, instead of"
+                        f" {postscript_name!r}.",
+                    ),
                 )

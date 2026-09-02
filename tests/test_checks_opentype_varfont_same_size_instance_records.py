@@ -1,11 +1,11 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
-from fontbakery.status import FAIL, SKIP
 from fontbakery.codetesting import (
     assert_PASS,
     assert_results_contain,
 )
+from fontbakery.status import FAIL, SKIP
 
 
 @check_id("opentype/varfont/same_size_instance_records")

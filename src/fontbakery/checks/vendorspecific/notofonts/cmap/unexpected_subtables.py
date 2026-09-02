@@ -1,10 +1,10 @@
-from fontbakery.prelude import check, WARN, FAIL, Message
 from fontbakery.constants import (
-    PlatformID,
-    WindowsEncodingID,
-    UnicodeEncodingID,
     MacintoshEncodingID,
+    PlatformID,
+    UnicodeEncodingID,
+    WindowsEncodingID,
 )
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -80,9 +80,12 @@ def check_cmap_unexpected_subtables(font):
             subtable.platformID,
             subtable.platEncID,
         ) not in EXPECTED_SUBTABLES:
-            yield WARN, Message(
-                "unexpected-subtable",
-                f"'cmap' has a subtable of"
-                f" (format={subtable.format}, platform={subtable.platformID},"
-                f" encoding={subtable.platEncID}), which it shouldn't have.",
+            yield (
+                WARN,
+                Message(
+                    "unexpected-subtable",
+                    f"'cmap' has a subtable of"
+                    f" (format={subtable.format}, platform={subtable.platformID},"
+                    f" encoding={subtable.platEncID}), which it shouldn't have.",
+                ),
             )

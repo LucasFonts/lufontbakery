@@ -1,8 +1,8 @@
 import shutil
 
 import pytest
-
 from conftest import check_id
+
 from fontbakery.codetesting import TEST_FILE, assert_results_contain
 from fontbakery.status import ERROR
 

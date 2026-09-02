@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -30,10 +30,13 @@ def check_name_trailing_spaces(ttFont):
             shortened_str = name_record.toUnicode()
             if len(shortened_str) > 25:
                 shortened_str = shortened_str[:10] + "[...]" + shortened_str[-10:]
-            yield FAIL, Message(
-                "trailing-space",
-                f"Name table record with key = {name_key} has trailing spaces"
-                f" that must be removed: '{shortened_str}'",
+            yield (
+                FAIL,
+                Message(
+                    "trailing-space",
+                    f"Name table record with key = {name_key} has trailing spaces"
+                    f" that must be removed: '{shortened_str}'",
+                ),
             )
     if not failed:
         yield PASS, "No trailing spaces on name table entries."

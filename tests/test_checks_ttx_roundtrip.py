@@ -2,9 +2,9 @@ from conftest import check_id
 
 #  from fontbakery.status import FAIL
 from fontbakery.codetesting import (
-    assert_PASS,
     #    assert_results_contain,
     TEST_FILE,
+    assert_PASS,
 )
 
 

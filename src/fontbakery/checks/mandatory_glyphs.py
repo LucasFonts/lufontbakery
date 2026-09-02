@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 from fontbakery.utils import glyph_has_ink
 
 
@@ -26,28 +26,38 @@ def check_mandatory_glyphs(ttFont):
     glyph_order = ttFont.getGlyphOrder()
 
     if NOTDEF not in glyph_order or len(glyph_order) == 0:
-        yield WARN, Message(
-            "notdef-not-found", f"Font should contain the {NOTDEF!r} glyph."
+        yield (
+            WARN,
+            Message("notdef-not-found", f"Font should contain the {NOTDEF!r} glyph."),
         )
         # The font doesn't even have the notdef. There's no point in testing further.
         return
 
     if glyph_order[0] != NOTDEF:
-        yield WARN, Message(
-            "notdef-not-first", f"The {NOTDEF!r} should be the font's first glyph."
+        yield (
+            WARN,
+            Message(
+                "notdef-not-first", f"The {NOTDEF!r} should be the font's first glyph."
+            ),
         )
 
     cmap = ttFont.getBestCmap()  # e.g. {65: 'A', 66: 'B', 67: 'C'} or None
     if cmap and NOTDEF in cmap.values():
         rev_cmap = {name: val for val, name in reversed(sorted(cmap.items()))}
-        yield WARN, Message(
-            "notdef-has-codepoint",
-            f"The {NOTDEF!r} glyph should not have a Unicode codepoint value assigned,"
-            f" but has 0x{rev_cmap[NOTDEF]:04X}.",
+        yield (
+            WARN,
+            Message(
+                "notdef-has-codepoint",
+                f"The {NOTDEF!r} glyph should not have a Unicode codepoint value assigned,"
+                f" but has 0x{rev_cmap[NOTDEF]:04X}.",
+            ),
         )
 
     if not glyph_has_ink(ttFont, NOTDEF):
-        yield FAIL, Message(
-            "notdef-is-blank",
-            f"The {NOTDEF!r} glyph should contain a drawing, but it is blank.",
+        yield (
+            FAIL,
+            Message(
+                "notdef-is-blank",
+                f"The {NOTDEF!r} glyph should contain a drawing, but it is blank.",
+            ),
         )

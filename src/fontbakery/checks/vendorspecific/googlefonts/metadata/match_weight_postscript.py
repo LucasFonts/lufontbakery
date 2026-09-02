@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL
+from fontbakery.prelude import FAIL, check
 
 
 @check(
@@ -44,16 +44,20 @@ def check_metadata_match_weight_postscript(font_metadata):
             pair.append((k, weight))
 
     if not pair:
-        yield FAIL, (
-            f"METADATA.pb: Font weight value ({font_metadata.weight}) is invalid."
+        yield (
+            FAIL,
+            (f"METADATA.pb: Font weight value ({font_metadata.weight}) is invalid."),
         )
     elif not (
         font_metadata.post_script_name.endswith("-" + pair[0][0])
         or font_metadata.post_script_name.endswith("-" + pair[1][0])
     ):
-        yield FAIL, (
-            f"METADATA.pb: Mismatch between postScriptName"
-            f' ("{font_metadata.post_script_name}")'
-            f" and weight value ({pair[0][1]}). The name must be"
-            f' ended with "{pair[0][0]}" or "{pair[1][0]}".\n'
+        yield (
+            FAIL,
+            (
+                f"METADATA.pb: Mismatch between postScriptName"
+                f' ("{font_metadata.post_script_name}")'
+                f" and weight value ({pair[0][1]}). The name must be"
+                f' ended with "{pair[0][0]}" or "{pair[1][0]}".\n'
+            ),
         )

@@ -1,8 +1,8 @@
 import os
 
 from fontbakery.constants import NameID
+from fontbakery.prelude import WARN, Message, check
 from fontbakery.testable import Font
-from fontbakery.prelude import check, Message, WARN
 
 
 @check(
@@ -41,9 +41,12 @@ def check_repo_vf_has_static_fonts(family_directory):
             return
 
         if not all(manually_hinted(font) for font in static_fonts):
-            yield WARN, Message(
-                "not-manually-hinted",
-                'There is a "static" dir but it contains fonts which are not '
-                "manually hinted. Delete the directory.",
+            yield (
+                WARN,
+                Message(
+                    "not-manually-hinted",
+                    'There is a "static" dir but it contains fonts which are not '
+                    "manually hinted. Delete the directory.",
+                ),
             )
             return

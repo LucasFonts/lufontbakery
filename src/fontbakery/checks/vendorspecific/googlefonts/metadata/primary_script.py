@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -15,8 +15,9 @@ def check_metadata_primary_script(ttFont, family_metadata):
     """METADATA.pb: Check for primary_script"""
 
     def get_primary_script(ttFont):
-        from fontTools import unicodedata
         from collections import Counter
+
+        from fontTools import unicodedata
 
         script_count = Counter()
         for c in ttFont.getBestCmap().keys():
@@ -74,10 +75,13 @@ def check_metadata_primary_script(ttFont, family_metadata):
             )
             is None
         ):
-            yield WARN, Message(
-                "wrong-primary-script",
-                (
-                    f"METADATA.pb: primary_script is '{family_metadata.primary_script}'"
-                    f"\nIt should instead be '{guessed_primary_script}'."
+            yield (
+                WARN,
+                Message(
+                    "wrong-primary-script",
+                    (
+                        f"METADATA.pb: primary_script is '{family_metadata.primary_script}'"
+                        f"\nIt should instead be '{guessed_primary_script}'."
+                    ),
                 ),
             )

@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.checks.vendorspecific.googlefonts.utils import GFAxisRegistry
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -37,11 +37,14 @@ def check_axisregistry_fvar_axis_defaults(ttFont):
 
         fallbacks = GFAxisRegistry()[axis.axisTag].fallback
         if axis.defaultValue not in [f.value for f in fallbacks]:
-            yield FAIL, Message(
-                "not-registered",
-                f"The defaul value {axis.axisTag}:{axis.defaultValue} is not registered"
-                " as an axis fallback name on the Google Axis Registry.\n\tYou should"
-                " consider suggesting the addition of this value to the registry"
-                " or adopted one of the existing fallback names for this axis:\n"
-                f"\t{fallbacks}",
+            yield (
+                FAIL,
+                Message(
+                    "not-registered",
+                    f"The defaul value {axis.axisTag}:{axis.defaultValue} is not registered"
+                    " as an axis fallback name on the Google Axis Registry.\n\tYou should"
+                    " consider suggesting the addition of this value to the registry"
+                    " or adopted one of the existing fallback names for this axis:\n"
+                    f"\t{fallbacks}",
+                ),
             )

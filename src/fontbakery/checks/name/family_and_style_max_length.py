@@ -62,11 +62,14 @@ def check_name_family_and_style_max_length(ttFont):
         for the_name in get_name_entry_strings(ttFont, nameid):
             the_name = transform(the_name)
             if len(the_name) > maxlen:
-                yield loglevel, Message(
-                    f"nameid{nameid}-too-long",
-                    f"Name ID {nameid} '{the_name}' exceeds"
-                    f" {maxlen} characters. This has been found to"
-                    f" cause problems {reason}.",
+                yield (
+                    loglevel,
+                    Message(
+                        f"nameid{nameid}-too-long",
+                        f"Name ID {nameid} '{the_name}' exceeds"
+                        f" {maxlen} characters. This has been found to"
+                        f" cause problems {reason}.",
+                    ),
                 )
 
     # check variable font name lengths
@@ -103,23 +106,26 @@ def check_name_family_and_style_max_length(ttFont):
 
         # make list of combined family & STAT style names
         names = [
-            f'{family_name} {" ".join(combination)}'
+            f"{family_name} {' '.join(combination)}"
             for combination in product(*styles_per_axis.values())
         ]
 
         for name in names:
             if len(name) > NAME_LENGTH_LIMIT:
                 stat_style_combination = name.replace(f"{family_name} ", "")
-                yield FAIL, Message(
-                    "familyname-plus-stat-entries-too-long",
-                    f"Name ID {family_name_id} '{family_name}' plus"
-                    f" STAT table style combination '{stat_style_combination}'"
-                    f" exceeds 31 characters (the combination is {len(name)} characters).\n\n"
-                    f" This has been found to"
-                    f" cause a fallback font to appear for some accented letters, as well"
-                    f" as in some scripts such as Thai, in"
-                    f" Microsoft Word on Windows 10 and 11. It can also lead to names"
-                    f" which are truncated in the Microsoft Word font menu.\n\n",
+                yield (
+                    FAIL,
+                    Message(
+                        "familyname-plus-stat-entries-too-long",
+                        f"Name ID {family_name_id} '{family_name}' plus"
+                        f" STAT table style combination '{stat_style_combination}'"
+                        f" exceeds 31 characters (the combination is {len(name)} characters).\n\n"
+                        f" This has been found to"
+                        f" cause a fallback font to appear for some accented letters, as well"
+                        f" as in some scripts such as Thai, in"
+                        f" Microsoft Word on Windows 10 and 11. It can also lead to names"
+                        f" which are truncated in the Microsoft Word font menu.\n\n",
+                    ),
                 )
 
     # if STAT not in font, assume that "fvar" instance names are used
@@ -145,16 +151,19 @@ def check_name_family_and_style_max_length(ttFont):
                         family_name = family_names[platform].toUnicode()
                     full_instance_name = family_name + " " + instance_name
                     if len(full_instance_name) > NAME_LENGTH_LIMIT:
-                        yield FAIL, Message(
-                            "fvar-instance-too-long",
-                            f"Variable font instance name '{full_instance_name}'"
-                            f" formed by space-separated concatenation of"
-                            f" font family name (nameID {NameID.FONT_FAMILY_NAME})"
-                            f" and instance subfamily nameID {instance.subfamilyNameID}"
-                            f" exceeds {NAME_LENGTH_LIMIT} characters.\n\n"
-                            f" This has been found to"
-                            f" cause a fallback font to appear for some accented letters, as well"
-                            f" as in some scripts such as Thai, in"
-                            f" Microsoft Word on Windows 10 and 11. It can also lead to names"
-                            f" which are truncated in the Microsoft Word font menu.\n\n",
+                        yield (
+                            FAIL,
+                            Message(
+                                "fvar-instance-too-long",
+                                f"Variable font instance name '{full_instance_name}'"
+                                f" formed by space-separated concatenation of"
+                                f" font family name (nameID {NameID.FONT_FAMILY_NAME})"
+                                f" and instance subfamily nameID {instance.subfamilyNameID}"
+                                f" exceeds {NAME_LENGTH_LIMIT} characters.\n\n"
+                                f" This has been found to"
+                                f" cause a fallback font to appear for some accented letters, as well"
+                                f" as in some scripts such as Thai, in"
+                                f" Microsoft Word on Windows 10 and 11. It can also lead to names"
+                                f" which are truncated in the Microsoft Word font menu.\n\n",
+                            ),
                         )

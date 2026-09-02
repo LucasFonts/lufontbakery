@@ -46,7 +46,10 @@ def check_arabic_spacing_symbols(ttFont):
         for name in reverseCmap:
             if reverseCmap[name].intersection(ARABIC_SPACING_SYMBOLS):
                 if name in class_def and class_def[name] == 3:
-                    yield FAIL, Message(
-                        "mark-in-gdef",
-                        f'"{name}" is defined in GDEF as a mark (class 3).',
+                    yield (
+                        FAIL,
+                        Message(
+                            "mark-in-gdef",
+                            f'"{name}" is defined in GDEF as a mark (class 3).',
+                        ),
                     )

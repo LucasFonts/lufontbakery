@@ -1,9 +1,9 @@
-from fontbakery.prelude import check, Message, PASS, WARN
-from fontbakery.utils import bullet_list
 from fontbakery.checks.outline_settings import (
     COLINEAR_EPSILON,
     FALSE_POSITIVE_CUTOFF,
 )
+from fontbakery.prelude import PASS, WARN, Message, check
+from fontbakery.utils import bullet_list
 
 
 @check(
@@ -38,16 +38,22 @@ def check_outline_colinear_vectors(ttFont, outlines_dict, config):
                     ):
                         warnings.append(f"{display_name}: {prev} -> {this}")
         if len(warnings) > FALSE_POSITIVE_CUTOFF:
-            yield PASS, (
-                "So many colinear vectors were found that this was probably by design."
+            yield (
+                PASS,
+                (
+                    "So many colinear vectors were found that this was probably by design."
+                ),
             )
             return
 
     if warnings:
         formatted_list = bullet_list(config, sorted(set(warnings)), bullet="*")
-        yield WARN, Message(
-            "found-colinear-vectors",
-            f"The following glyphs have colinear vectors:\n\n{formatted_list}",
+        yield (
+            WARN,
+            Message(
+                "found-colinear-vectors",
+                f"The following glyphs have colinear vectors:\n\n{formatted_list}",
+            ),
         )
     else:
         yield PASS, "No colinear vectors found."

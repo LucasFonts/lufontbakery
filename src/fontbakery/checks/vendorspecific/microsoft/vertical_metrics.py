@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, check
 
 
 @check(
@@ -20,35 +20,50 @@ def check_vertical_metrics(ttFont):
         # useTypoMetrics is set
         if hhea_table.ascender != os2_table.sTypoAscender:
             failed = True
-            yield FAIL, (
-                "hhea.ascent != OS/2.sTypoAscender: "
-                f"{hhea_table.ascender} != {os2_table.sTypoAscender}"
+            yield (
+                FAIL,
+                (
+                    "hhea.ascent != OS/2.sTypoAscender: "
+                    f"{hhea_table.ascender} != {os2_table.sTypoAscender}"
+                ),
             )
         if hhea_table.descender != os2_table.sTypoDescender:
             failed = True
-            yield FAIL, (
-                "hhea.descent != OS/2.sTypoDescender: "
-                f"{abs(hhea_table.descender)} != {os2_table.sTypoDescender}"
+            yield (
+                FAIL,
+                (
+                    "hhea.descent != OS/2.sTypoDescender: "
+                    f"{abs(hhea_table.descender)} != {os2_table.sTypoDescender}"
+                ),
             )
         if hhea_table.lineGap != os2_table.sTypoLineGap:
             failed = True
-            yield FAIL, (
-                "hhea.lineGap != OS/2.sTypoLineGap: "
-                f"{abs(hhea_table.lineGap)} != {os2_table.sTypoLineGap}"
+            yield (
+                FAIL,
+                (
+                    "hhea.lineGap != OS/2.sTypoLineGap: "
+                    f"{abs(hhea_table.lineGap)} != {os2_table.sTypoLineGap}"
+                ),
             )
     else:
         # useTypoMetrics is clear
         if hhea_table.ascender != os2_table.usWinAscent:
             failed = True
-            yield FAIL, (
-                "hhea.ascent != OS/2.usWinAscent: "
-                f"{hhea_table.ascender} != {os2_table.usWinAscent}"
+            yield (
+                FAIL,
+                (
+                    "hhea.ascent != OS/2.usWinAscent: "
+                    f"{hhea_table.ascender} != {os2_table.usWinAscent}"
+                ),
             )
         if abs(hhea_table.descender) != os2_table.usWinDescent:
             failed = True
-            yield FAIL, (
-                "hhea.descent != OS/2.usWinDescent: "
-                f"{abs(hhea_table.descender)} != {os2_table.usWinDescent}"
+            yield (
+                FAIL,
+                (
+                    "hhea.descent != OS/2.usWinDescent: "
+                    f"{abs(hhea_table.descender)} != {os2_table.usWinDescent}"
+                ),
             )
     if not failed:
         yield PASS, "Vertical metrics OK"

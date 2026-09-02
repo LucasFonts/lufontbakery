@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery.constants import FsSelection, MacStyle
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(

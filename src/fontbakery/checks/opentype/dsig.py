@@ -1,6 +1,6 @@
 from fontbakery.callable import check
-from fontbakery.status import WARN
 from fontbakery.message import Message
+from fontbakery.status import WARN
 
 
 @check(
@@ -27,12 +27,15 @@ from fontbakery.message import Message
 def check_dsig(ttFont):
     """The font should not need a DSIG table anymore."""
     if "DSIG" in ttFont:
-        yield WARN, Message(
-            "found-DSIG",
-            "This font has a digital signature (DSIG table) which"
-            " is only required - even if only a placeholder"
-            " - on old programs like MS Office 2013 in order to"
-            " work properly.\n"
-            "The current recommendation is to completely"
-            " remove the DSIG table.",
+        yield (
+            WARN,
+            Message(
+                "found-DSIG",
+                "This font has a digital signature (DSIG table) which"
+                " is only required - even if only a placeholder"
+                " - on old programs like MS Office 2013 in order to"
+                " work properly.\n"
+                "The current recommendation is to completely"
+                " remove the DSIG table.",
+            ),
         )

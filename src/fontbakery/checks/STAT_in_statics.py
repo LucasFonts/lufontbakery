@@ -53,9 +53,12 @@ def check_STAT_in_statics(ttFont):
 
     for tag_name in entries:
         if entries[tag_name] > 1:
-            yield FAIL, Message(
-                "multiple-STAT-entries",
-                "The STAT table has more than a single entry for the"
-                f" '{tag_name}' axis ({entries[tag_name]}) on this"
-                " static font which will causes problems on Windows.",
+            yield (
+                FAIL,
+                Message(
+                    "multiple-STAT-entries",
+                    "The STAT table has more than a single entry for the"
+                    f" '{tag_name}' axis ({entries[tag_name]}) on this"
+                    " static font which will causes problems on Windows.",
+                ),
             )

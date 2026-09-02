@@ -57,19 +57,25 @@ def check_inconsistencies_between_fvar_STAT(ttFont):
     for ins in fvar.instances:
         instance_name = name.getDebugName(ins.subfamilyNameID)
         if instance_name is None:
-            yield FAIL, Message(
-                "missing-name-id",
-                f"The name ID {ins.subfamilyNameID} used in an"
-                f" fvar instance is missing in the name table.",
+            yield (
+                FAIL,
+                Message(
+                    "missing-name-id",
+                    f"The name ID {ins.subfamilyNameID} used in an"
+                    f" fvar instance is missing in the name table.",
+                ),
             )
             continue
 
         for axis_tag, value in ins.coordinates.items():
             if not is_covered_in_STAT(ttFont, axis_tag, value):
-                yield FAIL, Message(
-                    "missing-fvar-instance-axis-value",
-                    f"{instance_name}: '{axis_tag}' axis value '{value}'"
-                    f" missing in STAT table.",
+                yield (
+                    FAIL,
+                    Message(
+                        "missing-fvar-instance-axis-value",
+                        f"{instance_name}: '{axis_tag}' axis value '{value}'"
+                        f" missing in STAT table.",
+                    ),
                 )
 
         # TODO: Compare fvar instance name with constructed STAT table name.

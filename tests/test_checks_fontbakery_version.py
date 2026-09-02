@@ -1,16 +1,16 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 import requests
-
 from conftest import check_id
-from fontbakery.status import FAIL
+
+from fontbakery.checks.fontbakery_version import is_up_to_date
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
-from fontbakery.checks.fontbakery_version import is_up_to_date
+from fontbakery.status import FAIL
 
 
 @pytest.mark.parametrize(

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FATAL
+from fontbakery.prelude import FATAL, Message, check
 
 
 @check(
@@ -32,8 +32,11 @@ def check_metadata_date_added(family_metadata):
         ):
             # Note: perhaps we could have better/more
             #       specific validation for the day of month
-            yield FATAL, Message(
-                "malformed",
-                f"The date_added field has invalid format."
-                f" It should be YYYY-MM-DD instead of '{family_metadata.date_added}'",
+            yield (
+                FATAL,
+                Message(
+                    "malformed",
+                    f"The date_added field has invalid format."
+                    f" It should be YYYY-MM-DD instead of '{family_metadata.date_added}'",
+                ),
             )

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -91,10 +91,13 @@ def check_metadata_weightclass(font, font_metadata):
     css_weight_name = CSS_WEIGHT_NAMES.get(font_metadata.weight)
 
     if gf_weight_name != css_weight_name:
-        yield FAIL, Message(
-            "mismatch",
-            f'OS/2 table has usWeightClass={ttFont["OS/2"].usWeightClass},'
-            f' meaning "{gf_weight_name}" on the Google Fonts API.\n\n'
-            f"On METADATA.pb it should be {should_be},"
-            f" but instead got {font_metadata.weight}.\n",
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f"OS/2 table has usWeightClass={ttFont['OS/2'].usWeightClass},"
+                f' meaning "{gf_weight_name}" on the Google Fonts API.\n\n'
+                f"On METADATA.pb it should be {should_be},"
+                f" but instead got {font_metadata.weight}.\n",
+            ),
         )

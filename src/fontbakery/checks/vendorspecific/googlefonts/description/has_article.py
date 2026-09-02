@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, INFO, FAIL
+from fontbakery.prelude import FAIL, INFO, Message, check
 
 
 @check(
@@ -27,36 +27,54 @@ def check_description_has_article(font):
 
     if not font.is_noto:
         if not has_article:
-            yield INFO, Message(
-                "missing-article",
-                "This font doesn't have an ARTICLE.en_us.html file.",
+            yield (
+                INFO,
+                Message(
+                    "missing-article",
+                    "This font doesn't have an ARTICLE.en_us.html file.",
+                ),
             )
         else:
             if article_is_empty:
-                yield FAIL, Message(
-                    "empty-article",
-                    "The ARTICLE.en_us.html file is empty.",
+                yield (
+                    FAIL,
+                    Message(
+                        "empty-article",
+                        "The ARTICLE.en_us.html file is empty.",
+                    ),
                 )
             if has_description:
-                yield FAIL, Message(
-                    "description-and-article",
-                    "This font has both a DESCRIPTION.en_us.html file"
-                    " and an ARTICLE.en_us.html file. In this case the"
-                    " description must be deleted.",
+                yield (
+                    FAIL,
+                    Message(
+                        "description-and-article",
+                        "This font has both a DESCRIPTION.en_us.html file"
+                        " and an ARTICLE.en_us.html file. In this case the"
+                        " description must be deleted.",
+                    ),
                 )
     elif font.is_noto:
         if not has_article:
-            yield FAIL, Message(
-                "missing-article",
-                "This is a Noto font but it lacks an ARTICLE.en_us.html file.",
+            yield (
+                FAIL,
+                Message(
+                    "missing-article",
+                    "This is a Noto font but it lacks an ARTICLE.en_us.html file.",
+                ),
             )
         if article_is_empty:
-            yield FAIL, Message(
-                "empty-article",
-                "The ARTICLE.en_us.html file is empty.",
+            yield (
+                FAIL,
+                Message(
+                    "empty-article",
+                    "The ARTICLE.en_us.html file is empty.",
+                ),
             )
         if not has_description or description_is_empty:
-            yield FAIL, Message(
-                "missing-description",
-                "This is a Noto font but it lacks a DESCRIPTION.en_us.html file.",
+            yield (
+                FAIL,
+                Message(
+                    "missing-description",
+                    "This is a Noto font but it lacks a DESCRIPTION.en_us.html file.",
+                ),
             )

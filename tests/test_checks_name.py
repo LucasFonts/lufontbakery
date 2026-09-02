@@ -1,14 +1,15 @@
 import copy
+
 import pytest
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
 from fontbakery.codetesting import (
-    assert_PASS,
-    assert_SKIP,
-    assert_results_contain,
     GLYPHSAPP_TEST_FILE,
     TEST_FILE,
+    assert_PASS,
+    assert_results_contain,
+    assert_SKIP,
 )
 from fontbakery.constants import NameID
 from fontbakery.status import FAIL, WARN

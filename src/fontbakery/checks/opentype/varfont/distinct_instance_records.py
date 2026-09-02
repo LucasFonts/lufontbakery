@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -40,7 +40,10 @@ def check_varfont_distinct_instance_records(ttFont, has_name_table):
             if inst_name is None:
                 inst_name = f"Instance #{i}"
 
-            yield WARN, Message(
-                f"repeated-instance-record:{inst_name}",
-                f"{inst_name!r} is a repeated instance record.",
+            yield (
+                WARN,
+                Message(
+                    f"repeated-instance-record:{inst_name}",
+                    f"{inst_name!r} is a repeated instance record.",
+                ),
             )

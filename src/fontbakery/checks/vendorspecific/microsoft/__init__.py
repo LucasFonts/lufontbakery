@@ -1,4 +1,4 @@
-from fontbakery.prelude import PASS, FAIL
+from fontbakery.prelude import FAIL, PASS
 
 
 def check_repertoire(ttFont, character_repertoire, name, error_status=FAIL):
@@ -6,8 +6,11 @@ def check_repertoire(ttFont, character_repertoire, name, error_status=FAIL):
     missing = character_repertoire - charset
     if missing:
         missing_formatted = ", ".join(f"0x{v:04X}" for v in sorted(missing))
-        yield error_status, (
-            f"character repertoire not complete for {name}; missing: {missing_formatted}"
+        yield (
+            error_status,
+            (
+                f"character repertoire not complete for {name}; missing: {missing_formatted}"
+            ),
         )
     else:
         yield PASS, f"character repertoire complete for {name}"

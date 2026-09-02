@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL, WARN, PASS
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 from fontbakery.utils import filesize_formatting
 
 
@@ -20,16 +20,22 @@ def check_file_size(font):
     # pytype: disable=name-error
     size = os.stat(font.file).st_size
     if size > (FAIL_SIZE or 9 * 1024 * 1024):  # noqa:F821 pylint:disable=E0602
-        yield FAIL, Message(
-            "massive-font",
-            f"Font file is {filesize_formatting(size)}, larger than limit"
-            f" {filesize_formatting(FAIL_SIZE or 9 * 1024 * 1024)}",  # noqa:F821 pylint:disable=E0602
+        yield (
+            FAIL,
+            Message(
+                "massive-font",
+                f"Font file is {filesize_formatting(size)}, larger than limit"
+                f" {filesize_formatting(FAIL_SIZE or 9 * 1024 * 1024)}",  # noqa:F821 pylint:disable=E0602
+            ),
         )
     elif size > (WARN_SIZE or 1 * 1024 * 1024):  # noqa:F821 pylint:disable=E0602
-        yield WARN, Message(
-            "large-font",
-            f"Font file is {filesize_formatting(size)}; ideally it should be less than"
-            f" {filesize_formatting(WARN_SIZE or 1 * 1024 * 1024)}",  # noqa:F821 pylint:disable=E0602
+        yield (
+            WARN,
+            Message(
+                "large-font",
+                f"Font file is {filesize_formatting(size)}; ideally it should be less than"
+                f" {filesize_formatting(WARN_SIZE or 1 * 1024 * 1024)}",  # noqa:F821 pylint:disable=E0602
+            ),
         )
     else:
         yield PASS, "Font had a reasonable file size"

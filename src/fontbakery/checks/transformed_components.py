@@ -1,4 +1,4 @@
-from fontbakery.prelude import PASS, FAIL, Message, check
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -50,10 +50,13 @@ def check_transformed_components(ttFont, is_hinted):
                     failures += f"* {glyph_name} (component {comp_name})\n"
 
     if failures:
-        yield FAIL, Message(
-            "transformed-components",
-            "The following glyphs had components with scaling or rotation\n"
-            f"or inverted outline direction:\n\n{failures}",
+        yield (
+            FAIL,
+            Message(
+                "transformed-components",
+                "The following glyphs had components with scaling or rotation\n"
+                f"or inverted outline direction:\n\n{failures}",
+            ),
         )
     else:
         yield PASS, "No glyphs had components with scaling or rotation"

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FATAL
+from fontbakery.prelude import FATAL, Message, check
 
 
 @check(
@@ -25,8 +25,11 @@ def check_metadata_single_cjk_subset(family_metadata):
 
     if len(cjk_subset_in_font) > 1:
         cjk_subsets = ", ".join(cjk_subsets)
-        yield FATAL, Message(
-            "multiple-cjk-subsets",
-            "METADATA.pb file contains more than one CJK subset."
-            f" Please choose only one from {cjk_subsets}.",
+        yield (
+            FATAL,
+            Message(
+                "multiple-cjk-subsets",
+                "METADATA.pb file contains more than one CJK subset."
+                f" Please choose only one from {cjk_subsets}.",
+            ),
         )

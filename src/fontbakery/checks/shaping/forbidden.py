@@ -1,10 +1,10 @@
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery.checks.shaping.utils import (
     create_report_item,
     get_from_test_with_default,
     get_shaping_parameters,
     run_a_set_of_shaping_tests,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(

@@ -88,8 +88,9 @@ def get_FamilyProto_Message(path):
 
 def get_DesignerInfoProto_Message(text_data):
     try:
-        from fontbakery.designers_pb2 import DesignerInfoProto
         from google.protobuf import text_format
+
+        from fontbakery.designers_pb2 import DesignerInfoProto
     except ImportError:
         exit_with_install_instructions("googlefonts")
 

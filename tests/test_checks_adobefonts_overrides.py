@@ -1,15 +1,14 @@
 from unittest.mock import patch
 
-from fontTools.ttLib import TTFont
 import requests
-
 from conftest import check_id
-from fontbakery.status import WARN, SKIP
+from fontTools.ttLib import TTFont
+
 from fontbakery.codetesting import (
-    assert_PASS,
-    assert_results_contain,
     TEST_FILE,
     MockContext,
+    assert_PASS,
+    assert_results_contain,
 )
 from fontbakery.constants import (
     NameID,
@@ -18,6 +17,7 @@ from fontbakery.constants import (
     WindowsLanguageID,
 )
 from fontbakery.profiles import adobefonts as adobefonts_profile
+from fontbakery.status import SKIP, WARN
 
 
 @check_id("whitespace_glyphs", profile=adobefonts_profile)

@@ -12,12 +12,12 @@ from fontbakery.checks.vendorspecific.googlefonts.conditions import (
 )
 from fontbakery.codetesting import (
     TEST_FILE,
+    MockContext,
     MockFont,
     assert_PASS,
     assert_results_contain,
     assert_SKIP,
     portable_path,
-    MockContext,
 )
 from fontbakery.constants import (
     OFL_BODY_TEXT,
@@ -1568,8 +1568,7 @@ def test_check_metadata_valid_filename_values(check):
             check(MockFont(file=font, family_metadata=meta)),
             FAIL,
             "bad-field",
-            f'with bad filename metadata ("WrongFileName")'
-            f' for fontfile "{font}"...',
+            f'with bad filename metadata ("WrongFileName") for fontfile "{font}"...',
         )
 
 
@@ -1795,7 +1794,7 @@ def test_check_metadata_nameid_family_and_full_names(check):
         if name.nameID == NameID.FONT_FAMILY_NAME:
             backup = name.string
             ttFont["name"].names[i].string = (
-                "I'm listening to" " The Players with Hiromasa Suzuki - Galaxy (1979)"
+                "I'm listening to The Players with Hiromasa Suzuki - Galaxy (1979)"
             ).encode(name.getEncoding())
             assert_results_contain(
                 check(ttFont),
@@ -3356,7 +3355,7 @@ def test_check_metadata_designer_profiles(check, requests_mock):
     requests_mock.get(
         "https://raw.githubusercontent.com/google/fonts/master/"
         "catalog/designers/sorkintype/sorkin_type.png",
-        content=b"\x89PNG\x0D\x0A\x1A\x0A",
+        content=b"\x89PNG\x0d\x0a\x1a\x0a",
     )
 
     # Delve Withrington is still not listed on the designers catalog.

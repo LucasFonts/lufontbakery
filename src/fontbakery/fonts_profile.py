@@ -1,6 +1,7 @@
 """
 FontBakery CheckRunner is the driver of a fontbakery suite of checks.
 """
+
 import glob
 import importlib
 import inspect
@@ -13,10 +14,9 @@ from fontTools.ttLib.sfnt import readTTCHeader
 
 import fontbakery.checks
 from fontbakery.callable import FontBakeryCheck
-from fontbakery.testable import CheckRunContext, FILE_TYPES, TTCFont
 from fontbakery.errors import ValueValidationError
 from fontbakery.profile import Profile, Section
-
+from fontbakery.testable import FILE_TYPES, CheckRunContext, TTCFont
 
 ITERARGS = {val.singular: val.plural for val in FILE_TYPES}
 
@@ -46,8 +46,7 @@ def setup_context(files):
                     accepted = True
             if not accepted:
                 logging.info(
-                    "Skipping '{}' as it does not"
-                    " seem to be accepted by this profile.",
+                    "Skipping '{}' as it does not seem to be accepted by this profile.",
                     file,
                 )
     if not context.testables:

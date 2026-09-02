@@ -1,6 +1,6 @@
-from fontbakery.testable import Ufo
-from fontbakery.prelude import check, PASS, WARN, Message
 from fontbakery import utils
+from fontbakery.prelude import PASS, WARN, Message, check
+from fontbakery.testable import Ufo
 
 
 @check(

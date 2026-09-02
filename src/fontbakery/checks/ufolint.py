@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, ERROR, FAIL, PASS, Message
+from fontbakery.prelude import ERROR, FAIL, PASS, Message, check
 
 
 @check(
@@ -23,10 +23,13 @@ def check_ufolint(ufo):
     try:
         subprocess.check_output(ufolint_cmd, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
-        yield FAIL, Message(
-            "ufolint-fail",
-            ("ufolint failed the UFO source. Output follows :" "\n\n{}\n").format(
-                e.output.decode()
+        yield (
+            FAIL,
+            Message(
+                "ufolint-fail",
+                ("ufolint failed the UFO source. Output follows :\n\n{}\n").format(
+                    e.output.decode()
+                ),
             ),
         )
     except OSError:

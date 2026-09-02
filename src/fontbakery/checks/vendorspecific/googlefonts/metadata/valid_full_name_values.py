@@ -1,5 +1,5 @@
 from fontbakery.constants import RIBBI_STYLE_NAMES
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 
 
 @check(
@@ -24,10 +24,13 @@ def check_metadata_valid_full_name_values(font):
 
     if not any((name in font.font_metadata.full_name) for name in familynames):
         familynames = ", ".join(familynames)
-        yield FAIL, Message(
-            "mismatch",
-            f"METADATA.pb font.full_name field"
-            f' ("{font.font_metadata.full_name}")'
-            f" does not match correct font name format"
-            f' ("{familynames}").',
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f"METADATA.pb font.full_name field"
+                f' ("{font.font_metadata.full_name}")'
+                f" does not match correct font name format"
+                f' ("{familynames}").',
+            ),
         )

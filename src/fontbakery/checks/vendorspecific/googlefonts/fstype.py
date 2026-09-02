@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -50,12 +50,15 @@ def check_fstype(ttFont):
                 "* There are reserved bits set, which indicates an invalid setting."
             )
 
-        yield FAIL, Message(
-            "drm",
-            f"In this font fsType is set to {value} meaning that:\n"
-            f"{restrictions}\n"
-            f"\n"
-            f"No such DRM restrictions can be enabled on the"
-            f" Google Fonts collection, so the fsType field"
-            f" must be set to zero (Installable Embedding) instead.",
+        yield (
+            FAIL,
+            Message(
+                "drm",
+                f"In this font fsType is set to {value} meaning that:\n"
+                f"{restrictions}\n"
+                f"\n"
+                f"No such DRM restrictions can be enabled on the"
+                f" Google Fonts collection, so the fsType field"
+                f" must be set to zero (Installable Embedding) instead.",
+            ),
         )

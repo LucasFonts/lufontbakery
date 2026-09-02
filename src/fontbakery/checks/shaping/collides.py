@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from fontbakery.prelude import check, FAIL, Message
-from fontbakery.utils import exit_with_install_instructions
 from fontbakery.checks.shaping.utils import (
     create_report_item,
     fix_svg,
@@ -9,6 +7,8 @@ from fontbakery.checks.shaping.utils import (
     get_shaping_parameters,
     run_a_set_of_shaping_tests,
 )
+from fontbakery.prelude import FAIL, Message, check
+from fontbakery.utils import exit_with_install_instructions
 
 
 @check(
@@ -31,8 +31,9 @@ def check_shaping_collides(config, ttFont):
         config,
         ttFont,
         run_collides_glyph_test,
-        lambda test, configuration: "collidoscope" in test
-        or "collidoscope" in configuration,
+        lambda test, configuration: (
+            "collidoscope" in test or "collidoscope" in configuration
+        ),
         collides_glyph_test_results,
         setup_glyph_collides,
     )
@@ -107,7 +108,7 @@ def collides_glyph_test_results(vharfbuzz, shaping_file, failed_shaping_tests):
         seen_bumps[tuple(bumps)] = True
         report_item = create_report_item(
             vharfbuzz,
-            f"{',' .join(bumps)} collision found in"
+            f"{','.join(bumps)} collision found in"
             f" e.g. <span class='tf'>{shaping_text}</span> <div>{draw}</div>",
             buf1=buf,
         )

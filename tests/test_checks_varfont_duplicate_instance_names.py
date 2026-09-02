@@ -5,9 +5,9 @@ from conftest import check_id
 from fontTools.ttLib import TTFont
 
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
 from fontbakery.constants import (
     PlatformID,

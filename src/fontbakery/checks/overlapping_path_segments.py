@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, WARN
+from fontbakery.prelude import PASS, WARN, Message, check
 from fontbakery.utils import bullet_list
 
 
@@ -30,10 +30,13 @@ def check_overlapping_path_segments(ttFont, outlines_dict, config):
                     )
                 seen.add(normal)
     if failed:
-        yield WARN, Message(
-            "overlapping-path-segments",
-            f"The following glyphs have overlapping path segments:\n\n"
-            f"{bullet_list(config, failed, bullet='*')}",
+        yield (
+            WARN,
+            Message(
+                "overlapping-path-segments",
+                f"The following glyphs have overlapping path segments:\n\n"
+                f"{bullet_list(config, failed, bullet='*')}",
+            ),
         )
     else:
         yield PASS, "No overlapping path segments found."

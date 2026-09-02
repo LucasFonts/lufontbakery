@@ -1,4 +1,5 @@
 import sys
+
 import fontbakery.cli
 
 if __name__ == "__main__":

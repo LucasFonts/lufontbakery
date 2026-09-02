@@ -1,5 +1,5 @@
 from fontbakery.constants import NameID
-from fontbakery.prelude import check, Message, PASS, FAIL, WARN, SKIP
+from fontbakery.prelude import FAIL, PASS, SKIP, WARN, Message, check
 
 
 @check(
@@ -55,12 +55,15 @@ def check_name_license_url(ttFont, familyname):
             string = nameRecord.string.decode(nameRecord.getEncoding())
             if nameRecord.nameID == NameID.LICENSE_DESCRIPTION:
                 if "http://" in string:
-                    yield WARN, Message(
-                        "http-in-description",
-                        f"Please consider using HTTPS URLs at"
-                        f" name table entry [plat={nameRecord.platformID},"
-                        f" enc={nameRecord.platEncID},"
-                        f" name={nameRecord.nameID}]",
+                    yield (
+                        WARN,
+                        Message(
+                            "http-in-description",
+                            f"Please consider using HTTPS URLs at"
+                            f" name table entry [plat={nameRecord.platformID},"
+                            f" enc={nameRecord.platEncID},"
+                            f" name={nameRecord.nameID}]",
+                        ),
                     )
                     string = "https://".join(string.split("http://"))
                     http_warn = True
@@ -70,20 +73,26 @@ def check_name_license_url(ttFont, familyname):
                     break
 
     if detected_license == "UFL.txt" and familyname not in LEGACY_UFL_FAMILIES:
-        yield FAIL, Message(
-            "ufl",
-            "The Ubuntu Font License is only acceptable on"
-            " the Google Fonts collection for legacy font"
-            " families that already adopted such license."
-            " New Families should use eigther Apache or"
-            " Open Font License.",
+        yield (
+            FAIL,
+            Message(
+                "ufl",
+                "The Ubuntu Font License is only acceptable on"
+                " the Google Fonts collection for legacy font"
+                " families that already adopted such license."
+                " New Families should use eigther Apache or"
+                " Open Font License.",
+            ),
         )
     else:
         found_good_entry = False
         if not detected_license:
-            yield SKIP, (
-                "Could not infer the font license."
-                " Please ensure NameID 13 (LICENSE DESCRIPTION) is properly set."
+            yield (
+                SKIP,
+                (
+                    "Could not infer the font license."
+                    " Please ensure NameID 13 (LICENSE DESCRIPTION) is properly set."
+                ),
             )
             return
         else:
@@ -93,68 +102,86 @@ def check_name_license_url(ttFont, familyname):
                 if nameRecord.nameID == NameID.LICENSE_INFO_URL:
                     string = nameRecord.string.decode(nameRecord.getEncoding())
                     if "http://" in string:
-                        yield WARN, Message(
-                            "http-in-license-info",
-                            f"Please consider using HTTPS URLs at"
-                            f" name table entry [plat={nameRecord.platformID},"
-                            f" enc={nameRecord.platEncID},"
-                            f" name={nameRecord.nameID}]",
+                        yield (
+                            WARN,
+                            Message(
+                                "http-in-license-info",
+                                f"Please consider using HTTPS URLs at"
+                                f" name table entry [plat={nameRecord.platformID},"
+                                f" enc={nameRecord.platEncID},"
+                                f" name={nameRecord.nameID}]",
+                            ),
                         )
                         string = "https://".join(string.split("http://"))
                     if string == expected:
                         found_good_entry = True
                     elif "scripts.sil.org/OFL" in string:
                         found_good_entry = True
-                        yield WARN, Message(
-                            "deprecated-ofl-url",
-                            'OFL url is no longer "https://scripts.sil.org/OFL". '
-                            "Use 'https://openfontlicense.org' instead.",
+                        yield (
+                            WARN,
+                            Message(
+                                "deprecated-ofl-url",
+                                'OFL url is no longer "https://scripts.sil.org/OFL". '
+                                "Use 'https://openfontlicense.org' instead.",
+                            ),
                         )
                     else:
                         passed = False
-                        yield FAIL, Message(
-                            "licensing-inconsistency",
-                            f"Licensing inconsistency in name table entries!"
-                            f" NameID={NameID.LICENSE_DESCRIPTION}"
-                            f" (LICENSE DESCRIPTION) indicates"
-                            f" {LICENSE_NAME[detected_license]} licensing,"
-                            f" but NameID={NameID.LICENSE_INFO_URL}"
-                            f" (LICENSE URL) has '{string}'."
-                            f" Expected: '{expected}'",
+                        yield (
+                            FAIL,
+                            Message(
+                                "licensing-inconsistency",
+                                f"Licensing inconsistency in name table entries!"
+                                f" NameID={NameID.LICENSE_DESCRIPTION}"
+                                f" (LICENSE DESCRIPTION) indicates"
+                                f" {LICENSE_NAME[detected_license]} licensing,"
+                                f" but NameID={NameID.LICENSE_INFO_URL}"
+                                f" (LICENSE URL) has '{string}'."
+                                f" Expected: '{expected}'",
+                            ),
                         )
         if http_warn:
-            yield WARN, Message(
-                "http",
-                "For now we're still accepting http URLs,"
-                " but you should consider using https instead.\n",
+            yield (
+                WARN,
+                Message(
+                    "http",
+                    "For now we're still accepting http URLs,"
+                    " but you should consider using https instead.\n",
+                ),
             )
 
         if not found_good_entry:
-            yield FAIL, Message(
-                "no-license-found",
-                f"A known license URL must be provided in"
-                f" the NameID {NameID.LICENSE_INFO_URL}"
-                f" (LICENSE INFO URL) entry."
-                f" Currently accepted licenses are"
-                f" Apache: '{LICENSE_URL['LICENSE.txt']}'"
-                f" or Open Font License: '{LICENSE_URL['OFL.txt']}'"
-                f"\n"
-                f"For a small set of legacy families the Ubuntu"
-                f" Font License '{LICENSE_URL['UFL.txt']}' may be"
-                f" acceptable as well."
-                f"\n"
-                f"When in doubt, please choose OFL for"
-                f" new font projects.",
+            yield (
+                FAIL,
+                Message(
+                    "no-license-found",
+                    f"A known license URL must be provided in"
+                    f" the NameID {NameID.LICENSE_INFO_URL}"
+                    f" (LICENSE INFO URL) entry."
+                    f" Currently accepted licenses are"
+                    f" Apache: '{LICENSE_URL['LICENSE.txt']}'"
+                    f" or Open Font License: '{LICENSE_URL['OFL.txt']}'"
+                    f"\n"
+                    f"For a small set of legacy families the Ubuntu"
+                    f" Font License '{LICENSE_URL['UFL.txt']}' may be"
+                    f" acceptable as well."
+                    f"\n"
+                    f"When in doubt, please choose OFL for"
+                    f" new font projects.",
+                ),
             )
         else:
             if passed:
                 yield PASS, "Font has a valid license URL in NAME table."
             else:
-                yield FAIL, Message(
-                    "bad-entries",
-                    f"Even though a valid license URL was seen in the"
-                    f" name table, there were also bad entries."
-                    f" Please review NameIDs {NameID.LICENSE_DESCRIPTION}"
-                    f" (LICENSE DESCRIPTION) and {NameID.LICENSE_INFO_URL}"
-                    f" (LICENSE INFO URL).",
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-entries",
+                        f"Even though a valid license URL was seen in the"
+                        f" name table, there were also bad entries."
+                        f" Please review NameIDs {NameID.LICENSE_DESCRIPTION}"
+                        f" (LICENSE DESCRIPTION) and {NameID.LICENSE_INFO_URL}"
+                        f" (LICENSE INFO URL).",
+                    ),
                 )

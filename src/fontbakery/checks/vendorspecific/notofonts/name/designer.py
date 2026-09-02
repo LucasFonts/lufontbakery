@@ -1,6 +1,5 @@
-from fontbakery.prelude import check, WARN, FAIL, Message
 from fontbakery.constants import NameID
-
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 NOTO_DESIGNERS = [
     "Nadine Chahine - Monotype Design Team",
@@ -61,8 +60,11 @@ def check_designer(ttFont):
 
     for designer in designers:
         if designer not in NOTO_DESIGNERS:
-            yield WARN, Message(
-                "unknown-designer",
-                f"The font's designer name '{designer}' was "
-                f"not a known Noto font designer.",
+            yield (
+                WARN,
+                Message(
+                    "unknown-designer",
+                    f"The font's designer name '{designer}' was "
+                    f"not a known Noto font designer.",
+                ),
             )

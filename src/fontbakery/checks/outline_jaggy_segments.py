@@ -1,8 +1,8 @@
 import math
 
-from fontbakery.prelude import check, Message, PASS, WARN
-from fontbakery.utils import bullet_list
 from fontbakery.checks.outline_settings import JAG_ANGLE
+from fontbakery.prelude import PASS, WARN, Message, check
+from fontbakery.utils import bullet_list
 
 
 @check(
@@ -47,9 +47,12 @@ def check_outline_jaggy_segments(ttFont, outlines_dict, config):
 
     if warnings:
         formatted_list = bullet_list(config, sorted(warnings), bullet="*")
-        yield WARN, Message(
-            "found-jaggy-segments",
-            f"The following glyphs have jaggy segments:\n\n{formatted_list}",
+        yield (
+            WARN,
+            Message(
+                "found-jaggy-segments",
+                f"The following glyphs have jaggy segments:\n\n{formatted_list}",
+            ),
         )
     else:
         yield PASS, "No jaggy segments found."

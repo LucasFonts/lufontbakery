@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -42,19 +42,25 @@ def check_description_broken_links(description_and_article_html, font):
                 if code not in [requests.codes.ok, requests.codes.too_many_requests]:
                     broken_links.append(f"{link} (status code: {code})")
             except requests.exceptions.Timeout:
-                yield WARN, Message(
-                    "timeout",
-                    f"Timedout while attempting to access: '{link}'."
-                    f" Please verify if that's a broken link.",
+                yield (
+                    WARN,
+                    Message(
+                        "timeout",
+                        f"Timedout while attempting to access: '{link}'."
+                        f" Please verify if that's a broken link.",
+                    ),
                 )
             except requests.exceptions.RequestException:
                 broken_links.append(link)
 
         if broken_links:
             broken_links_list = "\n\t".join(broken_links)
-            yield FAIL, Message(
-                "broken-links",
-                f"The following links are broken"
-                f" in the {source} file:\n\t"
-                f"{broken_links_list}",
+            yield (
+                FAIL,
+                Message(
+                    "broken-links",
+                    f"The following links are broken"
+                    f" in the {source} file:\n\t"
+                    f"{broken_links_list}",
+                ),
             )

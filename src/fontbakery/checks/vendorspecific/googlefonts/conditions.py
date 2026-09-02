@@ -1,19 +1,19 @@
 import os
 import re
-import yaml
 
+import yaml
 from fontTools.ttLib.ttFont import TTFont
 
 from fontbakery.callable import condition
-from fontbakery.testable import Font, CheckRunContext
+from fontbakery.checks.vendorspecific.googlefonts.utils import parse_html
 from fontbakery.constants import (
     NameID,
     PlatformID,
     UnicodeEncodingID,
     WindowsLanguageID,
 )
+from fontbakery.testable import CheckRunContext, Font
 from fontbakery.utils import exit_with_install_instructions
-from fontbakery.checks.vendorspecific.googlefonts.utils import parse_html
 
 # @condition
 # def glyphsFile(glyphs_file):
@@ -326,9 +326,11 @@ def remote_styles(font):
     """Get a dictionary of TTFont objects of all font files of
     a given family as currently hosted at Google Fonts.
     """
-    from fontbakery.utils import download_file
     import json
+
     import requests
+
+    from fontbakery.utils import download_file
 
     if not font.context.network or not font.listed_on_gfonts_api:
         return None
@@ -502,8 +504,9 @@ def is_noto(font):
 
 # Note that this is not a condition!
 def expected_font_names(ttFont, ttFonts):
-    from axisregistry import build_name_table, build_fvar_instances, build_stat
     from copy import deepcopy
+
+    from axisregistry import build_fvar_instances, build_name_table, build_stat
 
     siblings = [f for f in ttFonts if f != ttFont]
     font_cp = TTFont()

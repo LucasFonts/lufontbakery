@@ -18,8 +18,9 @@ def check_unique_glyphnames(ttFont):
         and ttFont.get("post")
         and ttFont["post"].formatType == 3
     ):
-        yield SKIP, (
-            "TrueType fonts with a format 3 post table contain no glyph names."
+        yield (
+            SKIP,
+            ("TrueType fonts with a format 3 post table contain no glyph names."),
         )
     elif (
         ttFont.sfntVersion == "OTTO"
@@ -27,8 +28,9 @@ def check_unique_glyphnames(ttFont):
         and ttFont.get("post")
         and ttFont["post"].formatType == 3
     ):
-        yield SKIP, (
-            "OpenType-CFF2 fonts with a format 3 post table contain no glyph names."
+        yield (
+            SKIP,
+            ("OpenType-CFF2 fonts with a format 3 post table contain no glyph names."),
         )
     else:
         glyph_names = set()
@@ -44,7 +46,10 @@ def check_unique_glyphnames(ttFont):
         if not dup_glyph_names:
             yield PASS, "Glyph names are all unique."
         else:
-            yield FAIL, Message(
-                "duplicated-glyph-names",
-                f"These glyph names occur more than once: {sorted(dup_glyph_names)}",
+            yield (
+                FAIL,
+                Message(
+                    "duplicated-glyph-names",
+                    f"These glyph names occur more than once: {sorted(dup_glyph_names)}",
+                ),
             )

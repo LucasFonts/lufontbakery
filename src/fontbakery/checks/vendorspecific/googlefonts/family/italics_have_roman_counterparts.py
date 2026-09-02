@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, WARN, FAIL
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -31,8 +31,9 @@ def check_family_italics_have_roman_counterparts(fonts, config):
             "-" not in os.path.basename(italic)
             or len(os.path.basename(italic).split("-")[-1].split(".")) != 2
         ):
-            yield WARN, Message(
-                "bad-filename", f"Filename seems to be incorrect: '{italic}'"
+            yield (
+                WARN,
+                Message("bad-filename", f"Filename seems to be incorrect: '{italic}'"),
             )
 
         style_from_filename = os.path.basename(italic).split("-")[-1].split(".")[0]
@@ -60,6 +61,9 @@ def check_family_italics_have_roman_counterparts(fonts, config):
         from fontbakery.utils import pretty_print_list
 
         missing_roman = pretty_print_list(config, missing_roman)
-        yield FAIL, Message(
-            "missing-roman", f"Italics missing a Roman counterpart: {missing_roman}"
+        yield (
+            FAIL,
+            Message(
+                "missing-roman", f"Italics missing a Roman counterpart: {missing_roman}"
+            ),
         )

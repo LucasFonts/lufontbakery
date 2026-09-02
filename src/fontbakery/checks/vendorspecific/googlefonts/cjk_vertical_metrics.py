@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 from fontbakery.utils import typo_metrics_enabled
 
 
@@ -53,28 +53,36 @@ def check_cjk_vertical_metrics(ttFont):
 
     # Check fsSelection bit 7 is not enabled
     if typo_metrics_enabled(ttFont):
-        yield FAIL, Message(
-            "bad-fselection-bit7", "OS/2 fsSelection bit 7 must be disabled"
+        yield (
+            FAIL,
+            Message("bad-fselection-bit7", "OS/2 fsSelection bit 7 must be disabled"),
         )
 
     # Check typo metrics and hhea lineGap match our expected values
     for k in expected_metrics:
         if font_metrics[k] != expected_metrics[k]:
-            yield FAIL, Message(
-                f"bad-{k}",
-                f'{k} is "{font_metrics[k]}" it should be {expected_metrics[k]}',
+            yield (
+                FAIL,
+                Message(
+                    f"bad-{k}",
+                    f'{k} is "{font_metrics[k]}" it should be {expected_metrics[k]}',
+                ),
             )
 
     # Check hhea and win values match
     if font_metrics["hhea.ascent"] != font_metrics["OS/2.usWinAscent"]:
-        yield FAIL, Message(
-            "ascent-mismatch", "hhea.ascent must match OS/2.usWinAscent"
+        yield (
+            FAIL,
+            Message("ascent-mismatch", "hhea.ascent must match OS/2.usWinAscent"),
         )
 
     if abs(font_metrics["hhea.descent"]) != font_metrics["OS/2.usWinDescent"]:
-        yield FAIL, Message(
-            "descent-mismatch",
-            "hhea.descent must match absolute value of OS/2.usWinDescent",
+        yield (
+            FAIL,
+            Message(
+                "descent-mismatch",
+                "hhea.descent must match absolute value of OS/2.usWinDescent",
+            ),
         )
 
     # Check the sum of the hhea metrics is between 1.1-1.5x of the font's upm
@@ -84,8 +92,11 @@ def check_cjk_vertical_metrics(ttFont):
         + font_metrics["hhea.lineGap"]
     ) / font_upm
     if not 1.1 < hhea_sum <= 1.5:
-        yield WARN, Message(
-            "bad-hhea-range",
-            f"We recommend the absolute sum of the hhea metrics should be"
-            f" between 1.1-1.4x of the font's upm. This font has {hhea_sum}x",
+        yield (
+            WARN,
+            Message(
+                "bad-hhea-range",
+                f"We recommend the absolute sum of the hhea metrics should be"
+                f" between 1.1-1.4x of the font's upm. This font has {hhea_sum}x",
+            ),
         )

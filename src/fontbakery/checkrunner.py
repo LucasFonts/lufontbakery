@@ -12,28 +12,28 @@ Conditions) and MAYBE in *customized* reporters e.g. subclasses.
 
 """
 
-from collections import OrderedDict
 import concurrent.futures
 import inspect
 import threading
-from typing import Union, Tuple
+from collections import OrderedDict
+from typing import Tuple, Union
 
 from fontbakery.configuration import Configuration
+from fontbakery.legacy_checkids import renaming_map as old_to_new
+from fontbakery.message import Message
 from fontbakery.result import (
     CheckResult,
-    Subresult,
     Identity,
+    Subresult,
 )
-from fontbakery.message import Message
-from fontbakery.utils import is_negated, format_error
 from fontbakery.status import (
-    Status,
     ERROR,
     FAIL,
     PASS,
     SKIP,
+    Status,
 )
-from fontbakery.legacy_checkids import renaming_map as old_to_new
+from fontbakery.utils import format_error, is_negated
 
 
 class CheckRunner:

@@ -1,7 +1,7 @@
 import os
 
-from fontbakery.reporters.html import HTMLReporter
 from fontbakery import __version__ as version
+from fontbakery.reporters.html import HTMLReporter
 
 LOGLEVELS = ["ERROR", "FATAL", "FAIL", "WARN", "SKIP", "INFO", "PASS", "DEBUG"]
 

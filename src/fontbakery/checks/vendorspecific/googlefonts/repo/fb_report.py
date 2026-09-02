@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -22,10 +22,13 @@ def check_repo_fb_report(family_directory):
         ]
     )
     if has_report_files:
-        yield WARN, Message(
-            "fb-report",
-            "There's no need to keep a copy of FontBakery reports in the"
-            " repository, since they are ephemeral; FontBakery has"
-            " a 'github markdown' output mode to make it easy to file"
-            " reports as issues.",
+        yield (
+            WARN,
+            Message(
+                "fb-report",
+                "There's no need to keep a copy of FontBakery reports in the"
+                " repository, since they are ephemeral; FontBakery has"
+                " a 'github markdown' output mode to make it easy to file"
+                " reports as issues.",
+            ),
         )

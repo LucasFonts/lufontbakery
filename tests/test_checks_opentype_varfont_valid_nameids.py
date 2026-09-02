@@ -1,11 +1,11 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
-from fontbakery.status import FAIL
 from fontbakery.codetesting import (
     assert_PASS,
     assert_results_contain,
 )
+from fontbakery.status import FAIL
 
 
 @check_id("opentype/varfont/valid_nameids")

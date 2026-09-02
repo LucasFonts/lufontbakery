@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -48,11 +48,14 @@ def check_unwanted_aat_tables(ttFont):
 
     if len(unwanted_tables_found) > 0:
         unwanted_list = "".join(f"* {tag}\n" for tag in unwanted_tables_found)
-        yield FAIL, Message(
-            "has-unwanted-tables",
-            f"Unwanted AAT tables were found"
-            f" in the font and should be removed, either by"
-            f" fonttools/ttx or by editing them using the tool"
-            f" they're built with:\n\n"
-            f" {unwanted_list}",
+        yield (
+            FAIL,
+            Message(
+                "has-unwanted-tables",
+                f"Unwanted AAT tables were found"
+                f" in the font and should be removed, either by"
+                f" fonttools/ttx or by editing them using the tool"
+                f" they're built with:\n\n"
+                f" {unwanted_list}",
+            ),
         )

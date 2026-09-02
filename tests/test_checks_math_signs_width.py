@@ -1,10 +1,11 @@
 from conftest import check_id
-from fontbakery.status import WARN
+
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
+from fontbakery.status import WARN
 
 
 @check_id("math_signs_width")

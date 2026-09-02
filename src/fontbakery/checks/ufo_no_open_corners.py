@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery import utils
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -13,8 +13,8 @@ from fontbakery import utils
 )
 def check_ufo_no_open_corners(config, ufo):
     """Check the sources have no corners"""
-    from glyphsLib.filters.eraseOpenCorners import EraseOpenCornersPen
     from fontTools.pens.basePen import NullPen
+    from glyphsLib.filters.eraseOpenCorners import EraseOpenCornersPen
 
     font = ufo.ufo_font
     for layer in font.layers:

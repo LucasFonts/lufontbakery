@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, WARN
 from fontbakery.constants import NameID
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -23,14 +23,17 @@ def check_name_description_max_length(ttFont):
             name.nameID == NameID.DESCRIPTION
             and len(name.string.decode(name.getEncoding())) > 200
         ):
-            yield WARN, Message(
-                "too-long",
-                f"A few name table entries with ID={NameID.DESCRIPTION}"
-                f" (NameID.DESCRIPTION) are longer than 200 characters."
-                f" Please check whether those entries are copyright"
-                f" notices mistakenly stored in the description"
-                f" string entries by a bug in an old FontLab version."
-                f" If that's the case, then such copyright notices"
-                f" must be removed from these entries.",
+            yield (
+                WARN,
+                Message(
+                    "too-long",
+                    f"A few name table entries with ID={NameID.DESCRIPTION}"
+                    f" (NameID.DESCRIPTION) are longer than 200 characters."
+                    f" Please check whether those entries are copyright"
+                    f" notices mistakenly stored in the description"
+                    f" string entries by a bug in an old FontLab version."
+                    f" If that's the case, then such copyright notices"
+                    f" must be removed from these entries.",
+                ),
             )
             return

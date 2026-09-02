@@ -1,8 +1,7 @@
-from glyphsets import languages_per_glyphset, get_glyphsets_fulfilled
-from shaperglot import Checker
-from shaperglot import Languages
+from glyphsets import get_glyphsets_fulfilled, languages_per_glyphset
+from shaperglot import Checker, Languages
 
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 from fontbakery.utils import markdown_table
 
 
@@ -61,22 +60,31 @@ def check_glyphsets_shape_languages(ttFont, config):
                     fails[f.message].append(language_string)
 
     if fails:
-        yield FAIL, Message(
-            "failed-language-shaping",
-            f"{glyphset} glyphset:\n{table_of_results('FAIL', fails)}\n",
+        yield (
+            FAIL,
+            Message(
+                "failed-language-shaping",
+                f"{glyphset} glyphset:\n{table_of_results('FAIL', fails)}\n",
+            ),
         )
 
     if warns:
-        yield WARN, Message(
-            "warning-language-shaping",
-            f"{glyphset} glyphset:\n{table_of_results('WARN', warns)}\n",
+        yield (
+            WARN,
+            Message(
+                "warning-language-shaping",
+                f"{glyphset} glyphset:\n{table_of_results('WARN', warns)}\n",
+            ),
         )
 
     if not any_glyphset_supported:
-        yield FAIL, Message(
-            "no-glyphset-supported",
-            (
-                "No GF glyphset was found to be supported >80%,"
-                " so language shaping support couldn't get checked."
+        yield (
+            FAIL,
+            Message(
+                "no-glyphset-supported",
+                (
+                    "No GF glyphset was found to be supported >80%,"
+                    " so language shaping support couldn't get checked."
+                ),
             ),
         )

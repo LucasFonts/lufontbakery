@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -22,10 +22,13 @@ from fontbakery.prelude import check, Message, WARN
 def check_metadata_reserved_font_name(font_metadata):
     """Copyright notice on METADATA.pb should not contain 'Reserved Font Name'."""
     if "Reserved Font Name" in font_metadata.copyright:
-        yield WARN, Message(
-            "rfn",
-            f"METADATA.pb:"
-            f' copyright field ("{font_metadata.copyright}")'
-            f' contains "Reserved Font Name".'
-            f" This is an error except in a few specific rare cases.",
+        yield (
+            WARN,
+            Message(
+                "rfn",
+                f"METADATA.pb:"
+                f' copyright field ("{font_metadata.copyright}")'
+                f' contains "Reserved Font Name".'
+                f" This is an error except in a few specific rare cases.",
+            ),
         )

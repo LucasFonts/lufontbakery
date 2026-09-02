@@ -1,14 +1,14 @@
 import io
 
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
-from fontbakery.status import FAIL
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
+from fontbakery.status import FAIL
 
 
 @check_id("opentype/loca/maxp_num_glyphs")

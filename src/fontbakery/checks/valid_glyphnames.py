@@ -37,8 +37,9 @@ def check_valid_glyphnames(ttFont, config):
         and ttFont.get("post")
         and ttFont["post"].formatType == 3
     ):
-        yield SKIP, (
-            "TrueType fonts with a format 3 post table contain no glyph names."
+        yield (
+            SKIP,
+            ("TrueType fonts with a format 3 post table contain no glyph names."),
         )
     elif (
         ttFont.sfntVersion == "OTTO"
@@ -46,8 +47,9 @@ def check_valid_glyphnames(ttFont, config):
         and ttFont.get("post")
         and ttFont["post"].formatType == 3
     ):
-        yield SKIP, (
-            "OpenType-CFF2 fonts with a format 3 post table contain no glyph names."
+        yield (
+            SKIP,
+            ("OpenType-CFF2 fonts with a format 3 post table contain no glyph names."),
         )
     else:
         bad_names = set()
@@ -66,22 +68,28 @@ def check_valid_glyphnames(ttFont, config):
             if not warn_names:
                 yield PASS, "Glyph names are all valid."
             else:
-                yield WARN, Message(
-                    "legacy-long-names",
-                    "The following glyph names may be too long for some legacy systems"
-                    " which may expect a maximum 31-characters length limit:\n"
-                    f"{pretty_print_list(config, sorted(warn_names))}",
+                yield (
+                    WARN,
+                    Message(
+                        "legacy-long-names",
+                        "The following glyph names may be too long for some legacy systems"
+                        " which may expect a maximum 31-characters length limit:\n"
+                        f"{pretty_print_list(config, sorted(warn_names))}",
+                    ),
                 )
         else:
             bad_names_list = pretty_print_list(config, sorted(bad_names))
-            yield FAIL, Message(
-                "found-invalid-names",
-                "The following glyph names do not comply"
-                f" with naming conventions: {bad_names_list}\n\n"
-                " A glyph name must be entirely comprised of characters"
-                " from the following set: A-Z a-z 0-9 .(period) _(underscore)."
-                " A glyph name must not start with a digit or period."
-                ' There are a few exceptions such as the special glyph ".notdef".'
-                ' The glyph names "twocents", "a1", and "_" are all valid,'
-                ' while "2cents" and ".twocents" are not.',
+            yield (
+                FAIL,
+                Message(
+                    "found-invalid-names",
+                    "The following glyph names do not comply"
+                    f" with naming conventions: {bad_names_list}\n\n"
+                    " A glyph name must be entirely comprised of characters"
+                    " from the following set: A-Z a-z 0-9 .(period) _(underscore)."
+                    " A glyph name must not start with a digit or period."
+                    ' There are a few exceptions such as the special glyph ".notdef".'
+                    ' The glyph names "twocents", "a1", and "_" are all valid,'
+                    ' while "2cents" and ".twocents" are not.',
+                ),
             )

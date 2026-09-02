@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -18,8 +18,11 @@ def check_metadata_consistent_repo_urls(
     """
     repo_url = family_metadata.source.repository_url
     if not repo_url:
-        yield FAIL, Message(
-            "lacks-repo-url", "Please add a family.source.repository_url entry."
+        yield (
+            FAIL,
+            Message(
+                "lacks-repo-url", "Please add a family.source.repository_url entry."
+            ),
         )
         return
 
@@ -69,7 +72,10 @@ def check_metadata_consistent_repo_urls(
         bad_urls = pretty_print_list(
             config, [f"{location} has '{url}'" for location, url in bad_urls]
         )
-        yield FAIL, Message(
-            "mismatch",
-            f"Repository URL is {a_url}\n\nBut: {bad_urls}\n",
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f"Repository URL is {a_url}\n\nBut: {bad_urls}\n",
+            ),
         )

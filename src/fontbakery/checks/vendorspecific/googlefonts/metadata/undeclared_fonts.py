@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -28,13 +28,16 @@ def check_metadata_undeclared_fonts(family_metadata, family_directory):
             for filename in os.listdir(os.path.join(family_directory, entry)):
                 if filename[-4:] in [".ttf", ".otf"]:
                     path = os.path.join(family_directory, entry, filename)
-                    yield WARN, Message(
-                        "font-on-subdir",
-                        f'The file "{path}" is a font binary'
-                        f" in a subdirectory.\n"
-                        f"Please keep all font files (except VF statics)"
-                        f" directly on the root directory side-by-side"
-                        f" with its corresponding METADATA.pb file.",
+                    yield (
+                        WARN,
+                        Message(
+                            "font-on-subdir",
+                            f'The file "{path}" is a font binary'
+                            f" in a subdirectory.\n"
+                            f"Please keep all font files (except VF statics)"
+                            f" directly on the root directory side-by-side"
+                            f" with its corresponding METADATA.pb file.",
+                        ),
                     )
         else:
             # Note: This does not include any font binaries placed in a "static" subdir!
@@ -42,13 +45,20 @@ def check_metadata_undeclared_fonts(family_metadata, family_directory):
                 binaries.append(entry)
 
     for filename in sorted(set(pb_binaries) - set(binaries)):
-        yield FAIL, Message(
-            "file-missing",
-            f'The file "{filename}" declared on METADATA.pb'
-            f" is not available in this directory.",
+        yield (
+            FAIL,
+            Message(
+                "file-missing",
+                f'The file "{filename}" declared on METADATA.pb'
+                f" is not available in this directory.",
+            ),
         )
 
     for filename in sorted(set(binaries) - set(pb_binaries)):
-        yield FAIL, Message(
-            "file-not-declared", f'The file "{filename}" is not declared on METADATA.pb'
+        yield (
+            FAIL,
+            Message(
+                "file-not-declared",
+                f'The file "{filename}" is not declared on METADATA.pb',
+            ),
         )

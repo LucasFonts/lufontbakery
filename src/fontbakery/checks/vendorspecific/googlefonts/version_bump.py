@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL
+from fontbakery.prelude import FAIL, check
 
 
 @check(
@@ -18,24 +18,36 @@ def check_version_bump(ttFont, api_gfonts_ttFont, github_gfonts_ttFont):
     github_gfonts_v_number = github_gfonts_ttFont["head"].fontRevision
 
     if v_number == api_gfonts_v_number:
-        yield FAIL, (
-            f"Version number {v_number:0.3f} is equal to version on **Google Fonts**."
+        yield (
+            FAIL,
+            (
+                f"Version number {v_number:0.3f} is equal to version on **Google Fonts**."
+            ),
         )
 
     if v_number < api_gfonts_v_number:
-        yield FAIL, (
-            f"Version number {v_number:0.3f} is less than on"
-            f" **Google Fonts** ({api_gfonts_v_number:0.3f})."
+        yield (
+            FAIL,
+            (
+                f"Version number {v_number:0.3f} is less than on"
+                f" **Google Fonts** ({api_gfonts_v_number:0.3f})."
+            ),
         )
 
     if v_number == github_gfonts_v_number:
-        yield FAIL, (
-            f"Version number {v_number:0.3f} is equal to version on"
-            f" google/fonts **GitHub repo**."
+        yield (
+            FAIL,
+            (
+                f"Version number {v_number:0.3f} is equal to version on"
+                f" google/fonts **GitHub repo**."
+            ),
         )
 
     if v_number < github_gfonts_v_number:
-        yield FAIL, (
-            f"Version number {v_number:0.3f} is less than on"
-            f" google/fonts **GitHub repo** ({github_gfonts_v_number:0.3f})."
+        yield (
+            FAIL,
+            (
+                f"Version number {v_number:0.3f} is less than on"
+                f" google/fonts **GitHub repo** ({github_gfonts_v_number:0.3f})."
+            ),
         )

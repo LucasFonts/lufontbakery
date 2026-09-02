@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, PASS, Message
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -26,8 +26,12 @@ def check_ufo_required_fields(ufo_font):
             required_fields.append(field)
 
     if required_fields:
-        yield FAIL, Message(
-            "missing-required-fields", f"Required field(s) missing: {required_fields}"
+        yield (
+            FAIL,
+            Message(
+                "missing-required-fields",
+                f"Required field(s) missing: {required_fields}",
+            ),
         )
     else:
         yield PASS, "Required fields present."

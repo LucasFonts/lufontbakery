@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, WARN, INFO, FAIL, Message
+from fontbakery.prelude import FAIL, INFO, WARN, Message, check
 
 
 @check(
@@ -54,23 +54,30 @@ def check_meta_script_lang_tags(ttFont):
     """Ensure fonts have ScriptLangTags declared on the 'meta' table."""
 
     if "meta" not in ttFont:
-        yield WARN, Message(
-            "lacks-meta-table", "This font file does not have a 'meta' table."
+        yield (
+            WARN,
+            Message("lacks-meta-table", "This font file does not have a 'meta' table."),
         )
 
     else:
         if "dlng" not in ttFont["meta"].data:
-            yield FAIL, Message(
-                "missing-dlng-tag",
-                "Please specify which languages and scripts this font is designed for.",
+            yield (
+                FAIL,
+                Message(
+                    "missing-dlng-tag",
+                    "Please specify which languages and scripts this font is designed for.",
+                ),
             )
         else:
             yield INFO, Message("dlng-tag", f"{ttFont['meta'].data['dlng']}")
 
         if "slng" not in ttFont["meta"].data:
-            yield FAIL, Message(
-                "missing-slng-tag",
-                "Please specify which languages and scripts this font supports.",
+            yield (
+                FAIL,
+                Message(
+                    "missing-slng-tag",
+                    "Please specify which languages and scripts this font supports.",
+                ),
             )
         else:
             yield INFO, Message("slng-tag", f"{ttFont['meta'].data['slng']}")

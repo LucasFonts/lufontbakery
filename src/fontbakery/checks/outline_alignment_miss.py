@@ -1,11 +1,11 @@
-from fontbakery.prelude import check, Message, PASS, WARN
-from fontbakery.utils import (
-    bullet_list,
-    close_but_not_on,
-)
 from fontbakery.checks.outline_settings import (
     ALIGNMENT_MISS_EPSILON,
     FALSE_POSITIVE_CUTOFF,
+)
+from fontbakery.prelude import PASS, WARN, Message, check
+from fontbakery.utils import (
+    bullet_list,
+    close_but_not_on,
 )
 
 
@@ -48,11 +48,14 @@ def check_outline_alignment_miss(ttFont, outlines_dict, config):
         alignments["x-height"] = ttFont["OS/2"].sxHeight
         alignments["cap-height"] = ttFont["OS/2"].sCapHeight
     else:
-        yield WARN, Message(
-            "skip-cap-x-height-alignment",
-            "x-height and cap-height checks are skipped"
-            f" because OS/2 table version is only {os2version}"
-            " and version >= 2 is required for those checks.",
+        yield (
+            WARN,
+            Message(
+                "skip-cap-x-height-alignment",
+                "x-height and cap-height checks are skipped"
+                f" because OS/2 table version is only {os2version}"
+                " and version >= 2 is required for those checks.",
+            ),
         )
 
     for glyph, outlines in outlines_dict.items():
@@ -74,19 +77,25 @@ def check_outline_alignment_miss(ttFont, outlines_dict, config):
                         )
         if len(warnings) > FALSE_POSITIVE_CUTOFF:
             # Let's not waste time.
-            yield PASS, (
-                "So many Y-coordinates of points were close to"
-                " boundaries that this was probably by design."
+            yield (
+                PASS,
+                (
+                    "So many Y-coordinates of points were close to"
+                    " boundaries that this was probably by design."
+                ),
             )
             return
 
     if warnings:
         formatted_list = bullet_list(config, warnings, bullet="*")
-        yield WARN, Message(
-            "found-misalignments",
-            f"The following glyphs have on-curve points which"
-            f" have potentially incorrect y coordinates:\n\n"
-            f"{formatted_list}",
+        yield (
+            WARN,
+            Message(
+                "found-misalignments",
+                f"The following glyphs have on-curve points which"
+                f" have potentially incorrect y coordinates:\n\n"
+                f"{formatted_list}",
+            ),
         )
     else:
         yield PASS, "Y-coordinates of points fell on appropriate boundaries."

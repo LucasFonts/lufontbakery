@@ -1,6 +1,6 @@
 import re
 
-from fontbakery.prelude import check, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, check
 
 
 @check(

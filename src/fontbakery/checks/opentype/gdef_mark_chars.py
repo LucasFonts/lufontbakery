@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN, SKIP
+from fontbakery.prelude import SKIP, WARN, Message, check
 from fontbakery.utils import get_mark_class_glyphnames, is_non_spacing_mark_char
 
 
@@ -29,14 +29,20 @@ def check_gdef_mark_chars(ttFont, config):
                 sorted(f"{cmap[c]} (U+{c:04X})" for c in mark_chars_not_in_mark_class),
                 sep=", ",
             )
-            yield WARN, Message(
-                "mark-chars",
-                f"The following mark characters could be"
-                f" in the GDEF mark glyph class:\n"
-                f"{formatted_marks}",
+            yield (
+                WARN,
+                Message(
+                    "mark-chars",
+                    f"The following mark characters could be"
+                    f" in the GDEF mark glyph class:\n"
+                    f"{formatted_marks}",
+                ),
             )
     else:
-        yield SKIP, (
-            'Font does not declare an optional "GDEF" table'
-            " or has any GDEF glyph class definition."
+        yield (
+            SKIP,
+            (
+                'Font does not declare an optional "GDEF" table'
+                " or has any GDEF glyph class definition."
+            ),
         )

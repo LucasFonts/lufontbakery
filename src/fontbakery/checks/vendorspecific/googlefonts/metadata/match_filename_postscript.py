@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -23,8 +23,11 @@ def check_metadata_match_filename_postscript(font_metadata):
     filename = os.path.splitext(font_metadata.filename)[0]
 
     if filename != post_script_name:
-        yield FAIL, Message(
-            "mismatch",
-            f'METADATA.pb font filename = "{font_metadata.filename}" does not match'
-            f' post_script_name="{font_metadata.post_script_name}".',
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f'METADATA.pb font filename = "{font_metadata.filename}" does not match'
+                f' post_script_name="{font_metadata.post_script_name}".',
+            ),
         )

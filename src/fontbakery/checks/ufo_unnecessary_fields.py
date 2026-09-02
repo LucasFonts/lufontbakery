@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, WARN, Message
+from fontbakery.prelude import PASS, WARN, Message, check
 
 
 @check(
@@ -29,8 +29,12 @@ def check_ufo_unnecessary_fields(ufo_font):
             unnecessary_fields.append(field)
 
     if unnecessary_fields:
-        yield WARN, Message(
-            "unnecessary-fields", f"Unnecessary field(s) present: {unnecessary_fields}"
+        yield (
+            WARN,
+            Message(
+                "unnecessary-fields",
+                f"Unnecessary field(s) present: {unnecessary_fields}",
+            ),
         )
     else:
         yield PASS, "Unnecessary fields omitted."

@@ -1,8 +1,8 @@
 from fontbakery.checks.vendorspecific.googlefonts.conditions import expected_font_names
-from fontbakery.prelude import check, Message, FAIL, WARN
 from fontbakery.constants import (
     NameID,
 )
+from fontbakery.prelude import FAIL, WARN, Message, check
 from fontbakery.utils import markdown_table
 
 
@@ -21,12 +21,15 @@ from fontbakery.utils import markdown_table
 def check_font_names(ttFont, ttFonts):
     """Check font names are correct"""
     if "fvar" in ttFont and "MORF" in [a.axisTag for a in ttFont["fvar"].axes]:
-        yield WARN, Message(
-            "morf-axis",
-            "Font has a Morph axis. This check only works on fonts that "
-            "have a wght axis. Since users can define their own stylenames "
-            "for Morph families, please manually check that the family works "
-            "on major platforms. You can use Agu Display as a reference.",
+        yield (
+            WARN,
+            Message(
+                "morf-axis",
+                "Font has a Morph axis. This check only works on fonts that "
+                "have a wght axis. Since users can define their own stylenames "
+                "for Morph families, please manually check that the family works "
+                "on major platforms. You can use Agu Display as a reference.",
+            ),
         )
         return
     expected_names = expected_font_names(ttFont, ttFonts)

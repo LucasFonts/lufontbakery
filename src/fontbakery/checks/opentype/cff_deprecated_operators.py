@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -19,13 +19,19 @@ def check_cff_deprecated_operators(cff_analysis):
 
     if cff_analysis.glyphs_dotsection or cff_analysis.glyphs_endchar_seac:
         for gn in cff_analysis.glyphs_dotsection:
-            yield WARN, Message(
-                "deprecated-operator-dotsection",
-                f'Glyph "{gn}" uses deprecated "dotsection" operator.',
+            yield (
+                WARN,
+                Message(
+                    "deprecated-operator-dotsection",
+                    f'Glyph "{gn}" uses deprecated "dotsection" operator.',
+                ),
             )
         for gn in cff_analysis.glyphs_endchar_seac:
-            yield FAIL, Message(
-                "deprecated-operation-endchar-seac",
-                f'Glyph "{gn}" has deprecated use of "endchar"'
-                f" operator to build accented characters (seac).",
+            yield (
+                FAIL,
+                Message(
+                    "deprecated-operation-endchar-seac",
+                    f'Glyph "{gn}" has deprecated use of "endchar"'
+                    f" operator to build accented characters (seac).",
+                ),
             )

@@ -1,6 +1,6 @@
 import unicodedata
 
-from fontbakery.prelude import check, Message, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, Message, check
 from fontbakery.utils import bullet_list
 
 
@@ -41,17 +41,23 @@ def check_marks_width(ttFont, config):
                 failed_spacing_mark_chars.append(glypname)
 
     if failed_non_spacing_mark_chars:
-        yield FAIL, Message(
-            "non-spacing-not-zero",
-            f"Combining accents with width advance width:\n\n"
-            f"{bullet_list(config, failed_non_spacing_mark_chars)}",
+        yield (
+            FAIL,
+            Message(
+                "non-spacing-not-zero",
+                f"Combining accents with width advance width:\n\n"
+                f"{bullet_list(config, failed_non_spacing_mark_chars)}",
+            ),
         )
 
     if failed_spacing_mark_chars:
-        yield FAIL, Message(
-            "non-spacing-not-zero",
-            f"Spacing marks without advance width:\n\n"
-            f"{bullet_list(config, failed_spacing_mark_chars)}",
+        yield (
+            FAIL,
+            Message(
+                "non-spacing-not-zero",
+                f"Spacing marks without advance width:\n\n"
+                f"{bullet_list(config, failed_spacing_mark_chars)}",
+            ),
         )
 
     if not failed_non_spacing_mark_chars and not failed_spacing_mark_chars:

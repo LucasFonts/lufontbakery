@@ -1,5 +1,5 @@
-from fontbakery.prelude import check
 from fontbakery.checks.vendorspecific.microsoft import ensure_name_id_exists
+from fontbakery.prelude import check
 
 
 @check(

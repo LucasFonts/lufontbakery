@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -76,10 +76,13 @@ def check_name_match_familyname_fullfont(ttFont):
                             family_name_id, plat_id, enc_id, lang_id
                         ).toUnicode()
                     except UnicodeDecodeError:
-                        yield FAIL, Message(
-                            f"cannot-decode-nameid-{family_name_id}",
-                            f"{decode_error_msg_prefix} and nameID {family_name_id}"
-                            " failed to be decoded.",
+                        yield (
+                            FAIL,
+                            Message(
+                                f"cannot-decode-nameid-{family_name_id}",
+                                f"{decode_error_msg_prefix} and nameID {family_name_id}"
+                                " failed to be decoded.",
+                            ),
                         )
                         continue
 
@@ -88,31 +91,40 @@ def check_name_match_familyname_fullfont(ttFont):
                             full_name_id, plat_id, enc_id, lang_id
                         ).toUnicode()
                     except UnicodeDecodeError:
-                        yield FAIL, Message(
-                            f"cannot-decode-nameid-{full_name_id}",
-                            f"{decode_error_msg_prefix} and nameID {full_name_id}"
-                            " failed to be decoded.",
+                        yield (
+                            FAIL,
+                            Message(
+                                f"cannot-decode-nameid-{full_name_id}",
+                                f"{decode_error_msg_prefix} and nameID {full_name_id}"
+                                " failed to be decoded.",
+                            ),
                         )
                         continue
 
                     if not full_name.startswith(family_name):
-                        yield FAIL, Message(
-                            "mismatch-font-names",
-                            f"On the 'name' table, the full font name {full_name!r}"
-                            f" does not begin with the font family name {family_name!r}"
-                            f" in platformID {plat_id},"
-                            f" encodingID {enc_id},"
-                            f" languageID {lang_id}({lang_id:04X}),"
-                            f" and nameID {family_name_id}.",
+                        yield (
+                            FAIL,
+                            Message(
+                                "mismatch-font-names",
+                                f"On the 'name' table, the full font name {full_name!r}"
+                                f" does not begin with the font family name {family_name!r}"
+                                f" in platformID {plat_id},"
+                                f" encodingID {enc_id},"
+                                f" languageID {lang_id}({lang_id:04X}),"
+                                f" and nameID {family_name_id}.",
+                            ),
                         )
 
     if not names_compared:
-        yield FAIL, Message(
-            "missing-font-names",
-            f"The font's 'name' table lacks a pair of records with"
-            f" nameID {NameID.FULL_FONT_NAME} (Full name),"
-            f" and at least one of"
-            f" nameID {NameID.FONT_FAMILY_NAME} (Font Family name),"
-            f" {NameID.TYPOGRAPHIC_FAMILY_NAME} (Typographic Family name),"
-            f" or {NameID.WWS_FAMILY_NAME} (WWS Family name).",
+        yield (
+            FAIL,
+            Message(
+                "missing-font-names",
+                f"The font's 'name' table lacks a pair of records with"
+                f" nameID {NameID.FULL_FONT_NAME} (Full name),"
+                f" and at least one of"
+                f" nameID {NameID.FONT_FAMILY_NAME} (Font Family name),"
+                f" {NameID.TYPOGRAPHIC_FAMILY_NAME} (Typographic Family name),"
+                f" or {NameID.WWS_FAMILY_NAME} (WWS Family name).",
+            ),
         )

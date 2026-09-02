@@ -1,6 +1,6 @@
 import unicodedata
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import bullet_list, mark_glyphs
 
 
@@ -49,7 +49,10 @@ def check_base_has_width(font, config):
 
     if problems:
         problems = bullet_list(config, problems)
-        yield FAIL, Message(
-            "zero-width-bases",
-            f"The following glyphs had zero advance width:\n{problems}",
+        yield (
+            FAIL,
+            Message(
+                "zero-width-bases",
+                f"The following glyphs had zero advance width:\n{problems}",
+            ),
         )

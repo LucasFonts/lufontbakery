@@ -1,5 +1,5 @@
 from fontbakery.constants import NameID
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -22,21 +22,27 @@ def check_metadata_nameid_post_script_name(ttFont, font_metadata):
 
     postscript_names = get_name_entry_strings(ttFont, NameID.POSTSCRIPT_NAME)
     if len(postscript_names) == 0:
-        yield FAIL, Message(
-            "missing",
-            (
-                f"This font lacks a POSTSCRIPT_NAME entry"
-                f" (nameID = {NameID.POSTSCRIPT_NAME}) in the name table."
+        yield (
+            FAIL,
+            Message(
+                "missing",
+                (
+                    f"This font lacks a POSTSCRIPT_NAME entry"
+                    f" (nameID = {NameID.POSTSCRIPT_NAME}) in the name table."
+                ),
             ),
         )
     else:
         for psname in postscript_names:
             if psname != font_metadata.post_script_name:
-                yield FAIL, Message(
-                    "mismatch",
-                    (
-                        f"Unmatched postscript name in font:"
-                        f' TTF has "{psname}" while METADATA.pb has'
-                        f' "{font_metadata.post_script_name}".'
+                yield (
+                    FAIL,
+                    Message(
+                        "mismatch",
+                        (
+                            f"Unmatched postscript name in font:"
+                            f' TTF has "{psname}" while METADATA.pb has'
+                            f' "{font_metadata.post_script_name}".'
+                        ),
                     ),
                 )

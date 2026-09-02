@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -17,17 +17,20 @@ from fontbakery.prelude import check, Message, WARN
         each instance is at the expected weight, width etc.
     """,
     conditions=["is_variable_font"],
-    proposal="https://github.com/fonttools/fontbakery/issues/3100"
+    proposal="https://github.com/fonttools/fontbakery/issues/3100",
     # NOTE: This is a high-priority WARN.
 )
 def check_mandatory_avar_table(ttFont):
     """Ensure variable fonts include an avar table."""
     if "avar" not in ttFont:
-        yield WARN, Message(
-            "missing-avar",
-            (
-                "This variable font does not have an avar table."
-                " Most variable fonts should include an avar table to correctly"
-                " define axes progression rates."
+        yield (
+            WARN,
+            Message(
+                "missing-avar",
+                (
+                    "This variable font does not have an avar table."
+                    " Most variable fonts should include an avar table to correctly"
+                    " define axes progression rates."
+                ),
             ),
         )

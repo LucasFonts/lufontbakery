@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -15,8 +15,11 @@ def check_metadata_license(family_metadata):
     """METADATA.pb license is "APACHE2", "UFL" or "OFL"?"""
     expected_licenses = ["APACHE2", "OFL", "UFL"]
     if family_metadata.license not in expected_licenses:
-        yield FAIL, Message(
-            "bad-license",
-            f'METADATA.pb license field ("{family_metadata.license}")'
-            f" must be one of the following: {expected_licenses}",
+        yield (
+            FAIL,
+            Message(
+                "bad-license",
+                f'METADATA.pb license field ("{family_metadata.license}")'
+                f" must be one of the following: {expected_licenses}",
+            ),
         )

@@ -15,8 +15,8 @@
 
 import json
 from difflib import ndiff
-from pathlib import Path
 from os.path import basename
+from pathlib import Path
 
 from fontTools.unicodedata import ot_tag_to_script
 
@@ -134,8 +134,9 @@ def run_a_set_of_shaping_tests(
         try:
             shaping_input_doc = json.loads(shaping_file.read_text(encoding="utf-8"))
         except Exception as e:
-            yield FAIL, Message(
-                "shaping-invalid-json", f"{shaping_file}: Invalid JSON: {e}."
+            yield (
+                FAIL,
+                Message("shaping-invalid-json", f"{shaping_file}: Invalid JSON: {e}."),
             )
             return
 
@@ -143,9 +144,12 @@ def run_a_set_of_shaping_tests(
         try:
             shaping_tests = shaping_input_doc["tests"]
         except KeyError:
-            yield FAIL, Message(
-                "shaping-missing-tests",
-                f"{shaping_file}: JSON file must have a 'tests' key.",
+            yield (
+                FAIL,
+                Message(
+                    "shaping-missing-tests",
+                    f"{shaping_file}: JSON file must have a 'tests' key.",
+                ),
             )
             return
 
@@ -158,9 +162,12 @@ def run_a_set_of_shaping_tests(
                 continue
 
             if "input" not in test:
-                yield FAIL, Message(
-                    "shaping-missing-input",
-                    f"{shaping_file}: test is missing an input key.",
+                yield (
+                    FAIL,
+                    Message(
+                        "shaping-missing-input",
+                        f"{shaping_file}: test is missing an input key.",
+                    ),
                 )
                 return
 

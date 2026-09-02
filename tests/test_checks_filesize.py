@@ -1,8 +1,9 @@
 from conftest import check_id
+
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
 from fontbakery.profiles import googlefonts
 from fontbakery.status import FAIL, WARN

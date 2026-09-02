@@ -1,6 +1,6 @@
 import re
 
-from fontbakery.prelude import check, PASS, SKIP, WARN, Message
+from fontbakery.prelude import PASS, SKIP, WARN, Message, check
 
 
 @check(
@@ -39,9 +39,12 @@ def check_ufo_features_default_languagesystem(ufo_font):
 
         if len(tags) > 0 and ("DFLT", "dflt") != tags[0]:
             tags_str = ", ".join([" ".join(t) for t in tags])
-            yield WARN, Message(
-                "default-languagesystem",
-                f"Default languagesystem not found in: {tags_str}.",
+            yield (
+                WARN,
+                Message(
+                    "default-languagesystem",
+                    f"Default languagesystem not found in: {tags_str}.",
+                ),
             )
         else:
             yield PASS, "Default languagesystem present or automatically inserted."

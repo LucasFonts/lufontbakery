@@ -1,5 +1,5 @@
 from fontbakery.constants import NameID
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -19,13 +19,16 @@ def check_name_no_copyright_on_description(ttFont):
             "opyright" in name.string.decode(name.getEncoding())
             and name.nameID == NameID.DESCRIPTION
         ):
-            yield FAIL, Message(
-                "copyright-on-description",
-                f"Some namerecords with"
-                f" ID={NameID.DESCRIPTION} (NameID.DESCRIPTION)"
-                f" containing copyright info should be removed"
-                f" (perhaps these were added by a longstanding"
-                f" FontLab Studio 5.x bug that copied"
-                f" copyright notices to them.)",
+            yield (
+                FAIL,
+                Message(
+                    "copyright-on-description",
+                    f"Some namerecords with"
+                    f" ID={NameID.DESCRIPTION} (NameID.DESCRIPTION)"
+                    f" containing copyright info should be removed"
+                    f" (perhaps these were added by a longstanding"
+                    f" FontLab Studio 5.x bug that copied"
+                    f" copyright notices to them.)",
+                ),
             )
             break

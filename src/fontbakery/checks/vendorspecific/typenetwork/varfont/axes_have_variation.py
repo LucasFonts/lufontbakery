@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -29,10 +29,13 @@ def check_varfont_axes_have_variation(ttFont):
 
     if failedAxes:
         for failedAxis in failedAxes:
-            yield FAIL, Message(
-                "axis-has-no-variation",
-                f"'{failedAxis['tag']}' axis has no variation its min and max values"
-                f" are {failedAxis['minValue'], failedAxis['maxValue']}",
+            yield (
+                FAIL,
+                Message(
+                    "axis-has-no-variation",
+                    f"'{failedAxis['tag']}' axis has no variation its min and max values"
+                    f" are {failedAxis['minValue'], failedAxis['maxValue']}",
+                ),
             )
     else:
         yield PASS, "All font axes has variation."

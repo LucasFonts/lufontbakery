@@ -1,14 +1,15 @@
 """Reporter class that renders report as a HTML document."""
 
-from collections import defaultdict
 import os
+from collections import defaultdict
+
 import cmarkgfm
 from cmarkgfm.cmark import Options as cmarkgfmOptions
 from jinja2 import ChoiceLoader, Environment, PackageLoader, Template, select_autoescape
 from markupsafe import Markup
 
-from fontbakery.reporters.serialize import SerializeReporter
 from fontbakery import __version__ as fb_version
+from fontbakery.reporters.serialize import SerializeReporter
 from fontbakery.utils import unindent_and_unwrap_rationale
 
 LOGLEVELS = ["ERROR", "FATAL", "FAIL", "WARN", "SKIP", "INFO", "PASS", "DEBUG"]

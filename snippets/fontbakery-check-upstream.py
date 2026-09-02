@@ -10,15 +10,16 @@ python snippets/fontbakery-check-upstream.py \
     --post_issue --gh_token $MY_GH_TOKEN \
     --footnote "Please ignore checkXX"
 """
-import requests
+
 import argparse
+import json
+import logging
+import os
+import shutil
 import subprocess
 import tempfile
-import os
-import json
-import shutil
-import logging
 
+import requests
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -90,12 +91,12 @@ def main():
         headers = {"Authorization": f"token {args.gh_token}"}
         body = open(gh_report, "r").read()
         if args.footnote:
-            body += f"\n" f"\n" f"{args.footnote}"
+            body += f"\n\n{args.footnote}"
         payload = {"title": "FontBakery Report", "body": body}
         r = requests.post(issue_url, json.dumps(payload), headers=headers)
         logger.info("Issue posted {}".format(r.json()["html_url"]))
     elif args.post_issue and not args.gh_token:
-        logger.info("Failed to post issue!\n" "\n" "Include your Github api token.")
+        logger.info("Failed to post issue!\n\nInclude your Github api token.")
 
     shutil.rmtree(tmp)
 

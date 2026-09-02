@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, PASS, WARN
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 
 
 def PANOSE_is_monospaced(panose):
@@ -136,34 +136,43 @@ def check_monospace(ttFont, glyph_metrics_stats):
 
     if ttFont["hhea"].advanceWidthMax != width_max:
         passed = False
-        yield FAIL, Message(
-            "bad-advanceWidthMax",
-            f"Value of hhea.advanceWidthMax"
-            f" should be set to {width_max}"
-            f" but got {ttFont['hhea'].advanceWidthMax} instead.",
+        yield (
+            FAIL,
+            Message(
+                "bad-advanceWidthMax",
+                f"Value of hhea.advanceWidthMax"
+                f" should be set to {width_max}"
+                f" but got {ttFont['hhea'].advanceWidthMax} instead.",
+            ),
         )
 
     if seems_monospaced:
         number_of_h_metrics = ttFont["hhea"].numberOfHMetrics
         if number_of_h_metrics != 3:
             passed = False
-            yield WARN, Message(
-                "bad-numberOfHMetrics",
-                f"The OpenType spec recommends at "
-                f"https://learn.microsoft.com/en-us/typography/opentype/spec/recom#hhea-table"
-                f" that hhea.numberOfHMetrics be set to 3"
-                f" but this font has {number_of_h_metrics} instead.\n"
-                f"Please read https://github.com/fonttools/fonttools/issues/3014"
-                f" to decide whether this makes sense for your font.",
+            yield (
+                WARN,
+                Message(
+                    "bad-numberOfHMetrics",
+                    f"The OpenType spec recommends at "
+                    f"https://learn.microsoft.com/en-us/typography/opentype/spec/recom#hhea-table"
+                    f" that hhea.numberOfHMetrics be set to 3"
+                    f" but this font has {number_of_h_metrics} instead.\n"
+                    f"Please read https://github.com/fonttools/fonttools/issues/3014"
+                    f" to decide whether this makes sense for your font.",
+                ),
             )
 
         if not PANOSE_is_monospaced(ttFont["OS/2"].panose):
             passed = False
             family_type = ttFont["OS/2"].panose.bFamilyType
-            yield FAIL, Message(
-                "mono-bad-panose",
-                f"The PANOSE numbers are incorrect for a monospaced font. "
-                f"{PANOSE_expected(family_type)}",
+            yield (
+                FAIL,
+                Message(
+                    "mono-bad-panose",
+                    f"The PANOSE numbers are incorrect for a monospaced font. "
+                    f"{PANOSE_expected(family_type)}",
+                ),
             )
 
         glyph_names = ttFont.getGlyphNames()
@@ -178,28 +187,38 @@ def check_monospace(ttFont, glyph_metrics_stats):
         outliers_ratio = float(len(unusually_spaced_glyphs)) / num_glyphs
         if outliers_ratio > 0:
             passed = False
-            yield WARN, Message(
-                "mono-outliers",
-                f"Font is monospaced"
-                f" but {len(unusually_spaced_glyphs)} glyphs"
-                f" ({100.0 * outliers_ratio:.2f}%)"
-                f" have a different width."
-                f" You should check the widths of:"
-                f" {unusually_spaced_glyphs}",
+            yield (
+                WARN,
+                Message(
+                    "mono-outliers",
+                    f"Font is monospaced"
+                    f" but {len(unusually_spaced_glyphs)} glyphs"
+                    f" ({100.0 * outliers_ratio:.2f}%)"
+                    f" have a different width."
+                    f" You should check the widths of:"
+                    f" {unusually_spaced_glyphs}",
+                ),
             )
         elif ttFont["post"].isFixedPitch == IsFixedWidth.NOT_MONOSPACED:
             passed = False
-            yield FAIL, Message(
-                "mono-bad-post-isFixedPitch",
-                f"On monospaced fonts, the value of post.isFixedPitch"
-                f" must be set to a non-zero value"
-                f" (meaning 'fixed width monospaced'),"
-                f" but got {ttFont['post'].isFixedPitch} instead.",
+            yield (
+                FAIL,
+                Message(
+                    "mono-bad-post-isFixedPitch",
+                    f"On monospaced fonts, the value of post.isFixedPitch"
+                    f" must be set to a non-zero value"
+                    f" (meaning 'fixed width monospaced'),"
+                    f" but got {ttFont['post'].isFixedPitch} instead.",
+                ),
             )
 
         if passed:
-            yield PASS, Message(
-                "mono-good", "Font is monospaced and all related metadata look good."
+            yield (
+                PASS,
+                Message(
+                    "mono-good",
+                    "Font is monospaced and all related metadata look good.",
+                ),
             )
     else:
         # it is a non-monospaced font, so lets make sure
@@ -207,24 +226,33 @@ def check_monospace(ttFont, glyph_metrics_stats):
 
         if ttFont["post"].isFixedPitch != IsFixedWidth.NOT_MONOSPACED:
             passed = False
-            yield FAIL, Message(
-                "bad-post-isFixedPitch",
-                f"On non-monospaced fonts,"
-                f" the post.isFixedPitch value must be set to"
-                f" {IsFixedWidth.NOT_MONOSPACED} (not monospaced),"
-                f" but got {ttFont['post'].isFixedPitch} instead.",
+            yield (
+                FAIL,
+                Message(
+                    "bad-post-isFixedPitch",
+                    f"On non-monospaced fonts,"
+                    f" the post.isFixedPitch value must be set to"
+                    f" {IsFixedWidth.NOT_MONOSPACED} (not monospaced),"
+                    f" but got {ttFont['post'].isFixedPitch} instead.",
+                ),
             )
 
         if ttFont["OS/2"].panose.bProportion == PANOSE_Proportion.MONOSPACED:
             passed = False
-            yield FAIL, Message(
-                "bad-panose",
-                "On non-monospaced fonts,"
-                " the OS/2.panose.bProportion value can be set to"
-                " any value except 9 (proportion: monospaced)"
-                " which is the bad value we got in this font.",
+            yield (
+                FAIL,
+                Message(
+                    "bad-panose",
+                    "On non-monospaced fonts,"
+                    " the OS/2.panose.bProportion value can be set to"
+                    " any value except 9 (proportion: monospaced)"
+                    " which is the bad value we got in this font.",
+                ),
             )
         if passed:
-            yield PASS, Message(
-                "good", "Font is not monospaced and all related metadata look good."
+            yield (
+                PASS,
+                Message(
+                    "good", "Font is not monospaced and all related metadata look good."
+                ),
             )

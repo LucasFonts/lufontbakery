@@ -1,5 +1,5 @@
 from fontbakery.constants import REGISTERED_AXIS_TAGS
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -22,20 +22,26 @@ def check_varfont_foundry_defined_tag_name(ttFont):
         if axisTag in REGISTERED_AXIS_TAGS:
             continue
         if axisTag.lower() in REGISTERED_AXIS_TAGS:
-            yield WARN, Message(
-                "foundry-defined-similar-registered-name",
-                f'Foundry-defined tag "{axisTag}" is very similar to'
-                f' registered tag "{axisTag.lower()}", consider renaming.\n'
-                f"If this tag was meant to be a registered tag, please"
-                f" use all lowercase letters in the tag name.",
+            yield (
+                WARN,
+                Message(
+                    "foundry-defined-similar-registered-name",
+                    f'Foundry-defined tag "{axisTag}" is very similar to'
+                    f' registered tag "{axisTag.lower()}", consider renaming.\n'
+                    f"If this tag was meant to be a registered tag, please"
+                    f" use all lowercase letters in the tag name.",
+                ),
             )
 
         firstChar = ord(axisTag[0])
         if not (firstChar >= ord("A") and firstChar <= ord("Z")):
-            yield FAIL, Message(
-                "invalid-foundry-defined-tag-first-letter",
-                f'Please fix axis tag "{axisTag}".\n'
-                f"Foundry-defined tags must begin with an uppercase letter.",
+            yield (
+                FAIL,
+                Message(
+                    "invalid-foundry-defined-tag-first-letter",
+                    f'Please fix axis tag "{axisTag}".\n'
+                    f"Foundry-defined tags must begin with an uppercase letter.",
+                ),
             )
 
         for i in range(3):
@@ -44,9 +50,12 @@ def check_varfont_foundry_defined_tag_name(ttFont):
                 (char >= ord("0") and char <= ord("9"))
                 or (char >= ord("A") and char <= ord("Z"))
             ):
-                yield FAIL, Message(
-                    "invalid-foundry-defined-tag-chars",
-                    f'Please fix axis tag "{axisTag}".\n'
-                    f"Foundry-defined tags must only use"
-                    f" uppercase or digits.",
+                yield (
+                    FAIL,
+                    Message(
+                        "invalid-foundry-defined-tag-chars",
+                        f'Please fix axis tag "{axisTag}".\n'
+                        f"Foundry-defined tags must only use"
+                        f" uppercase or digits.",
+                    ),
                 )

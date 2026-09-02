@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, Message
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -17,10 +17,13 @@ def check_ytlc_sanity(ttFont):
             continue
 
         if axis.minValue < 0 or axis.maxValue > 1000:
-            yield FAIL, Message(
-                "invalid-range",
-                f"The range of ytlc values"
-                f" ({axis.minValue} - {axis.maxValue}) does not conform"
-                f" to the expected range of ytlc which"
-                f" should be min value 0 to max value 1000",
+            yield (
+                FAIL,
+                Message(
+                    "invalid-range",
+                    f"The range of ytlc values"
+                    f" ({axis.minValue} - {axis.maxValue}) does not conform"
+                    f" to the expected range of ytlc which"
+                    f" should be min value 0 to max value 1000",
+                ),
             )

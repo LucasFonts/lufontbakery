@@ -38,8 +38,9 @@ def check_metadata_unreachable_subsetting(font, config):
         if metadata:
             subsets = metadata.subsets
         else:
-            yield FAIL, Message(
-                "unparsable-metadata", "Could not parse metadata.pb file"
+            yield (
+                FAIL,
+                Message("unparsable-metadata", "Could not parse metadata.pb file"),
             )
             return
     else:

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -15,8 +15,11 @@ def check_metadata_canonical_weight_value(font_metadata):
     """METADATA.pb: Check that font weight has a canonical value."""
     first_digit = font_metadata.weight / 100
     if (font_metadata.weight % 100) != 0 or (first_digit < 1 or first_digit > 9):
-        yield FAIL, Message(
-            "bad-weight",
-            f"METADATA.pb: The weight is declared as {font_metadata.weight}"
-            f" which is not a multiple of 100 between 100 and 900.",
+        yield (
+            FAIL,
+            Message(
+                "bad-weight",
+                f"METADATA.pb: The weight is declared as {font_metadata.weight}"
+                f" which is not a multiple of 100 between 100 and 900.",
+            ),
         )

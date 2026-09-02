@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -23,7 +23,10 @@ def check_varfont_family_axis_ranges(ttFonts):
 
     axes_info_from_font_files = {axis_info(ttFont) for ttFont in ttFonts}
     if len(axes_info_from_font_files) != 1:
-        yield FAIL, Message(
-            "axis-range-mismatch",
-            "Variable axes ranges not matching between font files",
+        yield (
+            FAIL,
+            Message(
+                "axis-range-mismatch",
+                "Variable axes ranges not matching between font files",
+            ),
         )

@@ -1,8 +1,7 @@
 from opentypespec.tags import FEATURE_TAGS
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import feature_tags
-
 
 DEPRECATED_TAGS = ["hngl", "opbd", "size"]
 
@@ -35,8 +34,11 @@ def check_layout_valid_feature_tags(ttFont):
             if not tag.isupper() or len(tag) > 4:
                 bad_tags.add(tag)
     if bad_tags:
-        yield FAIL, Message(
-            "bad-feature-tags",
-            "The following invalid feature tags were found in the font: "
-            + ", ".join(sorted(bad_tags)),
+        yield (
+            FAIL,
+            Message(
+                "bad-feature-tags",
+                "The following invalid feature tags were found in the font: "
+                + ", ".join(sorted(bad_tags)),
+            ),
         )

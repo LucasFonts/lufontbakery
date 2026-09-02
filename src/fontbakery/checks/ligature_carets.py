@@ -1,5 +1,5 @@
+from fontbakery.prelude import SKIP, WARN, Message, check, condition
 from fontbakery.testable import Font
-from fontbakery.prelude import check, condition, SKIP, WARN, Message
 from fontbakery.utils import bullet_list
 
 
@@ -44,10 +44,13 @@ def check_ligature_carets(config, ttFont, ligature_glyphs):
     if len(ligature_glyphs) == 0:
         yield SKIP, Message("no-ligatures", "No ligature glyphs found.")
     elif "GDEF" not in ttFont:
-        yield WARN, Message(
-            "lacks-caret-pos-gdef",
-            "This font lacks caret position values"
-            " for ligature glyphs because it doesn't have a GDEF table.",
+        yield (
+            WARN,
+            Message(
+                "lacks-caret-pos-gdef",
+                "This font lacks caret position values"
+                " for ligature glyphs because it doesn't have a GDEF table.",
+            ),
         )
     else:
         lig_caret_list = ttFont["GDEF"].table.LigCaretList
@@ -57,15 +60,21 @@ def check_ligature_carets(config, ttFont, ligature_glyphs):
             missing = set(ligature_glyphs) - set(lig_caret_list.Coverage.glyphs)
 
         if lig_caret_list is None or lig_caret_list.LigGlyphCount == 0:
-            yield WARN, Message(
-                "lacks-caret-pos",
-                "This font lacks caret position values"
-                " for ligature glyphs on its GDEF table.",
+            yield (
+                WARN,
+                Message(
+                    "lacks-caret-pos",
+                    "This font lacks caret position values"
+                    " for ligature glyphs on its GDEF table.",
+                ),
             )
         elif missing:
             missing = bullet_list(config, sorted(missing))
-            yield WARN, Message(
-                "incomplete-caret-pos-data",
-                f"This font lacks caret positioning values for these ligature glyphs:\n"
-                f"{missing}\n\n",
+            yield (
+                WARN,
+                Message(
+                    "incomplete-caret-pos-data",
+                    f"This font lacks caret positioning values for these ligature glyphs:\n"
+                    f"{missing}\n\n",
+                ),
             )

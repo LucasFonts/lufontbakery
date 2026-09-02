@@ -1,7 +1,7 @@
 import os
 
 from fontbakery.constants import NameID
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 
 
 @check(
@@ -19,22 +19,27 @@ def check_repo_dirname_match_nameid_1(fonts):
     """Directory name in GFonts repo structure must
     match NameID 1 of the regular."""
     from fontTools.ttLib import TTFont
+
     from fontbakery.utils import get_name_entry_strings, get_regular
 
     if any(f.is_variable_font for f in fonts):
-        yield SKIP, Message(
-            "variable-exempt", "Variable fonts are exempt from this check."
+        yield (
+            SKIP,
+            Message("variable-exempt", "Variable fonts are exempt from this check."),
         )
         return
 
     regular = get_regular(fonts)
     if not regular:
-        yield FAIL, Message(
-            "lacks-regular",
-            "The font seems to lack a regular."
-            " If family consists of a single-weight non-Regular style only,"
-            " consider the Google Fonts specs for this case:"
-            " https://github.com/googlefonts/gf-docs/tree/main/Spec#single-weight-families",  # noqa:E501 pylint:disable=C0301
+        yield (
+            FAIL,
+            Message(
+                "lacks-regular",
+                "The font seems to lack a regular."
+                " If family consists of a single-weight non-Regular style only,"
+                " consider the Google Fonts specs for this case:"
+                " https://github.com/googlefonts/gf-docs/tree/main/Spec#single-weight-families",  # noqa:E501 pylint:disable=C0301
+            ),
         )
         return
 
@@ -45,9 +50,12 @@ def check_repo_dirname_match_nameid_1(fonts):
 
     _, familypath, _ = os.path.abspath(regular.file).split(os.path.sep)[-3:]
     if familypath != expected:
-        yield FAIL, Message(
-            "mismatch",
-            f"Family name on the name table ('{entry}') does not match"
-            f" directory name in the repo structure ('{familypath}')."
-            f" Expected '{expected}'.",
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f"Family name on the name table ('{entry}') does not match"
+                f" directory name in the repo structure ('{familypath}')."
+                f" Expected '{expected}'.",
+            ),
         )

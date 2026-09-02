@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -38,22 +38,31 @@ def check_os2_metrics_match_hhea(ttFont):
 
     # OS/2 sTypoAscender and sTypoDescender match hhea ascent and descent
     if ttFont["OS/2"].sTypoAscender != ttFont["hhea"].ascent:
-        yield FAIL, Message(
-            "ascender",
-            f"OS/2 sTypoAscender ({ttFont['OS/2'].sTypoAscender})"
-            f" and hhea ascent ({ttFont['hhea'].ascent}) must be equal.",
+        yield (
+            FAIL,
+            Message(
+                "ascender",
+                f"OS/2 sTypoAscender ({ttFont['OS/2'].sTypoAscender})"
+                f" and hhea ascent ({ttFont['hhea'].ascent}) must be equal.",
+            ),
         )
     elif ttFont["OS/2"].sTypoDescender != ttFont["hhea"].descent:
-        yield FAIL, Message(
-            "descender",
-            f"OS/2 sTypoDescender ({ttFont['OS/2'].sTypoDescender})"
-            f" and hhea descent ({ttFont['hhea'].descent}) must be equal.",
+        yield (
+            FAIL,
+            Message(
+                "descender",
+                f"OS/2 sTypoDescender ({ttFont['OS/2'].sTypoDescender})"
+                f" and hhea descent ({ttFont['hhea'].descent}) must be equal.",
+            ),
         )
     elif ttFont["OS/2"].sTypoLineGap != ttFont["hhea"].lineGap:
-        yield FAIL, Message(
-            "lineGap",
-            f"OS/2 sTypoLineGap ({ttFont['OS/2'].sTypoLineGap})"
-            f" and hhea lineGap ({ttFont['hhea'].lineGap}) must be equal.",
+        yield (
+            FAIL,
+            Message(
+                "lineGap",
+                f"OS/2 sTypoLineGap ({ttFont['OS/2'].sTypoLineGap})"
+                f" and hhea lineGap ({ttFont['hhea'].lineGap}) must be equal.",
+            ),
         )
     else:
         yield PASS, "OS/2.sTypoAscender/Descender values match hhea.ascent/descent."

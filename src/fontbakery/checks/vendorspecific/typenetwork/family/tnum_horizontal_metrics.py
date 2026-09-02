@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, WARN, INFO
+from fontbakery.prelude import INFO, PASS, WARN, Message, check
 from fontbakery.utils import (
     bullet_list,
     pretty_print_list,
@@ -56,11 +56,14 @@ def check_family_tnum_horizontal_metrics(ttFonts, config):
         del tnum_widths[half_width]
 
     if half_width:
-        yield INFO, Message(
-            "half-widths",
-            f"The are other glyphs with half of the width ({half_width}) of the"
-            f" most common width such as the following ones:\n\n"
-            f"{bullet_list(config, half_width_glyphs)}.",
+        yield (
+            INFO,
+            Message(
+                "half-widths",
+                f"The are other glyphs with half of the width ({half_width}) of the"
+                f" most common width such as the following ones:\n\n"
+                f"{bullet_list(config, half_width_glyphs)}.",
+            ),
         )
 
     if len(tnum_widths.keys()):
@@ -68,11 +71,14 @@ def check_family_tnum_horizontal_metrics(ttFonts, config):
         tnumWidthsString = ""
         for width, glyphs in tnum_widths.items():
             tnumWidthsString += f"{width}: {pretty_print_list(config, glyphs)}\n\n"
-        yield WARN, Message(
-            "inconsistent-widths",
-            f"The most common tabular glyph width is {most_common_width}."
-            f" But there are other tabular glyphs with different widths"
-            f" such as the following ones:\n\n{tnumWidthsString}.",
+        yield (
+            WARN,
+            Message(
+                "inconsistent-widths",
+                f"The most common tabular glyph width is {most_common_width}."
+                f" But there are other tabular glyphs with different widths"
+                f" such as the following ones:\n\n{tnumWidthsString}.",
+            ),
         )
     else:
         yield PASS, "OK"

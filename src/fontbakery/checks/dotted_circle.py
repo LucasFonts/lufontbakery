@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, FAIL, PASS, SKIP, WARN, Message
 from fontbakery.checks.shaping.utils import is_complex_shaper_font
+from fontbakery.prelude import FAIL, PASS, SKIP, WARN, Message, check
 
 
 @check(
@@ -50,13 +50,17 @@ def check_dotted_circle(ttFont, config):
     if 0x25CC not in ttFont.getBestCmap():
         # How bad is this?
         if is_complex_shaper_font(ttFont):
-            yield FAIL, Message(
-                "missing-dotted-circle-complex",
-                "No dotted circle glyph present and font uses a complex shaper",
+            yield (
+                FAIL,
+                Message(
+                    "missing-dotted-circle-complex",
+                    "No dotted circle glyph present and font uses a complex shaper",
+                ),
             )
         else:
-            yield WARN, Message(
-                "missing-dotted-circle", "No dotted circle glyph present"
+            yield (
+                WARN,
+                Message("missing-dotted-circle", "No dotted circle glyph present"),
             )
         return
 
@@ -83,10 +87,13 @@ def check_dotted_circle(ttFont, config):
             unattached.append(g)
 
     if unattached:
-        yield FAIL, Message(
-            "unattached-dotted-circle-marks",
-            f"The following glyphs could not be attached to the dotted circle glyph:\n\n"
-            f"{bullet_list(config, sorted(unattached))}",
+        yield (
+            FAIL,
+            Message(
+                "unattached-dotted-circle-marks",
+                f"The following glyphs could not be attached to the dotted circle glyph:\n\n"
+                f"{bullet_list(config, sorted(unattached))}",
+            ),
         )
     else:
         yield PASS, "All marks were anchored to dotted circle"

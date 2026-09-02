@@ -1,10 +1,11 @@
 from conftest import check_id
-from fontbakery.status import FAIL
+
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
+from fontbakery.status import FAIL
 
 
 @check_id("family/single_directory")

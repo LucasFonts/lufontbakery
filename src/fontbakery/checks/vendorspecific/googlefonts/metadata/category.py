@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -32,7 +32,10 @@ def check_metadata_category(family_metadata):
             "DISPLAY",
             "HANDWRITING",
         ]:
-            yield FAIL, Message(
-                "bad-value",
-                f'The field category has "{category}" which is not valid.',
+            yield (
+                FAIL,
+                Message(
+                    "bad-value",
+                    f'The field category has "{category}" which is not valid.',
+                ),
             )

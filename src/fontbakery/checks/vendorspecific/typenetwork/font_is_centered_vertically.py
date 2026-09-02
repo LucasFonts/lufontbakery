@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, FAIL, WARN
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 
 
 @check(
@@ -28,26 +28,38 @@ def check_font_is_centered_vertically(ttFont):
     threshold2 = 0.3
 
     if threshold1 >= ratio > threshold2:
-        yield WARN, Message(
-            "uncentered",
-            "The font will display slightly vertically uncentered on"
-            " web environments.",
+        yield (
+            WARN,
+            Message(
+                "uncentered",
+                "The font will display slightly vertically uncentered on"
+                " web environments.",
+            ),
         )
-        yield WARN, Message(
-            "uncentered",
-            f"The font will display vertically uncentered on"
-            f" web environments. Top space above cap height is {ascent}"
-            f" and under baseline is {descent}",
+        yield (
+            WARN,
+            Message(
+                "uncentered",
+                f"The font will display vertically uncentered on"
+                f" web environments. Top space above cap height is {ascent}"
+                f" and under baseline is {descent}",
+            ),
         )
     elif ratio >= threshold2:
-        yield FAIL, Message(
-            "very-uncentered",
-            f"The font will display significantly vertically uncentered on"
-            f" web environments. Top space above cap height is {ascent}"
-            f" and under baseline is {descent}",
+        yield (
+            FAIL,
+            Message(
+                "very-uncentered",
+                f"The font will display significantly vertically uncentered on"
+                f" web environments. Top space above cap height is {ascent}"
+                f" and under baseline is {descent}",
+            ),
         )
     else:
-        yield PASS, Message(
-            "centered",
-            "The font will display vertically centered on web environments.",
+        yield (
+            PASS,
+            Message(
+                "centered",
+                "The font will display vertically centered on web environments.",
+            ),
         )

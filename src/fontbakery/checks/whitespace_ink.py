@@ -1,8 +1,8 @@
 from fontbakery.prelude import (
-    check,
-    Message,
-    PASS,
     FAIL,
+    PASS,
+    Message,
+    check,
 )
 from fontbakery.utils import (
     get_glyph_name,
@@ -69,9 +69,12 @@ def check_whitespace_ink(ttFont):
         g = get_glyph_name(ttFont, codepoint)
         if g is not None and glyph_has_ink(ttFont, g):
             passed = False
-            yield FAIL, Message(
-                "has-ink",
-                f"Glyph '{g}' has ink. It needs to be replaced by an empty glyph.",
+            yield (
+                FAIL,
+                Message(
+                    "has-ink",
+                    f"Glyph '{g}' has ink. It needs to be replaced by an empty glyph.",
+                ),
             )
     if passed:
         yield PASS, "There is no whitespace glyph with ink."

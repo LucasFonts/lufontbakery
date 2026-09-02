@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -25,10 +25,13 @@ def check_varfont_consistent_axes(VFs):
     for vf in VFs:
         for axis in ref_ranges:
             if axis not in map(lambda x: x.axisTag, vf["fvar"].axes):
-                yield FAIL, Message(
-                    "missing-axis",
-                    f"{os.path.basename(vf.reader.file.name)}:"
-                    f" lacks a '{axis}' variation axis.",
+                yield (
+                    FAIL,
+                    Message(
+                        "missing-axis",
+                        f"{os.path.basename(vf.reader.file.name)}:"
+                        f" lacks a '{axis}' variation axis.",
+                    ),
                 )
 
     expected_ranges = {
@@ -45,7 +48,10 @@ def check_varfont_consistent_axes(VFs):
 
     for axis, ranges in expected_ranges:
         if len(ranges) > 1:
-            yield FAIL, Message(
-                "inconsistent-axis-range",
-                "Axis 'axis' has diverging ranges accross the family: {ranges}.",
+            yield (
+                FAIL,
+                Message(
+                    "inconsistent-axis-range",
+                    "Axis 'axis' has diverging ranges accross the family: {ranges}.",
+                ),
             )

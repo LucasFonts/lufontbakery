@@ -2,10 +2,10 @@ import sys
 from unittest.mock import patch
 
 import pytest
+from conftest import ImportRaiser, remove_import_raiser
 from fontTools.ttLib import TTFont
 
-from conftest import ImportRaiser, remove_import_raiser
-from fontbakery.codetesting import CheckTester, TEST_FILE
+from fontbakery.codetesting import TEST_FILE, CheckTester
 
 
 def test_lxml_etree_extra_needed_exit(monkeypatch):

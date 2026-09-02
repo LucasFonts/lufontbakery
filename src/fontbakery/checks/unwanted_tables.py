@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, PASS
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -37,11 +37,14 @@ def check_unwanted_tables(ttFont):
             unwanted_tables_found.append(f"* {table} - {info}\n")
 
     if unwanted_tables_found:
-        yield FAIL, Message(
-            "unwanted-tables",
-            "The following unwanted font tables were found:\n\n"
-            f"{''.join(unwanted_tables_found)}\nThey can be removed with"
-            " the 'fix-unwanted-tables' script provided by gftools.",
+        yield (
+            FAIL,
+            Message(
+                "unwanted-tables",
+                "The following unwanted font tables were found:\n\n"
+                f"{''.join(unwanted_tables_found)}\nThey can be removed with"
+                " the 'fix-unwanted-tables' script provided by gftools.",
+            ),
         )
     else:
         yield PASS, "There are no unwanted tables."

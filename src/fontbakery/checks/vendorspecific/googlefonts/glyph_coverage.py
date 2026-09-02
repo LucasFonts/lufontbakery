@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 from fontbakery.utils import (
     bullet_list,
     is_icon_font,
@@ -36,7 +36,10 @@ def check_glyph_coverage(ttFont, family_metadata, config):
             "0x%04X (%s)\n" % (c, unicodedata2.name(chr(c)))
             for c in glyphsets_fulfilled[required_glyphset]["missing"]
         ]
-        yield FAIL, Message(
-            "missing-codepoints",
-            f"Missing required codepoints:\n\n{bullet_list(config, missing)}",
+        yield (
+            FAIL,
+            Message(
+                "missing-codepoints",
+                f"Missing required codepoints:\n\n{bullet_list(config, missing)}",
+            ),
         )

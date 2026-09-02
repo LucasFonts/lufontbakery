@@ -1,5 +1,4 @@
-from fontbakery.prelude import check, PASS, FAIL
-
+from fontbakery.prelude import FAIL, PASS, check
 
 MS_LICENSE_DESCRIPTION = (
     "Microsoft supplied font. You may use this font to create, display, "
@@ -9,9 +8,7 @@ MS_LICENSE_DESCRIPTION = (
     "the embedding restrictions included in this font; and (ii) temporarily "
     "download this font to a printer or other output device to help print "
     "content. Any other use is prohibited."
-).replace(
-    ",", ""
-)  # ignore commas, see below
+).replace(",", "")  # ignore commas, see below
 
 
 @check(

@@ -1,12 +1,12 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
-from fontbakery.status import WARN, SKIP
 from fontbakery.codetesting import (
-    assert_results_contain,
     TEST_FILE,
     assert_PASS,
+    assert_results_contain,
 )
+from fontbakery.status import SKIP, WARN
 
 
 @check_id("outline_alignment_miss")

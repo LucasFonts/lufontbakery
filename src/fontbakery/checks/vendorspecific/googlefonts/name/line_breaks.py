@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import NameID, PlatformID
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -21,9 +21,12 @@ def check_name_line_breaks(ttFont):
     for name in ttFont["name"].names:
         string = name.string.decode(name.getEncoding())
         if "\n" in string:
-            yield FAIL, Message(
-                "line-break",
-                f"Name entry {NameID(name.nameID).name}"
-                f" on platform {PlatformID(name.platformID).name}"
-                f" contains a line-break.",
+            yield (
+                FAIL,
+                Message(
+                    "line-break",
+                    f"Name entry {NameID(name.nameID).name}"
+                    f" on platform {PlatformID(name.platformID).name}"
+                    f" contains a line-break.",
+                ),
             )

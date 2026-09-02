@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -14,7 +14,10 @@ def check_family_valid_underline(ttFont):
 
     underlineThickness = ttFont["post"].underlineThickness
     if underlineThickness is None or underlineThickness == 0:
-        yield FAIL, Message(
-            "invalid-underline-thickness",
-            f"Thickness of the underline is {underlineThickness} which is not valid.",
+        yield (
+            FAIL,
+            Message(
+                "invalid-underline-thickness",
+                f"Thickness of the underline is {underlineThickness} which is not valid.",
+            ),
         )

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, PASS, WARN
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 
 
 @check(
@@ -42,25 +42,37 @@ def opentype_post_table_version(ttFont):
     is_cff = "CFF " in ttFont
 
     if is_cff and formatType != 3:
-        yield FAIL, Message(
-            "post-table-version", "CFF fonts must contain post format 3 table."
+        yield (
+            FAIL,
+            Message(
+                "post-table-version", "CFF fonts must contain post format 3 table."
+            ),
         )
     elif not is_cff and formatType == 3:
-        yield WARN, Message(
-            "post-table-version",
-            "Post table format 3 use has niche use case problems."
-            "Please review the check rationale for additional details.",
+        yield (
+            WARN,
+            Message(
+                "post-table-version",
+                "Post table format 3 use has niche use case problems."
+                "Please review the check rationale for additional details.",
+            ),
         )
     elif formatType == 2.5:
-        yield FAIL, Message(
-            "post-table-version",
-            "Post format 2.5 was deprecated in OpenType 1.3 and should not be used.",
+        yield (
+            FAIL,
+            Message(
+                "post-table-version",
+                "Post format 2.5 was deprecated in OpenType 1.3 and should not be used.",
+            ),
         )
     elif formatType == 4:
-        yield FAIL, Message(
-            "post-table-version",
-            "According to Apple documentation, post format 4 tables are"
-            "no longer necessary and should not be used.",
+        yield (
+            FAIL,
+            Message(
+                "post-table-version",
+                "According to Apple documentation, post format 4 tables are"
+                "no longer necessary and should not be used.",
+            ),
         )
     else:
         yield PASS, f"Font has an acceptable post format {formatType} table version."

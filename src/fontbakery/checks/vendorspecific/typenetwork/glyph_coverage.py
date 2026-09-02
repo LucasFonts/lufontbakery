@@ -1,9 +1,9 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.checks.vendorspecific.typenetwork.glyphsets import TN_latin_set
+from fontbakery.prelude import WARN, Message, check
 from fontbakery.utils import (
     bullet_list,
     exit_with_install_instructions,
 )
-from fontbakery.checks.vendorspecific.typenetwork.glyphsets import TN_latin_set
 
 
 @check(
@@ -31,7 +31,10 @@ def check_glyph_coverage(ttFont, font_codepoints, config):
         except ValueError:
             pass
     if missing:
-        yield WARN, Message(
-            "missing-codepoints",
-            f"Missing required codepoints:\n\n{bullet_list(config, missing)}",
+        yield (
+            WARN,
+            Message(
+                "missing-codepoints",
+                f"Missing required codepoints:\n\n{bullet_list(config, missing)}",
+            ),
         )

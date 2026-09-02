@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -16,11 +16,18 @@ def check_cff_call_depth(font):
 
     if analysis.glyphs_exceed_max or analysis.glyphs_recursion_errors:
         for gn in analysis.glyphs_exceed_max:
-            yield FAIL, Message(
-                "max-depth",
-                f'Subroutine call depth exceeded maximum of 10 for glyph "{gn}".',
+            yield (
+                FAIL,
+                Message(
+                    "max-depth",
+                    f'Subroutine call depth exceeded maximum of 10 for glyph "{gn}".',
+                ),
             )
         for gn in analysis.glyphs_recursion_errors:
-            yield FAIL, Message(
-                "recursion-error", f'Recursion error while decompiling glyph "{gn}".'
+            yield (
+                FAIL,
+                Message(
+                    "recursion-error",
+                    f'Recursion error while decompiling glyph "{gn}".',
+                ),
             )

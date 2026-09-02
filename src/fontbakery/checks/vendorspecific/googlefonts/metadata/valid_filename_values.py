@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -29,8 +29,11 @@ def check_metadata_valid_filename_values(font, family_metadata):
             break
 
     if not passed:
-        yield FAIL, Message(
-            "bad-field",
-            f"None of the METADATA.pb filename fields match"
-            f' correct font name format ("{expected}").',
+        yield (
+            FAIL,
+            Message(
+                "bad-field",
+                f"None of the METADATA.pb filename fields match"
+                f' correct font name format ("{expected}").',
+            ),
         )

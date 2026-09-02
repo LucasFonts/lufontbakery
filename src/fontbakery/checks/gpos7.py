@@ -36,6 +36,9 @@ def check_gpos7(ttFont):
         yield PASS, "Font has no GPOS7 lookups"
         return
 
-    yield WARN, Message(
-        "has-gpos7", "Font contains a GPOS7 lookup which is not processed by macOS"
+    yield (
+        WARN,
+        Message(
+            "has-gpos7", "Font contains a GPOS7 lookup which is not processed by macOS"
+        ),
     )

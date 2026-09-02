@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 from fontbakery.utils import all_kerning, bullet_list
 
 
@@ -36,11 +36,14 @@ def check_varfont_duplexed_axis_reflow(font, ttFont, config):
 
     for duplexed_axis, bad_glyphs in bad_glyphs_by_axis.items():
         bad_glyphs_list = bullet_list(config, sorted(bad_glyphs))
-        yield FAIL, Message(
-            f"{duplexed_axis.lower()}-causes-reflow",
-            f"The following glyphs have variation in horizontal"
-            f" advance due to duplexed axis {duplexed_axis}:\n"
-            f"{bad_glyphs_list}",
+        yield (
+            FAIL,
+            Message(
+                f"{duplexed_axis.lower()}-causes-reflow",
+                f"The following glyphs have variation in horizontal"
+                f" advance due to duplexed axis {duplexed_axis}:\n"
+                f"{bad_glyphs_list}",
+            ),
         )
 
     # Determine if any kerning rules vary the horizontal advance.
@@ -75,10 +78,13 @@ def check_varfont_duplexed_axis_reflow(font, ttFont, config):
                             if region in effective_regions
                         ]
                         if any(x for x in effective_deltas):
-                            yield FAIL, Message(
-                                "duplexed-kern-causes-reflow",
-                                f"Kerning rules cause variation in"
-                                f" horizontal advance on a duplexed axis"
-                                f" (e.g. {left}/{right})",
+                            yield (
+                                FAIL,
+                                Message(
+                                    "duplexed-kern-causes-reflow",
+                                    f"Kerning rules cause variation in"
+                                    f" horizontal advance on a duplexed axis"
+                                    f" (e.g. {left}/{right})",
+                                ),
                             )
                             break

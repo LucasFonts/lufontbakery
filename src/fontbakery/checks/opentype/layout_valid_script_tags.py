@@ -1,6 +1,6 @@
 from opentypespec.tags import SCRIPT_TAGS
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import script_tags
 
 
@@ -21,8 +21,11 @@ def check_layout_valid_script_tags(ttFont):
         if tag not in SCRIPT_TAGS.keys():
             bad_tags.add(tag)
     if bad_tags:
-        yield FAIL, Message(
-            "bad-script-tags",
-            "The following invalid script tags were found in the font: "
-            + ", ".join(sorted(bad_tags)),
+        yield (
+            FAIL,
+            Message(
+                "bad-script-tags",
+                "The following invalid script tags were found in the font: "
+                + ", ".join(sorted(bad_tags)),
+            ),
         )

@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -18,9 +18,12 @@ def check_metadata_family_directory_name(family_metadata, family_directory):
     dir_name = os.path.basename(family_directory)
     expected = family_metadata.name.replace(" ", "").lower()
     if expected != dir_name:
-        yield FAIL, Message(
-            "bad-directory-name",
-            f'Family name on METADATA.pb is "{family_metadata.name}"\n'
-            f'Directory name is "{dir_name}"\n'
-            f'Expected "{expected}"',
+        yield (
+            FAIL,
+            Message(
+                "bad-directory-name",
+                f'Family name on METADATA.pb is "{family_metadata.name}"\n'
+                f'Directory name is "{dir_name}"\n'
+                f'Expected "{expected}"',
+            ),
         )

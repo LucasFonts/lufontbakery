@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -40,9 +40,12 @@ def check_glyf_non_transformed_duplicate_components(ttFont, config):
                 seen.append(comp_info)
     if failed:
         formatted_list = "\t* " + pretty_print_list(config, failed, sep="\n\t* ")
-        yield FAIL, Message(
-            "found-duplicates",
-            f"The following glyphs have duplicate components which"
-            f" have the same x,y coordinates:\n"
-            f"{formatted_list}",
+        yield (
+            FAIL,
+            Message(
+                "found-duplicates",
+                f"The following glyphs have duplicate components which"
+                f" have the same x,y coordinates:\n"
+                f"{formatted_list}",
+            ),
         )

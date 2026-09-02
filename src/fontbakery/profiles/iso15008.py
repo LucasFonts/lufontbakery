@@ -1,6 +1,7 @@
 """
 Checks for suitability for in-car displays (ISO 15008).
 """
+
 PROFILE = {
     "sections": {
         "ISO15008": [

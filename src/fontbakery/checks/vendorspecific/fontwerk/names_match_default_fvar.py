@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, INFO, Message
+from fontbakery.prelude import FAIL, INFO, Message, check
 
 
 @check(
@@ -23,8 +23,11 @@ def check_names_match_default_fvar(ttFont):
             break
 
     if default_name_id is None:
-        yield FAIL, Message(
-            "missing-default-name-id", "fvar is missing a default instance name ID."
+        yield (
+            FAIL,
+            Message(
+                "missing-default-name-id", "fvar is missing a default instance name ID."
+            ),
         )
         return
 
@@ -32,10 +35,13 @@ def check_names_match_default_fvar(ttFont):
     subfam_name = ttFont["name"].getDebugName(default_name_id)
 
     if subfam_name is None:
-        yield FAIL, Message(
-            "missing-name-id",
-            f"Name ID {default_name_id} stored in"
-            f" fvar instance is missing in name table.",
+        yield (
+            FAIL,
+            Message(
+                "missing-name-id",
+                f"Name ID {default_name_id} stored in"
+                f" fvar instance is missing in name table.",
+            ),
         )
         return
 
@@ -55,10 +61,13 @@ def check_names_match_default_fvar(ttFont):
             (NameID.TYPOGRAPHIC_FAMILY_NAME, NameID.TYPOGRAPHIC_SUBFAMILY_NAME),
         ]:
             if [name_fam, name_subfam] == [None, None]:
-                yield INFO, Message(
-                    "missing-name-ids",
-                    f"It's not a requirement that a font has "
-                    f"to have these name IDs {fam_id} and {subfam_id}.",
+                yield (
+                    INFO,
+                    Message(
+                        "missing-name-ids",
+                        f"It's not a requirement that a font has "
+                        f"to have these name IDs {fam_id} and {subfam_id}.",
+                    ),
                 )
                 continue
 
@@ -72,8 +81,11 @@ def check_names_match_default_fvar(ttFont):
                 possible_names.append(name_fam)
 
             if default_name not in possible_names:
-                yield FAIL, Message(
-                    "bad-name",
-                    f"Name {possible_names} does not match fvar"
-                    f" default name '{default_name}'",
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-name",
+                        f"Name {possible_names} does not match fvar"
+                        f" default name '{default_name}'",
+                    ),
                 )

@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, Message, check
 from fontbakery.utils import exit_with_install_instructions
 
 
@@ -35,8 +35,12 @@ def check_canonical_filename(ttFont):
     expected_filename = axisregistry.build_filename(ttFont)
 
     if current_filename != expected_filename:
-        yield FAIL, Message(
-            "bad-filename", f'Expected "{expected_filename}. Got {current_filename}.'
+        yield (
+            FAIL,
+            Message(
+                "bad-filename",
+                f'Expected "{expected_filename}. Got {current_filename}.',
+            ),
         )
     else:
         yield PASS, f'Font filename is correct, "{current_filename}".'

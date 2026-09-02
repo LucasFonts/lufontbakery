@@ -1,7 +1,7 @@
 import re
 
 from fontbakery.constants import NameID
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -38,21 +38,27 @@ def check_name_char_restrictions(ttFont):
             if restrictions[name.nameID].search(string):
                 bad_entries.append(name)
                 badstring = string.encode("ascii", errors="xmlcharrefreplace")
-                yield FAIL, Message(
-                    "bad-string",
-                    (
-                        f"Bad string at"
-                        f" [nameID {name.nameID}, platformID {name.platformID},"
-                        f" langID {name.langID}, encoding '{name.getEncoding()}']:"
-                        f" '{badstring}'"
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-string",
+                        (
+                            f"Bad string at"
+                            f" [nameID {name.nameID}, platformID {name.platformID},"
+                            f" langID {name.langID}, encoding '{name.getEncoding()}']:"
+                            f" '{badstring}'"
+                        ),
                     ),
                 )
     if len(bad_entries) > 0:
-        yield FAIL, Message(
-            "bad-strings",
-            (
-                f"There are {len(bad_entries)} strings containing"
-                " disallowed characters in the restricted"
-                " NAME table entries."
+        yield (
+            FAIL,
+            Message(
+                "bad-strings",
+                (
+                    f"There are {len(bad_entries)} strings containing"
+                    " disallowed characters in the restricted"
+                    " NAME table entries."
+                ),
             ),
         )

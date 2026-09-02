@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -17,17 +17,20 @@ def check_stylisticset_description(ttFont):
         for record in range(ttFont["GSUB"].table.FeatureList.FeatureCount):
             feature = ttFont["GSUB"].table.FeatureList.FeatureRecord[record]
             tag = feature.FeatureTag
-            SSETS = [f"ss{n+1:02d}" for n in range(20)]
+            SSETS = [f"ss{n + 1:02d}" for n in range(20)]
             assert "ss00" not in SSETS
             assert "ss01" in SSETS
             assert "ss20" in SSETS
             assert "ss21" not in SSETS
             if tag in SSETS:
                 if feature.Feature.FeatureParams is None:
-                    yield WARN, Message(
-                        "missing-description",
-                        f"The stylistic set {tag} lacks"
-                        f" a description string on the 'name' table.",
+                    yield (
+                        WARN,
+                        Message(
+                            "missing-description",
+                            f"The stylistic set {tag} lacks"
+                            f" a description string on the 'name' table.",
+                        ),
                     )
                 else:
                     # TODO: Maybe here we can add code to make sure

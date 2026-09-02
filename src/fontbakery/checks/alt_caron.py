@@ -1,4 +1,4 @@
-from fontbakery.prelude import PASS, FAIL, WARN, Message, check
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 
 
 @check(
@@ -54,17 +54,23 @@ def check_alt_caron(ttFont):
         if reverseCmap.get(name, set()).intersection(CARON_GLYPHS):
             glyph = ttFont["glyf"][name]
             if not glyph.isComposite():
-                yield WARN, Message(
-                    "decomposed-outline",
-                    f"{name} is decomposed and therefore could not be checked."
-                    f" Please check manually.",
+                yield (
+                    WARN,
+                    Message(
+                        "decomposed-outline",
+                        f"{name} is decomposed and therefore could not be checked."
+                        f" Please check manually.",
+                    ),
                 )
                 continue
             if len(glyph.components) == 1:
-                yield WARN, Message(
-                    "single-component",
-                    f"{name} is composed of a single component and therefore"
-                    f" could not be checked. Please check manually.",
+                yield (
+                    WARN,
+                    Message(
+                        "single-component",
+                        f"{name} is composed of a single component and therefore"
+                        f" could not be checked. Please check manually.",
+                    ),
                 )
             if len(glyph.components) > 1:
                 for component in glyph.components:
@@ -78,15 +84,22 @@ def check_alt_caron(ttFont):
                     )
                     if codepoints.intersection(WRONG_CARON_MARKS):
                         passed = False
-                        yield FAIL, Message(
-                            "wrong-mark",
-                            f"{name} uses component {component.glyphName}.",
+                        yield (
+                            FAIL,
+                            Message(
+                                "wrong-mark",
+                                f"{name} uses component {component.glyphName}.",
+                            ),
                         )
 
                     # Uses bad mark
                     if codepoints.intersection(BAD_CARON_MARKS):
-                        yield WARN, Message(
-                            "bad-mark", f"{name} uses component {component.glyphName}."
+                        yield (
+                            WARN,
+                            Message(
+                                "bad-mark",
+                                f"{name} uses component {component.glyphName}.",
+                            ),
                         )
     if passed:
         yield PASS, "Looks good!"

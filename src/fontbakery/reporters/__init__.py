@@ -7,14 +7,15 @@ domains as well.
 Domain specific knowledge should be encoded only in the Profile (Checks,
 Conditions) and MAYBE in *customized* reporters e.g. subclasses.
 """
+
 from collections import Counter, defaultdict
-from typing import Iterable, Optional
 from dataclasses import dataclass
+from typing import Iterable, Optional
 
 from fontbakery.checkrunner import CheckRunner
-from fontbakery.status import Status
 from fontbakery.errors import ProtocolViolationError
 from fontbakery.result import CheckResult, Identity
+from fontbakery.status import Status
 
 
 @dataclass

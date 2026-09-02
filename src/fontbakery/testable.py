@@ -2,7 +2,7 @@ import os
 from collections import defaultdict
 from dataclasses import dataclass, field
 from functools import cached_property
-from typing import Optional, List
+from typing import List, Optional
 
 from fontTools.ttLib import TTFont
 
@@ -88,8 +88,8 @@ class Font(Testable):
 
     @cached_property
     def family(self):
-        from fontbakery.utils import get_name_entry_strings
         from fontbakery.constants import NameID
+        from fontbakery.utils import get_name_entry_strings
 
         ttFont = self.ttFont
         familynames = get_name_entry_strings(ttFont, NameID.FONT_FAMILY_NAME)
@@ -248,8 +248,8 @@ class Font(Testable):
     def is_bold(self):
         from fontbakery.constants import FsSelection, MacStyle
         from fontbakery.utils import (
-            keyword_in_full_font_name,
             bold_adjacent_styles_in_full_font_name,
+            keyword_in_full_font_name,
         )
 
         ttFont = self.ttFont
@@ -299,7 +299,8 @@ class CheckRunContext:
     @property  # Can't cache a map
     def ttFonts(self):
         return map(
-            lambda font: font.ttFont, self.fonts  # pytype: disable=attribute-error
+            lambda font: font.ttFont,
+            self.fonts,  # pytype: disable=attribute-error
         )
 
     @cached_property

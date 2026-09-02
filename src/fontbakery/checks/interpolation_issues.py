@@ -111,8 +111,11 @@ def check_interpolation_issues(ttFont, config):
     if not report:
         yield PASS, "No interpolation issues found"
     else:
-        yield WARN, Message(
-            "interpolation-issues",
-            f"Interpolation issues were found in the font:\n\n"
-            f"{bullet_list(config, report)}",
+        yield (
+            WARN,
+            Message(
+                "interpolation-issues",
+                f"Interpolation issues were found in the font:\n\n"
+                f"{bullet_list(config, report)}",
+            ),
         )

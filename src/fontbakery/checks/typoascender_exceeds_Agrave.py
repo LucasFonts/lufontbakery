@@ -1,5 +1,6 @@
 from fontTools.pens.boundsPen import BoundsPen
-from fontbakery.prelude import check, Message, PASS, FAIL, WARN, SKIP
+
+from fontbakery.prelude import FAIL, PASS, SKIP, WARN, Message, check
 
 
 @check(
@@ -36,9 +37,12 @@ def check_typoascender_exceeds_Agrave(ttFont):
     glyphset = ttFont_copy.getGlyphSet()
 
     if "Agrave" not in glyphset and "uni00C0" not in glyphset:
-        yield SKIP, Message(
-            "lacks-Agrave",
-            "Font file lacks the /Agrave, so it can’t be compared with typoAscender",
+        yield (
+            SKIP,
+            Message(
+                "lacks-Agrave",
+                "Font file lacks the /Agrave, so it can’t be compared with typoAscender",
+            ),
         )
         return
 
@@ -54,10 +58,13 @@ def check_typoascender_exceeds_Agrave(ttFont):
     typoAscender = ttFont_copy["OS/2"].sTypoAscender
 
     if typoAscender < yMax:
-        yield WARN, Message(
-            "typoAscender",
-            f"OS/2.sTypoAscender value should be greater than {yMax},"
-            f" but got {typoAscender} instead",
+        yield (
+            WARN,
+            Message(
+                "typoAscender",
+                f"OS/2.sTypoAscender value should be greater than {yMax},"
+                f" but got {typoAscender} instead",
+            ),
         )
     else:
         yield PASS, "OS/2.sTypoAscender value is greater than the yMax of /Agrave."

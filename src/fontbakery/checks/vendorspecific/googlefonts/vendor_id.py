@@ -1,5 +1,5 @@
 from fontbakery.checks.vendorspecific.googlefonts.utils import registered_vendor_ids
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -41,19 +41,28 @@ def check_vendor_id(ttFont):
     vid = ttFont["OS/2"].achVendID
     bad_vids = ["UKWN", "ukwn", "PfEd", "PYRS"]
     if vid is None:
-        yield WARN, Message(
-            "not-set",
-            f"OS/2 VendorID is not set." f" {SUGGEST_MICROSOFT_VENDORLIST_WEBSITE}",
+        yield (
+            WARN,
+            Message(
+                "not-set",
+                f"OS/2 VendorID is not set. {SUGGEST_MICROSOFT_VENDORLIST_WEBSITE}",
+            ),
         )
     elif vid in bad_vids:
-        yield WARN, Message(
-            "bad",
-            f"OS/2 VendorID is '{vid}', a font editor default."
-            f" {SUGGEST_MICROSOFT_VENDORLIST_WEBSITE}",
+        yield (
+            WARN,
+            Message(
+                "bad",
+                f"OS/2 VendorID is '{vid}', a font editor default."
+                f" {SUGGEST_MICROSOFT_VENDORLIST_WEBSITE}",
+            ),
         )
     elif vid not in registered_vendor_ids().keys():
-        yield WARN, Message(
-            "unknown",
-            f"OS/2 VendorID value '{vid}' is not yet recognized."
-            f" {SUGGEST_MICROSOFT_VENDORLIST_WEBSITE}",
+        yield (
+            WARN,
+            Message(
+                "unknown",
+                f"OS/2 VendorID value '{vid}' is not yet recognized."
+                f" {SUGGEST_MICROSOFT_VENDORLIST_WEBSITE}",
+            ),
         )

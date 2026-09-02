@@ -1,8 +1,8 @@
 import os
 
-from fontbakery.prelude import check, Message, PASS, FATAL, SKIP
-from fontbakery.utils import exit_with_install_instructions
 from fontbakery.checks.vendorspecific.googlefonts.utils import get_FamilyProto_Message
+from fontbakery.prelude import FATAL, PASS, SKIP, Message, check
+from fontbakery.utils import exit_with_install_instructions
 
 
 @check(
@@ -26,13 +26,19 @@ def check_metadata_parses(family_directory):
         get_FamilyProto_Message(pb_file)
         yield PASS, "METADATA.pb parsed successfuly."
     except text_format.ParseError as e:
-        yield FATAL, Message(
-            "parsing-error",
-            f"Family metadata at {family_directory} failed to parse.\n"
-            f"TRACEBACK:\n{e}",
+        yield (
+            FATAL,
+            Message(
+                "parsing-error",
+                f"Family metadata at {family_directory} failed to parse.\n"
+                f"TRACEBACK:\n{e}",
+            ),
         )
     except FileNotFoundError:
-        yield SKIP, Message(
-            "file-not-found",
-            f"Font family at '{family_directory}' lacks a METADATA.pb file.",
+        yield (
+            SKIP,
+            Message(
+                "file-not-found",
+                f"Font family at '{family_directory}' lacks a METADATA.pb file.",
+            ),
         )

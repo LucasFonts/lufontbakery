@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -18,8 +18,11 @@ def check_repo_upstream_yaml_has_required_fields(upstream_yaml):
 
     missing_fields = required_fields - upstream_fields
     if missing_fields:
-        yield FAIL, Message(
-            "missing-fields",
-            f"The upstream.yaml file is missing the following fields:"
-            f" {list(missing_fields)}",
+        yield (
+            FAIL,
+            Message(
+                "missing-fields",
+                f"The upstream.yaml file is missing the following fields:"
+                f" {list(missing_fields)}",
+            ),
         )

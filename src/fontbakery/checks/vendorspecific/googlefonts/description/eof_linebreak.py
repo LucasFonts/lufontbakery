@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -18,8 +18,11 @@ from fontbakery.prelude import check, Message, WARN
 def check_description_eof_linebreak(description):
     """DESCRIPTION.en_us.html should end in a linebreak."""
     if description[-1] != "\n":
-        yield WARN, Message(
-            "missing-eof-linebreak",
-            "The last characther on DESCRIPTION.en_us.html"
-            " is not a line-break. Please add it.",
+        yield (
+            WARN,
+            Message(
+                "missing-eof-linebreak",
+                "The last characther on DESCRIPTION.en_us.html"
+                " is not a line-break. Please add it.",
+            ),
         )

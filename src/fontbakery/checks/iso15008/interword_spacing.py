@@ -1,11 +1,11 @@
 from fontTools.pens.boundsPen import BoundsPen
 
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery.checks.iso15008.utils import (
-    xheight_intersections,
-    pair_kerning,
     DISCLAIMER,
+    pair_kerning,
+    xheight_intersections,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -36,9 +36,12 @@ def check_iso15008_interword_spacing(font, ttFont):
 
     l_intersections = xheight_intersections(ttFont_copy, "l")
     if len(l_intersections) < 2:
-        yield FAIL, Message(
-            "glyph-not-present",
-            "There was no 'l' glyph in the font, so the spacing could not be tested",
+        yield (
+            FAIL,
+            Message(
+                "glyph-not-present",
+                "There was no 'l' glyph in the font, so the spacing could not be tested",
+            ),
         )
         return
 
@@ -61,8 +64,11 @@ def check_iso15008_interword_spacing(font, ttFont):
     space_width += m_rsb + n_lsb
 
     if not 2.50 <= space_width / l_m <= 3.0:
-        yield FAIL, Message(
-            "bad-interword-spacing",
-            f"The interword space ({space_width}) was"
-            f" outside the recommended range ({l_m*2.5}-{l_m*3.0})",
+        yield (
+            FAIL,
+            Message(
+                "bad-interword-spacing",
+                f"The interword space ({space_width}) was"
+                f" outside the recommended range ({l_m * 2.5}-{l_m * 3.0})",
+            ),
         )

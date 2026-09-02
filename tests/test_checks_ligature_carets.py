@@ -1,12 +1,12 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
 from fontbakery.codetesting import (
+    TEST_FILE,
     # assert_PASS,  FIXME: We must also have PASS test-cases!
     assert_results_contain,
-    TEST_FILE,
 )
-from fontbakery.status import WARN, SKIP
+from fontbakery.status import SKIP, WARN
 
 
 @check_id("ligature_carets")
@@ -22,8 +22,7 @@ def test_check_ligature_carets(check):
     ttFont = TTFont(TEST_FILE("source-sans-pro/OTF/SourceSansPro-Bold.otf"))
     msg = assert_results_contain(check(ttFont), WARN, "lacks-caret-pos")
     assert msg == (
-        "This font lacks caret position values"
-        " for ligature glyphs on its GDEF table."
+        "This font lacks caret position values for ligature glyphs on its GDEF table."
     )
 
     # TODO:

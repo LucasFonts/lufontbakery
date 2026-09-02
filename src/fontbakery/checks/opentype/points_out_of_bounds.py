@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -35,16 +35,19 @@ def check_points_out_of_bounds(ttFont, config):
 
     if not passed:
         formatted_list = "\t* " + pretty_print_list(config, out_of_bounds, sep="\n\t* ")
-        yield WARN, Message(
-            "points-out-of-bounds",
-            f"The following glyphs have coordinates"
-            f" which are out of bounds:\n"
-            f"{formatted_list}\n"
-            f"\n"
-            f"This happens a lot when points are not extremes,"
-            f" which is usually bad. However, fixing this alert"
-            f" by adding points on extremes may do more harm"
-            f" than good, especially with italics,"
-            f" calligraphic-script, handwriting, rounded and"
-            f" other fonts. So it is common to ignore this message.",
+        yield (
+            WARN,
+            Message(
+                "points-out-of-bounds",
+                f"The following glyphs have coordinates"
+                f" which are out of bounds:\n"
+                f"{formatted_list}\n"
+                f"\n"
+                f"This happens a lot when points are not extremes,"
+                f" which is usually bad. However, fixing this alert"
+                f" by adding points on extremes may do more harm"
+                f" than good, especially with italics,"
+                f" calligraphic-script, handwriting, rounded and"
+                f" other fonts. So it is common to ignore this message.",
+            ),
         )

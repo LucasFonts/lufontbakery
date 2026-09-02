@@ -27,10 +27,13 @@ def check_metadata_unsupported_subsets(family_metadata, ttFont, font_codepoints)
             continue
 
         if subset not in ListSubsets():
-            yield FAIL, Message(
-                "unknown-subset",
-                f"Please remove the unrecognized subset '{subset}'"
-                f" from the METADATA.pb file.",
+            yield (
+                FAIL,
+                Message(
+                    "unknown-subset",
+                    f"Please remove the unrecognized subset '{subset}'"
+                    f" from the METADATA.pb file.",
+                ),
             )
             continue
 
@@ -39,8 +42,11 @@ def check_metadata_unsupported_subsets(family_metadata, ttFont, font_codepoints)
         subset_codepoints -= set([0, 13, 32, 160])
 
         if len(subset_codepoints.intersection(font_codepoints)) == 0:
-            yield FAIL, Message(
-                "unsupported-subset",
-                f"Please remove '{subset}' from METADATA.pb since none"
-                f" of its glyphs are supported by this font file.",
+            yield (
+                FAIL,
+                Message(
+                    "unsupported-subset",
+                    f"Please remove '{subset}' from METADATA.pb since none"
+                    f" of its glyphs are supported by this font file.",
+                ),
             )

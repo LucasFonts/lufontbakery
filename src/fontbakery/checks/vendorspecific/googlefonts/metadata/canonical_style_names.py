@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 
 
 @check(
@@ -18,18 +18,27 @@ from fontbakery.prelude import check, Message, FAIL, SKIP
 def check_metadata_canonical_style_names(font, font_metadata):
     """METADATA.pb: Font styles are named canonically?"""
     if font_metadata.style not in ["italic", "normal"]:
-        yield SKIP, (
-            "This check only applies to font styles declared"
-            ' as "italic" or "normal" on METADATA.pb.'
+        yield (
+            SKIP,
+            (
+                "This check only applies to font styles declared"
+                ' as "italic" or "normal" on METADATA.pb.'
+            ),
         )
     else:
         if font.is_italic and font_metadata.style != "italic":
-            yield FAIL, Message(
-                "italic",
-                f'The font style is "{font_metadata.style}" but it should be "italic".',
+            yield (
+                FAIL,
+                Message(
+                    "italic",
+                    f'The font style is "{font_metadata.style}" but it should be "italic".',
+                ),
             )
         elif not font.is_italic and font_metadata.style != "normal":
-            yield FAIL, Message(
-                "normal",
-                f'The font style is "{font_metadata.style}" but it should be "normal".',
+            yield (
+                FAIL,
+                Message(
+                    "normal",
+                    f'The font style is "{font_metadata.style}" but it should be "normal".',
+                ),
             )

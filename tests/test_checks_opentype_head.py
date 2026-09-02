@@ -1,16 +1,15 @@
-from fontTools.ttLib import TTFont
 import pytest
-
 from conftest import check_id
-from fontbakery.status import WARN, FAIL, PASS, SKIP
+from fontTools.ttLib import TTFont
+
 from fontbakery.codetesting import (
-    assert_PASS,
-    assert_SKIP,
-    assert_results_contain,
     TEST_FILE,
     MockFont,
+    assert_PASS,
+    assert_results_contain,
+    assert_SKIP,
 )
-
+from fontbakery.status import FAIL, PASS, SKIP, WARN
 
 mada_fonts = [
     TEST_FILE("mada/Mada-Black.ttf"),
@@ -98,8 +97,9 @@ def test_check_unitsperem(check):
 
 def test_parse_version_string():
     """Checking font version fields."""
-    from fontbakery.checks.opentype.font_version import parse_version_string
     import fractions
+
+    from fontbakery.checks.opentype.font_version import parse_version_string
 
     version_tests_good = {
         "Version 01.234": fractions.Fraction("1.234"),

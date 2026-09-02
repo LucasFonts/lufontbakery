@@ -1,11 +1,13 @@
-import pkgutil
-import fontbakery
-from importlib import import_module
-from fontbakery.profile import get_module_profile
 import json
+import pkgutil
+import re
+from importlib import import_module
+
 import cmarkgfm
 from cmarkgfm.cmark import Options as cmarkgfmOptions
-import re
+
+import fontbakery
+from fontbakery.profile import get_module_profile
 
 
 def md2html(x):

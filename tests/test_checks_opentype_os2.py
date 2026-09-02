@@ -1,21 +1,20 @@
 import io
 import os
-import pytest
 
-import fontTools.ttLib
-from fontTools.ttLib import TTFont
 import fontTools.subset
-
+import fontTools.ttLib
+import pytest
 from conftest import check_id
-from fontbakery.status import INFO, WARN, FAIL, PASS, FATAL
-from fontbakery.codetesting import (
-    assert_PASS,
-    assert_SKIP,
-    assert_results_contain,
-    portable_path,
-    TEST_FILE,
-)
+from fontTools.ttLib import TTFont
 
+from fontbakery.codetesting import (
+    TEST_FILE,
+    assert_PASS,
+    assert_results_contain,
+    assert_SKIP,
+    portable_path,
+)
+from fontbakery.status import FAIL, FATAL, INFO, PASS, WARN
 
 mada_fonts = [
     TEST_FILE("mada/Mada-Black.ttf"),

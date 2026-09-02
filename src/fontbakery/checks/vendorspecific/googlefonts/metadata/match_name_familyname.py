@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -17,9 +17,12 @@ from fontbakery.prelude import check, Message, FAIL
 def check_metadata_match_name_familyname(family_metadata, font_metadata):
     """METADATA.pb: Check font name is the same as family name."""
     if font_metadata.name != family_metadata.name:
-        yield FAIL, Message(
-            "mismatch",
-            f"METADATA.pb: {font_metadata.filename}:\n"
-            f' Family name "{family_metadata.name}" does not match'
-            f' font name: "{font_metadata.name}"',
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f"METADATA.pb: {font_metadata.filename}:\n"
+                f' Family name "{family_metadata.name}" does not match'
+                f' font name: "{font_metadata.name}"',
+            ),
         )

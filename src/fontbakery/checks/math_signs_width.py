@@ -65,11 +65,14 @@ def check_math_signs_width(ttFont):
             if not w == most_common_width:
                 outliers_summary.append(f"Width = {w}:\n{', '.join(names)}\n")
         outliers_summary = "\n".join(outliers_summary)
-        yield WARN, Message(
-            "width-outliers",
-            f"The most common width is {most_common_width} among a set of {num_glyphs}"
-            " math glyphs.\nThe following math glyphs have a different width, though:"
-            f"\n\n{outliers_summary}",
+        yield (
+            WARN,
+            Message(
+                "width-outliers",
+                f"The most common width is {most_common_width} among a set of {num_glyphs}"
+                " math glyphs.\nThe following math glyphs have a different width, though:"
+                f"\n\n{outliers_summary}",
+            ),
         )
     else:
         yield PASS, "Looks good."

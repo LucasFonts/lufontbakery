@@ -1,11 +1,11 @@
-from fontbakery.prelude import check, Message, FAIL
-from fontbakery.utils import typo_metrics_enabled
 from fontbakery.constants import (
     NameID,
     PlatformID,
     UnicodeEncodingID,
     WindowsLanguageID,
 )
+from fontbakery.prelude import FAIL, Message, check
+from fontbakery.utils import typo_metrics_enabled
 
 
 @check(
@@ -42,15 +42,21 @@ def check_vertical_metrics_regressions(regular_ttFont, font):
     ttFont = regular_ttFont
 
     if not ttFont:
-        yield FAIL, Message(
-            "couldnt-find-local-regular",
-            "Could not identify a local Regular style font",
+        yield (
+            FAIL,
+            Message(
+                "couldnt-find-local-regular",
+                "Could not identify a local Regular style font",
+            ),
         )
         return
     if not gf_ttFont:
-        yield FAIL, Message(
-            "couldnt-find-remote-regular",
-            "Could not identify a Regular style font hosted on Google Fonts",
+        yield (
+            FAIL,
+            Message(
+                "couldnt-find-remote-regular",
+                "Could not identify a Regular style font hosted on Google Fonts",
+            ),
         )
         return
 
@@ -61,10 +67,13 @@ def check_vertical_metrics_regressions(regular_ttFont, font):
 
     if gf_has_typo_metrics:
         if not ttFont_has_typo_metrics:
-            yield FAIL, Message(
-                "bad-fsselection-bit7",
-                "fsSelection bit 7 needs to be enabled because "
-                "the family on Google Fonts has it enabled.",
+            yield (
+                FAIL,
+                Message(
+                    "bad-fsselection-bit7",
+                    "fsSelection bit 7 needs to be enabled because "
+                    "the family on Google Fonts has it enabled.",
+                ),
             )
             # faux enable it so we can see which metrics also need changing
             ttFont_has_typo_metrics = True
@@ -81,11 +90,14 @@ def check_vertical_metrics_regressions(regular_ttFont, font):
             math.ceil(ttFont["OS/2"].usWinDescent),
         ):
             if not ttFont_has_typo_metrics:
-                yield FAIL, Message(
-                    "bad-fsselection-bit7",
-                    "fsSelection bit 7 needs to be enabled "
-                    "because the win metrics differ from "
-                    "the family on Google Fonts.",
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-fsselection-bit7",
+                        "fsSelection bit 7 needs to be enabled "
+                        "because the win metrics differ from "
+                        "the family on Google Fonts.",
+                    ),
                 )
                 ttFont_has_typo_metrics = True
         expected_ascender = math.ceil(gf_ttFont["OS/2"].usWinAscent * upm_scale)
@@ -107,33 +119,45 @@ def check_vertical_metrics_regressions(regular_ttFont, font):
     hhea_descender = ttFont["hhea"].descent
 
     if typo_ascender != expected_ascender:
-        yield FAIL, Message(
-            "bad-typo-ascender",
-            f"{full_font_name}:"
-            f" OS/2 sTypoAscender is {typo_ascender}"
-            f" when it should be {expected_ascender}",
+        yield (
+            FAIL,
+            Message(
+                "bad-typo-ascender",
+                f"{full_font_name}:"
+                f" OS/2 sTypoAscender is {typo_ascender}"
+                f" when it should be {expected_ascender}",
+            ),
         )
 
     if typo_descender != expected_descender:
-        yield FAIL, Message(
-            "bad-typo-descender",
-            f"{full_font_name}:"
-            f" OS/2 sTypoDescender is {typo_descender}"
-            f" when it should be {expected_descender}",
+        yield (
+            FAIL,
+            Message(
+                "bad-typo-descender",
+                f"{full_font_name}:"
+                f" OS/2 sTypoDescender is {typo_descender}"
+                f" when it should be {expected_descender}",
+            ),
         )
 
     if hhea_ascender != expected_ascender:
-        yield FAIL, Message(
-            "bad-hhea-ascender",
-            f"{full_font_name}:"
-            f" hhea Ascender is {hhea_ascender}"
-            f" when it should be {expected_ascender}",
+        yield (
+            FAIL,
+            Message(
+                "bad-hhea-ascender",
+                f"{full_font_name}:"
+                f" hhea Ascender is {hhea_ascender}"
+                f" when it should be {expected_ascender}",
+            ),
         )
 
     if hhea_descender != expected_descender:
-        yield FAIL, Message(
-            "bad-hhea-descender",
-            f"{full_font_name}:"
-            f" hhea Descender is {hhea_descender}"
-            f" when it should be {expected_descender}",
+        yield (
+            FAIL,
+            Message(
+                "bad-hhea-descender",
+                f"{full_font_name}:"
+                f" hhea Descender is {hhea_descender}"
+                f" when it should be {expected_descender}",
+            ),
         )

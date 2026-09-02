@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, PASS
+from fontbakery.prelude import FAIL, PASS, check
 
 
 def parse_unicode_escape(s):
@@ -98,24 +98,36 @@ def check_tnum_glyphs_equal_widths(ttFont):
             # Shape set of characters and verify glyphs have same width
             glyphs_with_widths = verify_widths(ttFont, hbFont, check_text)
             if len(glyphs_with_widths) > 1:
-                yield FAIL, (
-                    f"tnum glyphs in instance {instance_coord_dict} "
-                    f"do not align:\n{format_glyphs_by_width(glyphs_with_widths)}"
+                yield (
+                    FAIL,
+                    (
+                        f"tnum glyphs in instance {instance_coord_dict} "
+                        f"do not align:\n{format_glyphs_by_width(glyphs_with_widths)}"
+                    ),
                 )
             else:
-                yield PASS, (
-                    f"tnum glyphs in instance {instance_coord_dict} "
-                    f"are all the same width: {next(iter(glyphs_with_widths.values()))}"  # pylint:disable=R1708
+                yield (
+                    PASS,
+                    (
+                        f"tnum glyphs in instance {instance_coord_dict} "
+                        f"are all the same width: {next(iter(glyphs_with_widths.values()))}"  # pylint:disable=R1708
+                    ),
                 )
 
     else:
         # Shape set of characters and verify glyphs have same width
         glyphs_with_widths = verify_widths(ttFont, hbFont, check_text)
         if len(glyphs_with_widths) > 1:
-            yield FAIL, (
-                f"tnum glyphs appear not to align:\n{format_glyphs_by_width(glyphs_with_widths)}"
+            yield (
+                FAIL,
+                (
+                    f"tnum glyphs appear not to align:\n{format_glyphs_by_width(glyphs_with_widths)}"
+                ),
             )
         else:
-            yield PASS, (
-                f"tnum glyphs are all the same width: {next(iter(glyphs_with_widths.values()))}"  # pylint:disable=R1708
+            yield (
+                PASS,
+                (
+                    f"tnum glyphs are all the same width: {next(iter(glyphs_with_widths.values()))}"  # pylint:disable=R1708
+                ),
             )

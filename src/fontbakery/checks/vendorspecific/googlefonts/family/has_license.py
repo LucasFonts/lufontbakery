@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import pretty_print_list
 
 
@@ -21,16 +21,22 @@ def check_family_has_license(licenses, config):
         filenames = pretty_print_list(
             config, [os.path.basename(license) for license in licenses]
         )
-        yield FAIL, Message(
-            "multiple",
-            f"More than a single license file found: {filenames}",
+        yield (
+            FAIL,
+            Message(
+                "multiple",
+                f"More than a single license file found: {filenames}",
+            ),
         )
     elif not licenses:
-        yield FAIL, Message(
-            "no-license",
-            "No license file was found."
-            " Please add an OFL.txt or a LICENSE.txt file."
-            " If you are running fontbakery on a Google Fonts"
-            " upstream repo, which is fine, just make sure"
-            " there is a temporary license file in the same folder.",
+        yield (
+            FAIL,
+            Message(
+                "no-license",
+                "No license file was found."
+                " Please add an OFL.txt or a LICENSE.txt file."
+                " If you are running fontbakery on a Google Fonts"
+                " upstream repo, which is fine, just make sure"
+                " there is a temporary license file in the same folder.",
+            ),
         )

@@ -1,5 +1,5 @@
 from fontbakery.constants import PlatformID, WindowsEncodingID, WindowsLanguageID
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -39,16 +39,22 @@ def check_varfont_duplicate_instance_names(ttFont):
             else:
                 seen.add(name)
         else:
-            yield FAIL, Message(
-                "name-record-not-found",
-                f"A 'name' table record for platformID {PLAT_ID},"
-                f" encodingID {ENC_ID}, languageID {LANG_ID}({LANG_ID:04X}),"
-                f" and nameID {name_id} was not found.",
+            yield (
+                FAIL,
+                Message(
+                    "name-record-not-found",
+                    f"A 'name' table record for platformID {PLAT_ID},"
+                    f" encodingID {ENC_ID}, languageID {LANG_ID}({LANG_ID:04X}),"
+                    f" and nameID {name_id} was not found.",
+                ),
             )
 
     if duplicate:
         duplicate_instances = "".join(f"* {inst}\n" for inst in sorted(duplicate))
-        yield FAIL, Message(
-            "duplicate-instance-names",
-            f"Following instances names are duplicate:\n\n{duplicate_instances}",
+        yield (
+            FAIL,
+            Message(
+                "duplicate-instance-names",
+                f"Following instances names are duplicate:\n\n{duplicate_instances}",
+            ),
         )

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, PASS, SKIP
+from fontbakery.prelude import FAIL, PASS, SKIP, Message, check
 
 
 @check(
@@ -30,8 +30,11 @@ def check_varfont_bold_wght_coord(font):
     elif font.bold_wght_coord == 700:
         yield PASS, "Bold:wght is 700."
     else:
-        yield FAIL, Message(
-            "wght-not-700",
-            f'The "wght" axis coordinate of the "Bold" instance must be 700.'
-            f" Got {font.bold_wght_coord} instead.",
+        yield (
+            FAIL,
+            Message(
+                "wght-not-700",
+                f'The "wght" axis coordinate of the "Bold" instance must be 700.'
+                f" Got {font.bold_wght_coord} instead.",
+            ),
         )

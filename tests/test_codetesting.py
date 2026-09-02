@@ -1,20 +1,20 @@
 import os
 
-from glyphsLib import GSFont
 import pytest
+from glyphsLib import GSFont
 
 from fontbakery.codetesting import (
+    GLYPHSAPP_TEST_FILE,
+    PATH_TEST_DATA,
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
     assert_SKIP,
-    GLYPHSAPP_TEST_FILE,
-    PATH_TEST_DATA,
     portable_path,
-    TEST_FILE,
 )
 from fontbakery.message import Message
 from fontbakery.result import Subresult
-from fontbakery.status import PASS, FAIL, ERROR, SKIP, DEBUG
+from fontbakery.status import DEBUG, ERROR, FAIL, PASS, SKIP
 
 
 def test_portable_path():

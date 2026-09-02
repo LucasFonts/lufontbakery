@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -45,16 +45,22 @@ def check_fvar_regular_coords_correct(
 
     for axis, expected, actual in REGULAR_COORDINATE_EXPECTATIONS:
         if actual is not None and actual != expected:
-            yield FAIL, Message(
-                f"{axis}-not-{expected}",
-                f"Regular instance has {axis} coordinate of {actual},"
-                f" expected {expected}",
+            yield (
+                FAIL,
+                Message(
+                    f"{axis}-not-{expected}",
+                    f"Regular instance has {axis} coordinate of {actual},"
+                    f" expected {expected}",
+                ),
             )
 
     actual = regular_opsz_coord
     if actual and not (10 <= actual <= 16):
-        yield WARN, Message(
-            "opsz",
-            f"Regular instance has opsz coordinate of {actual},"
-            f" expected between 10 and 16",
+        yield (
+            WARN,
+            Message(
+                "opsz",
+                f"Regular instance has opsz coordinate of {actual},"
+                f" expected between 10 and 16",
+            ),
         )

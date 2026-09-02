@@ -1,12 +1,12 @@
 from fontTools.pens.boundsPen import BoundsPen
 
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery.checks.iso15008.utils import (
-    xheight_intersections,
-    stem_width,
-    pair_kerning,
     DISCLAIMER,
+    pair_kerning,
+    stem_width,
+    xheight_intersections,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -49,17 +49,23 @@ def check_iso15008_intercharacter_spacing(font, ttFont):
 
     l_l = l_rsb + pair_kerning(font, "l", "l") + l_lsb
     if l_l is None:
-        yield FAIL, Message(
-            "glyph-not-present",
-            "There was no 'l' glyph in the font, so the spacing could not be tested",
+        yield (
+            FAIL,
+            Message(
+                "glyph-not-present",
+                "There was no 'l' glyph in the font, so the spacing could not be tested",
+            ),
         )
         return
     if not 1.5 <= (l_l / width) <= 2.4:
-        yield FAIL, Message(
-            "bad-vertical-vertical-spacing",
-            f"The space between vertical strokes ({l_l})"
-            f" does not conform to the expected"
-            f" range of {width * 1.5}-{width * 2.4}",
+        yield (
+            FAIL,
+            Message(
+                "bad-vertical-vertical-spacing",
+                f"The space between vertical strokes ({l_l})"
+                f" does not conform to the expected"
+                f" range of {width * 1.5}-{width * 2.4}",
+            ),
         )
 
     # For v, however, a simple LSB/RSB is adequate.
@@ -75,21 +81,30 @@ def check_iso15008_intercharacter_spacing(font, ttFont):
     l_v = l_rsb + pair_kerning(font, "l", "v") + v_lsb
 
     if l_v is None:
-        yield FAIL, Message(
-            "glyph-not-present",
-            "There was no 'v' glyph in the font, so the spacing could not be tested",
+        yield (
+            FAIL,
+            Message(
+                "glyph-not-present",
+                "There was no 'v' glyph in the font, so the spacing could not be tested",
+            ),
         )
         return
 
     if (l_v / width) <= 0.85:
-        yield FAIL, Message(
-            "bad-vertical-diagonal-spacing",
-            f"The space between vertical and diagonal strokes ({l_v})"
-            f" was less than the expected"
-            f" value of {width * 0.85}",
+        yield (
+            FAIL,
+            Message(
+                "bad-vertical-diagonal-spacing",
+                f"The space between vertical and diagonal strokes ({l_v})"
+                f" was less than the expected"
+                f" value of {width * 0.85}",
+            ),
         )
 
     if v_rsb + pair_kerning(font, "v", "v") + v_lsb <= 0:
-        yield FAIL, Message(
-            "bad-diagonal-diagonal-spacing", "Diagonal strokes (vv) were touching"
+        yield (
+            FAIL,
+            Message(
+                "bad-diagonal-diagonal-spacing", "Diagonal strokes (vv) were touching"
+            ),
         )

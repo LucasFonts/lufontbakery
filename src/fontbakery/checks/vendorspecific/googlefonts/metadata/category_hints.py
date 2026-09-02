@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -33,8 +33,11 @@ def check_metadata_category_hint(family_metadata):
         inferred_category is not None
         and inferred_category not in family_metadata.category
     ):
-        yield WARN, Message(
-            "inferred-category",
-            f'Familyname seems to hint at "{inferred_category}" but'
-            f' METADATA.pb declares it as "{family_metadata.category}".',
+        yield (
+            WARN,
+            Message(
+                "inferred-category",
+                f'Familyname seems to hint at "{inferred_category}" but'
+                f' METADATA.pb declares it as "{family_metadata.category}".',
+            ),
         )

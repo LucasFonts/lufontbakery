@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, WARN, FAIL, SKIP, Message
+from fontbakery.prelude import FAIL, SKIP, WARN, Message, check
 
 
 @check(
@@ -21,8 +21,9 @@ def check_cmap_format_12(ttFont, config):
             break
 
     if not cmap4:
-        yield FAIL, Message(
-            "no-cmap-4", "The font did not contain a format 4 cmap table"
+        yield (
+            FAIL,
+            Message("no-cmap-4", "The font did not contain a format 4 cmap table"),
         )
         return
 
@@ -32,21 +33,27 @@ def check_cmap_format_12(ttFont, config):
         skipped = False
         codepoints = subtable.cmap.keys()
         if not any(cp > 0x0FFF for cp in codepoints):
-            yield FAIL, Message(
-                "pointless-format-12",
-                "A format 12 subtable did not contain"
-                " any codepoints beyond the Basic Multilingual Plane (BMP)",
+            yield (
+                FAIL,
+                Message(
+                    "pointless-format-12",
+                    "A format 12 subtable did not contain"
+                    " any codepoints beyond the Basic Multilingual Plane (BMP)",
+                ),
             )
 
         unmapped_from_4 = set(cmap4.cmap.keys()) - set(codepoints)
         if unmapped_from_4:
             from fontbakery.utils import pretty_print_list
 
-            yield WARN, Message(
-                "unmapped-from-4",
-                f"A format 12 subtable did not the following codepoints"
-                f" mapped in the format 4 subtable:"
-                f" {pretty_print_list(config, unmapped_from_4)}",
+            yield (
+                WARN,
+                Message(
+                    "unmapped-from-4",
+                    f"A format 12 subtable did not the following codepoints"
+                    f" mapped in the format 4 subtable:"
+                    f" {pretty_print_list(config, unmapped_from_4)}",
+                ),
             )
 
     if skipped:

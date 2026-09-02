@@ -1,6 +1,6 @@
 import math
 
-from fontbakery.prelude import check, Message, PASS, WARN
+from fontbakery.prelude import PASS, WARN, Message, check
 from fontbakery.utils import bullet_list
 
 
@@ -39,12 +39,15 @@ def check_outline_semi_vertical(ttFont, outlines_dict, config):
 
     if warnings:
         formatted_list = bullet_list(config, sorted(warnings), bullet="*")
-        yield WARN, Message(
-            "found-semi-vertical",
-            f"The following glyphs have"
-            f" semi-vertical/semi-horizontal lines:\n"
-            f"\n"
-            f"{formatted_list}",
+        yield (
+            WARN,
+            Message(
+                "found-semi-vertical",
+                f"The following glyphs have"
+                f" semi-vertical/semi-horizontal lines:\n"
+                f"\n"
+                f"{formatted_list}",
+            ),
         )
     else:
         yield PASS, "No semi-horizontal/semi-vertical lines found."

@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, PASS, FAIL, INFO
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, INFO, PASS, Message, check
 
 
 @check(
@@ -13,8 +13,8 @@ from fontbakery.constants import NameID
 )
 def check_name_mandatory_entries(ttFont, style):
     """Font has all mandatory 'name' table entries?"""
-    from fontbakery.utils import get_name_entry_strings
     from fontbakery.constants import RIBBI_STYLE_NAMES
+    from fontbakery.utils import get_name_entry_strings
 
     optional_nameIDs = [
         NameID.COPYRIGHT_NOTICE,
@@ -56,29 +56,38 @@ def check_name_mandatory_entries(ttFont, style):
         for entry in get_name_entry_strings(ttFont, nameId):
             if len(entry) == 0:
                 passed = False
-                yield FAIL, Message(
-                    "missing-required-entry",
-                    f"Font lacks entry with nameId={nameId}"
-                    f" ({NameID(nameId).name})",
+                yield (
+                    FAIL,
+                    Message(
+                        "missing-required-entry",
+                        f"Font lacks entry with nameId={nameId}"
+                        f" ({NameID(nameId).name})",
+                    ),
                 )
 
     # The font should have these name IDs:
     for nameId in optional_nameIDs:
         if len(get_name_entry_strings(ttFont, nameId)) == 0:
             passed = False
-            yield INFO, Message(
-                "missing-optional-entry",
-                f"Font lacks entry with nameId={nameId} ({NameID(nameId).name})",
+            yield (
+                INFO,
+                Message(
+                    "missing-optional-entry",
+                    f"Font lacks entry with nameId={nameId} ({NameID(nameId).name})",
+                ),
             )
 
     # The font should NOT have these name IDs:
     for nameId in unnecessary_nameIDs:
         if len(get_name_entry_strings(ttFont, nameId)) != 0:
             passed = False
-            yield INFO, Message(
-                "unnecessary-entry",
-                f"Font have unnecessary name entry with nameId={nameId}"
-                f" ({NameID(nameId).name})",
+            yield (
+                INFO,
+                Message(
+                    "unnecessary-entry",
+                    f"Font have unnecessary name entry with nameId={nameId}"
+                    f" ({NameID(nameId).name})",
+                ),
             )
 
     if passed:

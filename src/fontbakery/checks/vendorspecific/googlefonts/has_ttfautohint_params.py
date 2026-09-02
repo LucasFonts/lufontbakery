@@ -1,7 +1,7 @@
 import re
 
-from fontbakery.prelude import check, Message, PASS, FAIL, SKIP
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, PASS, SKIP, Message, check
 
 
 @check(
@@ -36,14 +36,20 @@ def check_has_ttfautohint_params(ttFont):
                 yield PASS, Message("ok", f"Font has ttfautohint params ({params})")
         else:
             passed = True
-            yield SKIP, Message(
-                "not-hinted",
-                "Font appears to our heuristic as not hinted using ttfautohint.",
+            yield (
+                SKIP,
+                Message(
+                    "not-hinted",
+                    "Font appears to our heuristic as not hinted using ttfautohint.",
+                ),
             )
 
     if not passed:
-        yield FAIL, Message(
-            "lacks-ttfa-params",
-            "Font is lacking ttfautohint params on its"
-            " version strings on the name table.",
+        yield (
+            FAIL,
+            Message(
+                "lacks-ttfa-params",
+                "Font is lacking ttfautohint params on its"
+                " version strings on the name table.",
+            ),
         )

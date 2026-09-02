@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -37,8 +37,11 @@ def check_missing_small_caps_glyphs(ttFont):
                     missing = smcp_glyphs - set(ttFont.getGlyphNames())
                     if missing:
                         missing = "\n\t - " + "\n\t - ".join(missing)
-                        yield FAIL, Message(
-                            "missing-glyphs",
-                            f"These '{tag}' glyphs are missing:\n\n{missing}",
+                        yield (
+                            FAIL,
+                            Message(
+                                "missing-glyphs",
+                                f"These '{tag}' glyphs are missing:\n\n{missing}",
+                            ),
                         )
                 break

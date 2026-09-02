@@ -2,6 +2,7 @@
 """
 Checks for Adobe Fonts (formerly known as Typekit).
 """
+
 PROFILE = {
     "include_profiles": ["universal"],
     "exclude_checks": [

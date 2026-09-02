@@ -11,9 +11,9 @@ Domain specific knowledge should be encoded only in the Profile (Checks,
 Conditions) and MAYBE in *customized* reporters e.g. subclasses.
 
 """
-import inspect
 
-from functools import update_wrapper, cached_property
+import inspect
+from functools import cached_property, update_wrapper
 from typing import Callable
 
 

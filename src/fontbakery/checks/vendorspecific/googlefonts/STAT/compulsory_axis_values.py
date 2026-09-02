@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import markdown_table
 
 
@@ -105,7 +105,10 @@ def check_stat(ttFont, expected_font_names):
         yield FAIL, Message("missing-ital-axis-values", "Italic Axis Value missing.")
 
     if font_axis_values != expected_axis_values:
-        yield FAIL, Message(
-            "bad-axis-values",
-            f"Compulsory STAT Axis Values are incorrect:\n\n{md_table}\n\n",
+        yield (
+            FAIL,
+            Message(
+                "bad-axis-values",
+                f"Compulsory STAT Axis Values are incorrect:\n\n{md_table}\n\n",
+            ),
         )

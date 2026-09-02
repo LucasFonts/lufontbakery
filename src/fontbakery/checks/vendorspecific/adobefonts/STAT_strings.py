@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -38,9 +38,12 @@ def check_STAT_strings(ttFont):
             bad_values.add(f"nameID {name.nameID}: {name.toUnicode()}")
 
     if bad_values:
-        yield FAIL, Message(
-            "bad-italic",
-            f"The following AxisValue entries in the STAT table"
-            f' should not contain "Italic":\n'
-            f" {sorted(bad_values)}",
+        yield (
+            FAIL,
+            Message(
+                "bad-italic",
+                f"The following AxisValue entries in the STAT table"
+                f' should not contain "Italic":\n'
+                f" {sorted(bad_values)}",
+            ),
         )

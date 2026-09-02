@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -45,12 +45,15 @@ def check_color_cpal_brightness(config, ttFont):
                             dark_glyphs.append(key)
     if dark_glyphs:
         dark_glyphs = pretty_print_list(config, sorted(dark_glyphs))
-        yield WARN, Message(
-            "glyphs-too-dark-or-too-bright",
-            f"The following glyphs have layers that are too bright or"
-            f" too dark: {dark_glyphs}.\n"
-            f"\n"
-            f" To fix this, please either set the color definitions of all"
-            f" layers in question to current color (0xFFFF), or alter"
-            f" the brightness of these layers significantly.",
+        yield (
+            WARN,
+            Message(
+                "glyphs-too-dark-or-too-bright",
+                f"The following glyphs have layers that are too bright or"
+                f" too dark: {dark_glyphs}.\n"
+                f"\n"
+                f" To fix this, please either set the color definitions of all"
+                f" layers in question to current color (0xFFFF), or alter"
+                f" the brightness of these layers significantly.",
+            ),
         )

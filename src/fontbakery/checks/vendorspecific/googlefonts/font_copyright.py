@@ -1,10 +1,11 @@
 from collections import defaultdict
-from fontbakery.prelude import check, Message, FAIL
+
 from fontbakery.checks.vendorspecific.googlefonts.constants import (
     DESCRIPTION_OF_EXPECTED_COPYRIGHT_STRING_FORMATTING,
     EXPECTED_COPYRIGHT_PATTERN,
 )
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import show_inconsistencies
 
 
@@ -32,6 +33,7 @@ from fontbakery.utils import show_inconsistencies
 def check_font_copyright(ttFont, font_metadata, config):
     """Copyright notices match canonical pattern in fonts"""
     import re
+
     from fontbakery.utils import get_name_entry_strings
 
     copyrights = [
@@ -46,25 +48,34 @@ def check_font_copyright(ttFont, font_metadata, config):
     for source, string in copyrights:
         sources_of_copyrights[string].append(source)
         if not re.search(EXPECTED_COPYRIGHT_PATTERN, string.lower()):
-            yield FAIL, Message(
-                "bad-notice-format",
-                f"{source}: Copyright notices should match a pattern similar to:\n\n"
-                f' "Copyright 2020 The Familyname Project Authors (git url)"\n\n'
-                f'But instead we have got:\n\n"{string}"',
+            yield (
+                FAIL,
+                Message(
+                    "bad-notice-format",
+                    f"{source}: Copyright notices should match a pattern similar to:\n\n"
+                    f' "Copyright 2020 The Familyname Project Authors (git url)"\n\n'
+                    f'But instead we have got:\n\n"{string}"',
+                ),
             )
 
         if len(string) > 500:
-            yield FAIL, Message(
-                "max-length",
-                f"{source}: The length of the following copyright"
-                f" notice ({len(string)}) exceeds 500 chars:"
-                f' "{string}"',
+            yield (
+                FAIL,
+                Message(
+                    "max-length",
+                    f"{source}: The length of the following copyright"
+                    f" notice ({len(string)}) exceeds 500 chars:"
+                    f' "{string}"',
+                ),
             )
 
     if len(sources_of_copyrights) > 1:
-        yield FAIL, Message(
-            "mismatch",
-            "Copyright notices differ between name table entries and METADATA.pb."
-            "The following copyright values were found:\n\n"
-            + show_inconsistencies(sources_of_copyrights, config),
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                "Copyright notices differ between name table entries and METADATA.pb."
+                "The following copyright values were found:\n\n"
+                + show_inconsistencies(sources_of_copyrights, config),
+            ),
         )

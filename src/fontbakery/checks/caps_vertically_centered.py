@@ -1,5 +1,6 @@
 from fontTools.pens.boundsPen import BoundsPen
-from fontbakery.prelude import check, Message, PASS, WARN, SKIP
+
+from fontbakery.prelude import PASS, SKIP, WARN, Message, check
 
 
 @check(
@@ -29,10 +30,13 @@ def check_caps_vertically_centered(ttFont):
 
     for glyphname in SOME_UPPERCASE_GLYPHS:
         if glyphname not in glyphSet.keys():
-            yield SKIP, Message(
-                "lacks-ascii",
-                "The implementation of this check relies on a few samples"
-                " of uppercase latin characters that are not available in this font.",
+            yield (
+                SKIP,
+                Message(
+                    "lacks-ascii",
+                    "The implementation of this check relies on a few samples"
+                    " of uppercase latin characters that are not available in this font.",
+                ),
             )
             return
 
@@ -57,9 +61,12 @@ def check_caps_vertically_centered(ttFont):
     difference = abs(top_margin - bottom_margin)
 
     if difference > error_margin:
-        yield WARN, Message(
-            "vertical-metrics-not-centered",
-            "Uppercase glyphs are not vertically centered in the em box.",
+        yield (
+            WARN,
+            Message(
+                "vertical-metrics-not-centered",
+                "Uppercase glyphs are not vertically centered in the em box.",
+            ),
         )
     else:
         yield PASS, "Uppercase glyphs are vertically centered in the em box."

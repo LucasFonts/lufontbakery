@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -41,11 +41,14 @@ def check_smart_dropout(ttFont):
     INSTRUCTIONS = b"\xb8\x01\xff\x85\xb0\x04\x8d"
 
     if not ("prep" in ttFont and INSTRUCTIONS in ttFont["prep"].program.getBytecode()):
-        yield FAIL, Message(
-            "lacks-smart-dropout",
-            "The 'prep' table does not contain TrueType"
-            " instructions enabling smart dropout control."
-            " To fix, export the font with autohinting enabled,"
-            " or run ttfautohint on the font, or run the"
-            " `gftools fix-nonhinting` script.",
+        yield (
+            FAIL,
+            Message(
+                "lacks-smart-dropout",
+                "The 'prep' table does not contain TrueType"
+                " instructions enabling smart dropout control."
+                " To fix, export the font with autohinting enabled,"
+                " or run ttfautohint on the font, or run the"
+                " `gftools fix-nonhinting` script.",
+            ),
         )

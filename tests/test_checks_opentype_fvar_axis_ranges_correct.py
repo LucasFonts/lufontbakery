@@ -1,11 +1,11 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
-from fontbakery.status import FAIL, WARN
 from fontbakery.codetesting import (
     assert_PASS,
     assert_results_contain,
 )
+from fontbakery.status import FAIL, WARN
 
 
 @check_id("opentype/fvar/axis_ranges_correct")

@@ -1,9 +1,9 @@
 from collections import defaultdict
 from typing import Iterable
 
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 from fontbakery.testable import Font
-from fontbakery.utils import show_inconsistencies, bullet_list
+from fontbakery.utils import bullet_list, show_inconsistencies
 
 
 @check(
@@ -31,19 +31,25 @@ def check_family_panose_familytype(fonts: Iterable[Font], config):
         familytypes[familytype].append(font.file_displayname)
 
     if missing:
-        yield FAIL, Message(
-            "lacks-OS/2",
-            "One or more fonts lack the required OS/2 table:\n"
-            + bullet_list(config, missing),
+        yield (
+            FAIL,
+            Message(
+                "lacks-OS/2",
+                "One or more fonts lack the required OS/2 table:\n"
+                + bullet_list(config, missing),
+            ),
         )
 
     if len(familytypes) > 1:
-        yield WARN, Message(
-            "inconsistency",
-            "PANOSE family type is not the same across this family."
-            " In order to fix this, please make sure that"
-            " the panose.bFamilyType value is the same"
-            " in the OS/2 table of all of this family font files.\n\n"
-            "The following PANOSE family types were found:\n\n"
-            + show_inconsistencies(familytypes, config),
+        yield (
+            WARN,
+            Message(
+                "inconsistency",
+                "PANOSE family type is not the same across this family."
+                " In order to fix this, please make sure that"
+                " the panose.bFamilyType value is the same"
+                " in the OS/2 table of all of this family font files.\n\n"
+                "The following PANOSE family types were found:\n\n"
+                + show_inconsistencies(familytypes, config),
+            ),
         )

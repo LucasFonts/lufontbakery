@@ -1,13 +1,13 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont, newTable
 from fontTools.ttLib.tables._k_e_r_n import KernTable_format_0, KernTable_format_unkown
 
-from conftest import check_id
-from fontbakery.status import INFO, FAIL, WARN
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
+from fontbakery.status import FAIL, INFO, WARN
 
 
 @check_id("opentype/kern_table")

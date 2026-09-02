@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, FAIL, INFO
+from fontbakery.prelude import FAIL, INFO, check
 from fontbakery.testable import TTCFont
 
 
@@ -18,10 +18,11 @@ from fontbakery.testable import TTCFont
 )
 def check_ttx_roundtrip(font):
     """Checking with fontTools.ttx"""
-    from fontTools import ttx
     import subprocess
     import sys
     import tempfile
+
+    from fontTools import ttx
 
     font_file = font.file
     if isinstance(font, TTCFont):
@@ -67,17 +68,20 @@ def check_ttx_roundtrip(font):
     (import_stdout, import_stderr) = import_process.communicate()
 
     if import_process.returncode != 0:
-        yield FAIL, (
-            "TTX had some problem parsing the generated XML file."
-            " This most likely mean there's some problem in the font."
-            " Please inspect the output of ttx in order to find more"
-            " on what went wrong. A common problem is the presence of"
-            " control characteres outside the accepted character range"
-            " as defined in the XML spec. FontTools has got a bug which"
-            " causes TTX to generate corrupt XML files in those cases."
-            " So, check the entries of the name table and remove any control"
-            " chars that you find there. The full ttx error message was:\n"
-            f"======\n{import_stderr or import_stdout}\n======"
+        yield (
+            FAIL,
+            (
+                "TTX had some problem parsing the generated XML file."
+                " This most likely mean there's some problem in the font."
+                " Please inspect the output of ttx in order to find more"
+                " on what went wrong. A common problem is the presence of"
+                " control characteres outside the accepted character range"
+                " as defined in the XML spec. FontTools has got a bug which"
+                " causes TTX to generate corrupt XML files in those cases."
+                " So, check the entries of the name table and remove any control"
+                " chars that you find there. The full ttx error message was:\n"
+                f"======\n{import_stderr or import_stdout}\n======"
+            ),
         )
 
     import_error_msgs = []
@@ -86,9 +90,12 @@ def check_ttx_roundtrip(font):
             import_error_msgs.append(line)
 
     if import_error_msgs:
-        yield INFO, (
-            "While importing an XML file and converting it back to TTF,"
-            " ttx emited the messages listed below."
+        yield (
+            INFO,
+            (
+                "While importing an XML file and converting it back to TTF,"
+                " ttx emited the messages listed below."
+            ),
         )
         for msg in import_error_msgs:
             yield FAIL, msg.strip()

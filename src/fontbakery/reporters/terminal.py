@@ -2,36 +2,35 @@
 FontBakery reporters/terminal can report the events of the FontBakery
 CheckRunner Protocol to the terminal (or by pipe to files).
 """
-from dataclasses import dataclass
+
+import atexit
 import os
 import re
 import sys
-import atexit
+from dataclasses import dataclass
 from typing import Optional
 
-from rich.segment import Segment, Segments
+import rich
 from rich.live import Live
 from rich.markdown import Markdown
 from rich.markup import escape
-import rich
+from rich.segment import Segment, Segments
 
-from fontbakery.constants import LIGHT_THEME, CUPCAKE, MEANING_MESSAGE
+from fontbakery.constants import CUPCAKE, LIGHT_THEME, MEANING_MESSAGE
 from fontbakery.message import Message
-from fontbakery.result import CheckResult
 from fontbakery.reporters import FontbakeryReporter
-
+from fontbakery.result import CheckResult
 from fontbakery.status import (
     DEBUG,
     ERROR,
-    FATAL,
     FAIL,
+    FATAL,
     INFO,
     PASS,
     SKIP,
     WARN,
 )
 from fontbakery.utils import IndentedParagraph
-
 
 statuses = (
     INFO,

@@ -1,5 +1,5 @@
 from fontbakery.constants import FsSelection, MacStyle
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -50,10 +50,13 @@ def check_fsselection(ttFont, style):
         (regular_seen, regular_expected, "Regular"),
     ]:
         if flag != expected:
-            yield FAIL, Message(
-                f"bad-{label.upper()}",
-                f"fsSelection {label} flag {flag}"
-                f" does not match font style {style}",
+            yield (
+                FAIL,
+                Message(
+                    f"bad-{label.upper()}",
+                    f"fsSelection {label} flag {flag}"
+                    f" does not match font style {style}",
+                ),
             )
 
     mac_bold = bool(ttFont["head"].macStyle & MacStyle.BOLD)
@@ -63,8 +66,11 @@ def check_fsselection(ttFont, style):
         (italic_seen, mac_italic, "Italic"),
     ]:
         if flag != expected:
-            yield FAIL, Message(
-                f"fsselection-macstyle-{label.lower()}",
-                f"fsSelection {label} flag {flag}"
-                f" does not match macStyle {expected} flag",
+            yield (
+                FAIL,
+                Message(
+                    f"fsselection-macstyle-{label.lower()}",
+                    f"fsSelection {label} flag {flag}"
+                    f" does not match macStyle {expected} flag",
+                ),
             )

@@ -1,9 +1,9 @@
 import requests
 
-from fontbakery.prelude import check, Message, FAIL, WARN
 from fontbakery.checks.vendorspecific.googlefonts.utils import (
     get_DesignerInfoProto_Message,
 )
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -64,10 +64,13 @@ def check_metadata_designer_profiles(family_metadata, config):
         designer = designer.strip()
         normalized_name = normalize(designer)
         if normalized_name == "multipledesigners":
-            yield FAIL, Message(
-                "multiple-designers",
-                f"Font family {family_metadata.name} does not explicitely"
-                f" mention the names of its designers on its METADATA.pb file.",
+            yield (
+                FAIL,
+                Message(
+                    "multiple-designers",
+                    f"Font family {family_metadata.name} does not explicitely"
+                    f" mention the names of its designers on its METADATA.pb file.",
+                ),
             )
             continue
 
@@ -81,37 +84,49 @@ def check_metadata_designer_profiles(family_metadata, config):
         #              f"Config is '{config}'")
 
         if response.status_code != requests.codes.OK:
-            yield WARN, Message(
-                "profile-not-found",
-                f"It seems that {designer} is still not listed on"
-                f" the designers catalog. Please submit a photo and"
-                f" a link to a webpage where people can learn more"
-                f" about the work of this designer/typefoundry.",
+            yield (
+                WARN,
+                Message(
+                    "profile-not-found",
+                    f"It seems that {designer} is still not listed on"
+                    f" the designers catalog. Please submit a photo and"
+                    f" a link to a webpage where people can learn more"
+                    f" about the work of this designer/typefoundry.",
+                ),
             )
             continue
 
         info = get_DesignerInfoProto_Message(response.content)
         if info.designer != designer.strip():
-            yield FAIL, Message(
-                "mismatch",
-                f"Designer name at METADATA.pb ({designer})"
-                f" is not the same as listed on the designers"
-                f" catalog ({info.designer}) available at {url}",
+            yield (
+                FAIL,
+                Message(
+                    "mismatch",
+                    f"Designer name at METADATA.pb ({designer})"
+                    f" is not the same as listed on the designers"
+                    f" catalog ({info.designer}) available at {url}",
+                ),
             )
 
         if info.link != "":
-            yield FAIL, Message(
-                "link-field",
-                "Currently the link field is not used by the GFonts API."
-                " Designer webpage links should, for now, be placed"
-                " directly on the bio.html file.",
+            yield (
+                FAIL,
+                Message(
+                    "link-field",
+                    "Currently the link field is not used by the GFonts API."
+                    " Designer webpage links should, for now, be placed"
+                    " directly on the bio.html file.",
+                ),
             )
 
         if not info.avatar.file_name and designer != "Google":
-            yield FAIL, Message(
-                "missing-avatar",
-                f"Designer {designer} still does not have an avatar image. "
-                f"Please provide one.",
+            yield (
+                FAIL,
+                Message(
+                    "missing-avatar",
+                    f"Designer {designer} still does not have an avatar image. "
+                    f"Please provide one.",
+                ),
             )
         else:
             avatar_url = (
@@ -119,8 +134,11 @@ def check_metadata_designer_profiles(family_metadata, config):
             )
             response = requests.get(avatar_url, timeout=config.get("timeout"))
             if response.status_code != requests.codes.OK:
-                yield FAIL, Message(
-                    "bad-avatar-filename",
-                    "The avatar filename provided seems to be incorrect:"
-                    f" ({avatar_url})",
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-avatar-filename",
+                        "The avatar filename provided seems to be incorrect:"
+                        f" ({avatar_url})",
+                    ),
                 )

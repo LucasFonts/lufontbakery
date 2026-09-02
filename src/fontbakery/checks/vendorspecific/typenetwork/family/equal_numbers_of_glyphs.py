@@ -1,5 +1,5 @@
+from fontbakery.prelude import PASS, WARN, Message, check, condition
 from fontbakery.testable import CheckRunContext
-from fontbakery.prelude import check, condition, Message, PASS, WARN
 
 
 @condition(CheckRunContext)
@@ -59,23 +59,31 @@ def equal_numbers_of_glyphs(roman_ttFonts, italic_ttFonts):
             italic_failed_fonts[fontname] = this_count
 
     if len(roman_failed_fonts) > 0:
-        yield WARN, Message(
-            "roman-different-number-of-glyphs",
-            f"Romans doesn’t have the same number of glyphs"
-            f"{max_roman_font} has {max_roman_count} and \n\t{roman_failed_fonts}",
+        yield (
+            WARN,
+            Message(
+                "roman-different-number-of-glyphs",
+                f"Romans doesn’t have the same number of glyphs"
+                f"{max_roman_font} has {max_roman_count} and \n\t{roman_failed_fonts}",
+            ),
         )
     else:
-        yield PASS, (
-            "All roman files in this family have an equal total ammount of glyphs."
+        yield (
+            PASS,
+            ("All roman files in this family have an equal total ammount of glyphs."),
         )
 
     if len(italic_failed_fonts) > 0:
-        yield WARN, Message(
-            "italic-different-number-of-glyphs",
-            f"Italics doesn’t have the same number of glyphs"
-            f"{max_italic_font} has {max_italic_count} and \n\t{italic_failed_fonts}",
+        yield (
+            WARN,
+            Message(
+                "italic-different-number-of-glyphs",
+                f"Italics doesn’t have the same number of glyphs"
+                f"{max_italic_font} has {max_italic_count} and \n\t{italic_failed_fonts}",
+            ),
         )
     else:
-        yield PASS, (
-            "All italics files in this family have an equal total ammount of glyphs."
+        yield (
+            PASS,
+            ("All italics files in this family have an equal total ammount of glyphs."),
         )

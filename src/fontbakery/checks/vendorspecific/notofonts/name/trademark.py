@@ -1,8 +1,7 @@
 import re
 
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery.constants import NameID
-
+from fontbakery.prelude import FAIL, Message, check
 
 TRADEMARK = r"(Noto|Arimo|Tinos) is a trademark of Google (Inc|LLC)"
 
@@ -23,8 +22,11 @@ def check_name_trademark(ttFont):
         yield FAIL, Message("no-trademark", "The font contained no trademark entry.")
     for trademark in trademarks:
         if not re.match(TRADEMARK, trademark):
-            yield FAIL, Message(
-                "bad-trademark",
-                f"The trademark entry should be '{TRADEMARK}' "
-                f"but was actually '{trademark}'",
+            yield (
+                FAIL,
+                Message(
+                    "bad-trademark",
+                    f"The trademark entry should be '{TRADEMARK}' "
+                    f"but was actually '{trademark}'",
+                ),
             )

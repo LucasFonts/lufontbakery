@@ -1,10 +1,10 @@
-from fontTools.ttLib import newTable, TTFont
-
 from conftest import check_id
+from fontTools.ttLib import TTFont, newTable
+
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
 from fontbakery.status import FAIL
 

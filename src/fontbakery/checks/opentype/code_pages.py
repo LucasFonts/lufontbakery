@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -38,8 +38,11 @@ def check_code_pages(ttFont):
             and ttFont["OS/2"].ulCodePageRange2 == 0
         )
     ):
-        yield FAIL, Message(
-            "no-code-pages",
-            "No code pages defined in the OS/2 table"
-            " ulCodePageRange1 and CodePageRange2 fields.",
+        yield (
+            FAIL,
+            Message(
+                "no-code-pages",
+                "No code pages defined in the OS/2 table"
+                " ulCodePageRange1 and CodePageRange2 fields.",
+            ),
         )

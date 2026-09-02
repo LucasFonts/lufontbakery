@@ -1,5 +1,5 @@
 from fontbakery.constants import NameID, PlatformID
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -43,47 +43,62 @@ def check_name_license(ttFont, license_filename):
             entry_found = True
             value = nameRecord.toUnicode()
             if "http://" in value:
-                yield WARN, Message(
-                    "http-in-description",
-                    f"Please consider using HTTPS URLs at"
-                    f" name table entry [plat={nameRecord.platformID},"
-                    f" enc={nameRecord.platEncID},"
-                    f" name={nameRecord.nameID}]",
+                yield (
+                    WARN,
+                    Message(
+                        "http-in-description",
+                        f"Please consider using HTTPS URLs at"
+                        f" name table entry [plat={nameRecord.platformID},"
+                        f" enc={nameRecord.platEncID},"
+                        f" name={nameRecord.nameID}]",
+                    ),
                 )
                 value = "https://".join(value.split("http://"))
                 http_warn = True
 
             if "scripts.sil.org/OFL" in value:
-                yield WARN, Message(
-                    "old-url",
-                    "Please consider updating the url from "
-                    "'https://scripts.sil.org/OFL' to "
-                    "'https://openfontlicense.org'.",
+                yield (
+                    WARN,
+                    Message(
+                        "old-url",
+                        "Please consider updating the url from "
+                        "'https://scripts.sil.org/OFL' to "
+                        "'https://openfontlicense.org'.",
+                    ),
                 )
                 return
             if value != placeholder:
-                yield FAIL, Message(
-                    "wrong",
-                    f"License file {license_filename} exists but"
-                    f" NameID {NameID.LICENSE_DESCRIPTION}"
-                    f" (LICENSE DESCRIPTION) value on platform"
-                    f" {nameRecord.platformID}"
-                    f" ({PlatformID(nameRecord.platformID).name})"
-                    f" is not specified for that."
-                    f' Value was: "{value}"'
-                    f' Must be changed to "{placeholder}"',
+                yield (
+                    FAIL,
+                    Message(
+                        "wrong",
+                        f"License file {license_filename} exists but"
+                        f" NameID {NameID.LICENSE_DESCRIPTION}"
+                        f" (LICENSE DESCRIPTION) value on platform"
+                        f" {nameRecord.platformID}"
+                        f" ({PlatformID(nameRecord.platformID).name})"
+                        f" is not specified for that."
+                        f' Value was: "{value}"'
+                        f' Must be changed to "{placeholder}"',
+                    ),
                 )
     if http_warn:
-        yield WARN, Message(
-            "http",
-            "For now we're still accepting http URLs,"
-            " but you should consider using https instead.\n",
+        yield (
+            WARN,
+            Message(
+                "http",
+                "For now we're still accepting http URLs,"
+                " but you should consider using https instead.\n",
+            ),
         )
 
     if not entry_found:
-        yield FAIL, Message(
-            "missing",
-            f"Font lacks NameID {NameID.LICENSE_DESCRIPTION}"
-            f" (LICENSE DESCRIPTION). A proper licensing"
-            f" entry must be set.",
+        yield (
+            FAIL,
+            Message(
+                "missing",
+                f"Font lacks NameID {NameID.LICENSE_DESCRIPTION}"
+                f" (LICENSE DESCRIPTION). A proper licensing"
+                f" entry must be set.",
+            ),
         )

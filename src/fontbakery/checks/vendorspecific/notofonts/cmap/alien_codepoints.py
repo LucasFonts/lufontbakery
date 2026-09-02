@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, FAIL, Message
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -28,14 +28,20 @@ def check_cmap_alien_codepoints(ttFont, config):
     from fontbakery.utils import pretty_print_list
 
     if pua:
-        yield FAIL, Message(
-            "pua-encoded",
-            "The following private use area codepoints were"
-            " encoded in the font: " + pretty_print_list(config, pua),
+        yield (
+            FAIL,
+            Message(
+                "pua-encoded",
+                "The following private use area codepoints were"
+                " encoded in the font: " + pretty_print_list(config, pua),
+            ),
         )
     if surrogate:
-        yield FAIL, Message(
-            "surrogate-encoded",
-            "The following surrogate pair codepoints were"
-            " encoded in the font: " + pretty_print_list(config, surrogate),
+        yield (
+            FAIL,
+            Message(
+                "surrogate-encoded",
+                "The following surrogate pair codepoints were"
+                " encoded in the font: " + pretty_print_list(config, surrogate),
+            ),
         )

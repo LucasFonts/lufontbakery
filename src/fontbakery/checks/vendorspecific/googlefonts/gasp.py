@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, INFO, FAIL, WARN
+from fontbakery.prelude import FAIL, INFO, WARN, Message, check
 
 
 @check(
@@ -31,24 +31,34 @@ def check_gasp(ttFont):
     )
 
     if "gasp" not in ttFont.keys():
-        yield FAIL, Message(
-            "lacks-gasp",
-            "Font is missing the 'gasp' table."
-            " Try exporting the font with autohinting enabled.\n" + NON_HINTING_MESSAGE,
+        yield (
+            FAIL,
+            Message(
+                "lacks-gasp",
+                "Font is missing the 'gasp' table."
+                " Try exporting the font with autohinting enabled.\n"
+                + NON_HINTING_MESSAGE,
+            ),
         )
     else:
         if not isinstance(ttFont["gasp"].gaspRange, dict):
-            yield FAIL, Message(
-                "empty", "The 'gasp' table has no values.\n" + NON_HINTING_MESSAGE
+            yield (
+                FAIL,
+                Message(
+                    "empty", "The 'gasp' table has no values.\n" + NON_HINTING_MESSAGE
+                ),
             )
         else:
             if 0xFFFF not in ttFont["gasp"].gaspRange:
-                yield WARN, Message(
-                    "lacks-ffff-range",
-                    "The 'gasp' table does not have an entry"
-                    " that applies for all font sizes."
-                    " The gaspRange value for such entry should"
-                    " be set to 0xFFFF.",
+                yield (
+                    WARN,
+                    Message(
+                        "lacks-ffff-range",
+                        "The 'gasp' table does not have an entry"
+                        " that applies for all font sizes."
+                        " The gaspRange value for such entry should"
+                        " be set to 0xFFFF.",
+                    ),
                 )
             else:
                 gasp_meaning = {
@@ -69,24 +79,33 @@ def check_gasp(ttFont):
                     table.append(f"PPM <= {key}:\n\tflag = 0x{value:02X}\n\t{meaning}")
 
                 table = "\n".join(table)
-                yield INFO, Message(
-                    "ranges",
-                    f"These are the ppm ranges declared on"
-                    f" the gasp table:\n\n{table}\n",
+                yield (
+                    INFO,
+                    Message(
+                        "ranges",
+                        f"These are the ppm ranges declared on"
+                        f" the gasp table:\n\n{table}\n",
+                    ),
                 )
 
                 for key in ttFont["gasp"].gaspRange.keys():
                     if key != 0xFFFF:
-                        yield WARN, Message(
-                            "non-ffff-range",
-                            f"The gasp table has a range of {key}"
-                            f" that may be unneccessary.",
+                        yield (
+                            WARN,
+                            Message(
+                                "non-ffff-range",
+                                f"The gasp table has a range of {key}"
+                                f" that may be unneccessary.",
+                            ),
                         )
                     else:
                         value = ttFont["gasp"].gaspRange[0xFFFF]
                         if value != 0x0F:
-                            yield WARN, Message(
-                                "unset-flags",
-                                f"The gasp range 0xFFFF value 0x{value:02X}"
-                                f" should be set to 0x0F.",
+                            yield (
+                                WARN,
+                                Message(
+                                    "unset-flags",
+                                    f"The gasp range 0xFFFF value 0x{value:02X}"
+                                    f" should be set to 0x0F.",
+                                ),
                             )

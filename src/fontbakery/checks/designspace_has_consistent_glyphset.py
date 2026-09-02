@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, PASS, Message
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -26,9 +26,12 @@ def check_designspace_has_consistent_glyphset(designSpace, config):
                 f" in the default master: {outliers}"
             )
     if failures:
-        yield FAIL, Message(
-            "inconsistent-glyphset",
-            f"Glyphsets were not consistent:\n\n" f"{bullet_list(config, failures)}",
+        yield (
+            FAIL,
+            Message(
+                "inconsistent-glyphset",
+                f"Glyphsets were not consistent:\n\n{bullet_list(config, failures)}",
+            ),
         )
     else:
         yield PASS, "Glyphsets were consistent."

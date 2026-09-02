@@ -1,5 +1,3 @@
-from fontbakery.profiles.opentype import PROFILE as opentype_profile
-from fontbakery.profiles.universal import PROFILE as universal_profile
 from fontbakery.profiles.adobefonts import PROFILE as adobefonts_profile
 from fontbakery.profiles.fontbureau import PROFILE as fontbureau_profile
 from fontbakery.profiles.fontval import PROFILE as fontval_profile
@@ -8,7 +6,9 @@ from fontbakery.profiles.googlefonts import PROFILE as googlefonts_profile
 from fontbakery.profiles.iso15008 import PROFILE as iso15008_profile
 from fontbakery.profiles.microsoft import PROFILE as microsoft_profile
 from fontbakery.profiles.notofonts import PROFILE as notofonts_profile
+from fontbakery.profiles.opentype import PROFILE as opentype_profile
 from fontbakery.profiles.typenetwork import PROFILE as typenetwork_profile
+from fontbakery.profiles.universal import PROFILE as universal_profile
 
 VENDOR_SPECIFIC_NAMES = [
     "adobefonts",
@@ -41,14 +41,11 @@ for filename, profile, msg in [
     ("fontval", fontval_profile, "3rd party tool: MS Font Validator wrapper"),
 ]:
     output = open(f"source/fontbakery/checks/{filename}.rst", "w")
-    output.write(f"{'#'*len(msg)}\n{msg}\n{'#'*len(msg)}\n\n")
+    output.write(f"{'#' * len(msg)}\n{msg}\n{'#' * len(msg)}\n\n")
 
     for section, checks in profile["sections"].items():
         section_header = (
-            f"\n{'-'*len(section)}\n"
-            f"{section}\n"
-            f"{'-'*len(section)}\n\n"
-            f".. toctree::\n"
+            f"\n{'-' * len(section)}\n{section}\n{'-' * len(section)}\n\n.. toctree::\n"
         )
 
         for checkid in checks:

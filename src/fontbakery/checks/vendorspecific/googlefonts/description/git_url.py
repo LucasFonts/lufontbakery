@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, INFO, FAIL
+from fontbakery.prelude import FAIL, INFO, Message, check
 
 
 @check(
@@ -28,9 +28,12 @@ def check_description_git_url(description_html):
             yield INFO, Message("url-found", f"Found a git repo URL: {link}")
 
     if not git_urls:
-        yield FAIL, Message(
-            "lacks-git-url",
-            "Please host your font project on a public Git repo"
-            " (such as GitHub or GitLab) and place a link"
-            " in the DESCRIPTION.en_us.html file.",
+        yield (
+            FAIL,
+            Message(
+                "lacks-git-url",
+                "Please host your font project on a public Git repo"
+                " (such as GitHub or GitLab) and place a link"
+                " in the DESCRIPTION.en_us.html file.",
+            ),
         )

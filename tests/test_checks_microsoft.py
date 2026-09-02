@@ -1,9 +1,8 @@
 import pytest
-
 from fontTools.ttLib import TTFont
 
+from fontbakery.codetesting import TEST_FILE, CheckTester
 from fontbakery.status import FAIL, PASS, WARN
-from fontbakery.codetesting import CheckTester, TEST_FILE
 
 
 @pytest.fixture

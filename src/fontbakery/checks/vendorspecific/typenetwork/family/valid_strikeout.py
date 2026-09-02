@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -14,7 +14,10 @@ def check_family_valid_strikeout(ttFont):
 
     strikeoutSize = ttFont["OS/2"].yStrikeoutSize
     if strikeoutSize is None or strikeoutSize == 0:
-        yield FAIL, Message(
-            "invalid-strikeout-size",
-            f"Size of the strikeout is {strikeoutSize} which is not valid.",
+        yield (
+            FAIL,
+            Message(
+                "invalid-strikeout-size",
+                f"Size of the strikeout is {strikeoutSize} which is not valid.",
+            ),
         )

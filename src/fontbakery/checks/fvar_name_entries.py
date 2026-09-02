@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -20,9 +20,12 @@ def check_fvar_name_entries(ttFont):
             if entry.nameID == instance.subfamilyNameID
         ]
         if len(entries) == 0:
-            yield FAIL, Message(
-                "missing-name",
-                f"Named instance with coordinates {instance.coordinates}"
-                f" lacks an entry on the name table"
-                f" (nameID={instance.subfamilyNameID}).",
+            yield (
+                FAIL,
+                Message(
+                    "missing-name",
+                    f"Named instance with coordinates {instance.coordinates}"
+                    f" lacks an entry on the name table"
+                    f" (nameID={instance.subfamilyNameID}).",
+                ),
             )

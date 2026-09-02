@@ -1,8 +1,8 @@
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery.checks.iso15008.utils import (
-    stem_width,
     DISCLAIMER,
+    stem_width,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -30,8 +30,11 @@ def check_iso15008_stem_width(ttFont):
     ascender = ttFont["hhea"].ascender
     proportion = width / ascender
     if not 0.10 <= proportion <= 0.20:
-        yield FAIL, Message(
-            "invalid-proportion",
-            f"The proportion of stem width to ascender ({proportion})"
-            f"does not conform to the expected range of 0.10-0.20",
+        yield (
+            FAIL,
+            Message(
+                "invalid-proportion",
+                f"The proportion of stem width to ascender ({proportion})"
+                f"does not conform to the expected range of 0.10-0.20",
+            ),
         )

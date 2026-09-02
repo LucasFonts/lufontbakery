@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, condition, Message, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, Message, check, condition
 from fontbakery.testable import CheckRunContext
 
 
@@ -68,34 +68,46 @@ def check_family_win_ascent_and_descent(ttFont, vmetrics):
     # OS/2 usWinAscent:
     if win_ascent < y_max:
         failed = True
-        yield FAIL, Message(
-            "ascent",
-            f"OS/2.usWinAscent value should be equal or greater than {y_max},"
-            f" but got {win_ascent} instead",
+        yield (
+            FAIL,
+            Message(
+                "ascent",
+                f"OS/2.usWinAscent value should be equal or greater than {y_max},"
+                f" but got {win_ascent} instead",
+            ),
         )
     if win_ascent > y_max * 2:
         failed = True
-        yield FAIL, Message(
-            "ascent",
-            f"OS/2.usWinAscent value {win_ascent} is too large."
-            f" It should be less than double the yMax. Current yMax value is {y_max}",
+        yield (
+            FAIL,
+            Message(
+                "ascent",
+                f"OS/2.usWinAscent value {win_ascent} is too large."
+                f" It should be less than double the yMax. Current yMax value is {y_max}",
+            ),
         )
     # OS/2 usWinDescent:
     if win_descent < abs(y_min):
         failed = True
-        yield FAIL, Message(
-            "descent",
-            f"OS/2.usWinDescent value should be equal or greater than {abs(y_min)},"
-            f" but got {win_descent} instead",
+        yield (
+            FAIL,
+            Message(
+                "descent",
+                f"OS/2.usWinDescent value should be equal or greater than {abs(y_min)},"
+                f" but got {win_descent} instead",
+            ),
         )
 
     if win_descent > abs(y_min) * 2:
         failed = True
-        yield FAIL, Message(
-            "descent",
-            f"OS/2.usWinDescent value {win_descent} is too large."
-            " It should be less than double the yMin."
-            f" Current absolute yMin value is {abs(y_min)}",
+        yield (
+            FAIL,
+            Message(
+                "descent",
+                f"OS/2.usWinDescent value {win_descent} is too large."
+                " It should be less than double the yMin."
+                f" Current absolute yMin value is {abs(y_min)}",
+            ),
         )
     if not failed:
         yield PASS, "OS/2 usWinAscent & usWinDescent values look good!"

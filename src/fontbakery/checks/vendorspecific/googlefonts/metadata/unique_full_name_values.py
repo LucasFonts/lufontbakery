@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -21,7 +21,10 @@ def check_metadata_unique_full_name_values(family_metadata):
         fonts[f.full_name] = f
 
     if len(set(fonts.keys())) != len(family_metadata.fonts):
-        yield FAIL, Message(
-            "duplicated",
-            'Found duplicated "full_name" values in METADATA.pb fonts field.',
+        yield (
+            FAIL,
+            Message(
+                "duplicated",
+                'Found duplicated "full_name" values in METADATA.pb fonts field.',
+            ),
         )

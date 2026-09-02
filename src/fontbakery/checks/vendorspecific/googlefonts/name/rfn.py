@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 # Although this is a /name/ check, it's really about licensing
@@ -37,18 +37,24 @@ def check_name_rfn(ttFont, familyname):
         if matches:
             reserved_font_name = matches.group(1)
             if reserved_font_name in familyname:
-                yield FAIL, Message(
-                    "rfn",
-                    f'Name table entry contains "Reserved Font Name":\n'
-                    f'\t"{string}"\n'
-                    f"\n"
-                    f"This is an error except in a few specific rare cases.",
+                yield (
+                    FAIL,
+                    Message(
+                        "rfn",
+                        f'Name table entry contains "Reserved Font Name":\n'
+                        f'\t"{string}"\n'
+                        f"\n"
+                        f"This is an error except in a few specific rare cases.",
+                    ),
                 )
             else:
-                yield WARN, Message(
-                    "legacy-familyname",
-                    f'Name table entry contains "Reserved Font Name" for a'
-                    f" family name ({reserved_font_name}) that differs"
-                    f" from the currently used family name ({familyname}),"
-                    f" which is fine.",
+                yield (
+                    WARN,
+                    Message(
+                        "legacy-familyname",
+                        f'Name table entry contains "Reserved Font Name" for a'
+                        f" family name ({reserved_font_name}) that differs"
+                        f" from the currently used family name ({familyname}),"
+                        f" which is fine.",
+                    ),
                 )

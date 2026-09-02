@@ -1,15 +1,15 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables._f_v_a_r import Axis
 
-from conftest import check_id
-from fontbakery.status import FAIL, WARN
 from fontbakery.codetesting import (
-    assert_PASS,
-    assert_SKIP,
-    assert_results_contain,
     TEST_FILE,
     MockFont,
+    assert_PASS,
+    assert_results_contain,
+    assert_SKIP,
 )
+from fontbakery.status import FAIL, WARN
 
 
 @check_id("opentype/fvar/regular_coords_correct")

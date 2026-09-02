@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, WARN
+from fontbakery.prelude import PASS, WARN, Message, check
 from fontbakery.utils import bullet_list
 
 
@@ -41,10 +41,13 @@ def check_PUA_encoded_glyphs(ttFont, config):
             pua_encoded_glyphs.append(glyphName + f" U+{cp:02x}".upper())
 
     if pua_encoded_glyphs:
-        yield WARN, Message(
-            "pua-encoded",
-            f"Glyphs with PUA codepoints:\n\n"
-            f"{bullet_list(config, pua_encoded_glyphs)}",
+        yield (
+            WARN,
+            Message(
+                "pua-encoded",
+                f"Glyphs with PUA codepoints:\n\n"
+                f"{bullet_list(config, pua_encoded_glyphs)}",
+            ),
         )
     else:
         yield PASS, "No PUA encoded glyphs."

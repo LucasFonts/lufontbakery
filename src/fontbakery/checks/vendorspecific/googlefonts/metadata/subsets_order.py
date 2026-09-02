@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -17,8 +17,11 @@ def check_metadata_subsets_order(family_metadata):
     if list(family_metadata.subsets) != expected:
         subsets = "', '".join(family_metadata.subsets)
         expected = "', '".join(expected)
-        yield FAIL, Message(
-            "not-sorted",
-            f"METADATA.pb subsets are not sorted in alphabetical order:"
-            f" Got ['{subsets}'] and expected ['{expected}']",
+        yield (
+            FAIL,
+            Message(
+                "not-sorted",
+                f"METADATA.pb subsets are not sorted in alphabetical order:"
+                f" Got ['{subsets}'] and expected ['{expected}']",
+            ),
         )

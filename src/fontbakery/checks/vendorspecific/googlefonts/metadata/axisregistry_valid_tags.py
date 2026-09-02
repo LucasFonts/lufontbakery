@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.checks.vendorspecific.googlefonts.utils import GFAxisRegistry
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -33,8 +33,11 @@ def check_axisregistry_valid_tags(family_metadata):
     """Validate METADATA.pb axes tags are defined in gf_axisregistry."""
     for axis in family_metadata.axes:
         if axis.tag not in GFAxisRegistry().keys():
-            yield FAIL, Message(
-                "bad-axis-tag",
-                f"The font variation axis '{axis.tag}'"
-                f" is not yet registered on Google Fonts Axis Registry.",
+            yield (
+                FAIL,
+                Message(
+                    "bad-axis-tag",
+                    f"The font variation axis '{axis.tag}'"
+                    f" is not yet registered on Google Fonts Axis Registry.",
+                ),
             )

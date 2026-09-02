@@ -2,38 +2,37 @@
 # usage:
 # $ fontbakery check-profile fontbakery.profiles.googlefonts -h
 import argparse
-from collections import OrderedDict
 import os
-import sys
 import signal
+import sys
+from collections import OrderedDict
 
 from fontbakery import __version__
 from fontbakery.checkrunner import CheckRunner
+from fontbakery.configuration import Configuration
+from fontbakery.errors import ValueValidationError
+from fontbakery.fonts_profile import (
+    ITERARGS,
+    get_module,
+    profile_factory,
+    setup_context,
+)
+from fontbakery.reporters.badge import BadgeReporter
+from fontbakery.reporters.ghmarkdown import GHMarkdownReporter
+from fontbakery.reporters.html import HTMLReporter
+from fontbakery.reporters.serialize import JSONReporter
+from fontbakery.reporters.terminal import TerminalReporter
 from fontbakery.status import (
     DEBUG,
     ERROR,
-    FATAL,
     FAIL,
+    FATAL,
     INFO,
     PASS,
     SKIP,
     WARN,
 )
-from fontbakery.configuration import Configuration
-from fontbakery.errors import ValueValidationError
-from fontbakery.fonts_profile import (
-    profile_factory,
-    get_module,
-    setup_context,
-    ITERARGS,
-)
-from fontbakery.reporters.terminal import TerminalReporter
-from fontbakery.reporters.serialize import JSONReporter
-from fontbakery.reporters.badge import BadgeReporter
-from fontbakery.reporters.ghmarkdown import GHMarkdownReporter
-from fontbakery.reporters.html import HTMLReporter
 from fontbakery.utils import get_theme
-
 
 CLI_PROFILES = [
     "adobefonts",
@@ -354,7 +353,7 @@ def add_profile_arguments(argument_parser):
         int_value = int(value)
         if int_value < 0:
             raise argparse.ArgumentTypeError(
-                f'Invalid value "{value}" must be' f" zero or a positive integer value."
+                f'Invalid value "{value}" must be zero or a positive integer value.'
             )
         return int_value
 

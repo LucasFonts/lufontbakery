@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, Message
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -13,6 +13,10 @@ def check_vendor_id(ttFont):
 
     vendor_id = ttFont["OS/2"].achVendID
     if vendor_id != "WERK":
-        yield FAIL, Message(
-            "bad-vendor-id", f"OS/2 VendorID is '{vendor_id}', but should be 'WERK'."
+        yield (
+            FAIL,
+            Message(
+                "bad-vendor-id",
+                f"OS/2 VendorID is '{vendor_id}', but should be 'WERK'.",
+            ),
         )

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, Message, check
 from fontbakery.utils import get_glyph_name
 
 
@@ -34,12 +34,15 @@ def check_whitespace_widths(ttFont):
     if space_width > 0 and space_width == nbsp_width:
         yield PASS, "Space and non-breaking space have the same width."
     else:
-        yield FAIL, Message(
-            "different-widths",
-            "Space and non-breaking space have differing width:"
-            f" The space glyph named {space_name} is {space_width} font units wide,"
-            f" non-breaking space named ({nbsp_name}) is {nbsp_width} font units wide,"
-            ' and both should be positive and the same. GlyphsApp has "Sidebearing'
-            ' arithmetic" (https://glyphsapp.com/tutorials/spacing) which allows you to'
-            " set the non-breaking space width to always equal the space width.",
+        yield (
+            FAIL,
+            Message(
+                "different-widths",
+                "Space and non-breaking space have differing width:"
+                f" The space glyph named {space_name} is {space_width} font units wide,"
+                f" non-breaking space named ({nbsp_name}) is {nbsp_width} font units wide,"
+                ' and both should be positive and the same. GlyphsApp has "Sidebearing'
+                ' arithmetic" (https://glyphsapp.com/tutorials/spacing) which allows you to'
+                " set the non-breaking space width to always equal the space width.",
+            ),
         )

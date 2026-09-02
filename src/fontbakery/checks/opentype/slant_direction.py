@@ -31,6 +31,7 @@ def uharfbuzz_blob(font):
 def check_slant_direction(ttFont, uharfbuzz_blob):
     """Checking direction of slnt axis angles."""
     import uharfbuzz as hb
+
     from fontbakery.utils import PointsPen, axis
 
     if not axis(ttFont, "slnt"):
@@ -38,11 +39,14 @@ def check_slant_direction(ttFont, uharfbuzz_blob):
         return
 
     if ord(REFERENCE) not in ttFont.getBestCmap():
-        yield SKIP, Message(
-            "no-reference-glyph",
-            f"This check uses '{REFERENCE}' as a reference codepoint to "
-            "determine slant direction, but it is not present in this font, "
-            "and so the slant direction cannot be checked.",
+        yield (
+            SKIP,
+            Message(
+                "no-reference-glyph",
+                f"This check uses '{REFERENCE}' as a reference codepoint to "
+                "determine slant direction, but it is not present in this font, "
+                "and so the slant direction cannot be checked.",
+            ),
         )
         return
 
@@ -65,9 +69,12 @@ def check_slant_direction(ttFont, uharfbuzz_blob):
         return x_delta
 
     if x_delta(axis(ttFont, "slnt").minValue) < x_delta(axis(ttFont, "slnt").maxValue):
-        yield FAIL, Message(
-            "positive-value-for-clockwise-lean",
-            "The right-leaning glyphs have a positive 'slnt' axis value,"
-            " which is likely a mistake. It needs to be negative"
-            " to lean rightwards.",
+        yield (
+            FAIL,
+            Message(
+                "positive-value-for-clockwise-lean",
+                "The right-leaning glyphs have a positive 'slnt' axis value,"
+                " which is likely a mistake. It needs to be negative"
+                " to lean rightwards.",
+            ),
         )

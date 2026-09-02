@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, SKIP, Message
+from fontbakery.prelude import FAIL, SKIP, Message, check
 from fontbakery.utils import get_advance_width_for_char
 
 
@@ -22,8 +22,11 @@ def check_htmx_encoded_latin_digits(ttFont):
         if actual_width is None:
             yield FAIL, Message("missing-digit", f"Missing Latin digit {d}")
         elif actual_width != zero_width:
-            yield FAIL, Message(
-                "bad-digit-width",
-                f"Width of {d} was expected to be "
-                f"{zero_width} but was {actual_width}",
+            yield (
+                FAIL,
+                Message(
+                    "bad-digit-width",
+                    f"Width of {d} was expected to be "
+                    f"{zero_width} but was {actual_width}",
+                ),
             )

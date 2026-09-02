@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 from fontbakery.utils import bullet_list
 
 
@@ -55,8 +55,11 @@ def check_outline_direction(ttFont, outlines_dict, config):
 
     if warnings:
         formatted_list = bullet_list(config, sorted(warnings), bullet="*")
-        yield WARN, Message(
-            "ccw-outer-contour",
-            f"The following glyphs have a counter-clockwise outer contour:\n\n"
-            f"{formatted_list}",
+        yield (
+            WARN,
+            Message(
+                "ccw-outer-contour",
+                f"The following glyphs have a counter-clockwise outer contour:\n\n"
+                f"{formatted_list}",
+            ),
         )

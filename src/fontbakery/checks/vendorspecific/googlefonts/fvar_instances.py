@@ -70,15 +70,21 @@ def check_fvar_instances(ttFont, ttFonts):
             hints += "- Delete additional instances\n"
         if wght_wrong:
             hints += "- wght coordinates are wrong for some instances"
-        yield FAIL, Message(
-            "bad-fvar-instances",
-            f"fvar instances are incorrect:\n\n" f"{hints}\n\n{md_table}\n\n",
+        yield (
+            FAIL,
+            Message(
+                "bad-fvar-instances",
+                f"fvar instances are incorrect:\n\n{hints}\n\n{md_table}\n\n",
+            ),
         )
     elif any(font_instances[i] != expected_instances[i] for i in same):
-        yield WARN, Message(
-            "suspicious-fvar-coords",
-            f"fvar instance coordinates for non-wght axes are not the same as"
-            f" the fvar defaults. This may be intentional so please check with"
-            f" the font author:\n\n"
-            f"{md_table}\n\n",
+        yield (
+            WARN,
+            Message(
+                "suspicious-fvar-coords",
+                f"fvar instance coordinates for non-wght axes are not the same as"
+                f" the fvar defaults. This may be intentional so please check with"
+                f" the font author:\n\n"
+                f"{md_table}\n\n",
+            ),
         )

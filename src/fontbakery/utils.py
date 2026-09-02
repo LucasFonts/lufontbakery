@@ -22,14 +22,14 @@ import traceback
 from copy import deepcopy
 from typing import Optional
 
+import rich
 from fontTools.pens.basePen import BasePen
 from fontTools.ttLib import TTFont
-import rich
 
 from fontbakery.constants import (
-    NO_COLORS_THEME,
     DARK_THEME,
     LIGHT_THEME,
+    NO_COLORS_THEME,
     PANOSE_Family_Type,
 )
 
@@ -217,9 +217,9 @@ def filesize_formatting(s):
     if s < 1024:
         return f"{s} bytes"
     elif s < 1024 * 1024:
-        return f"{s/1024:.1f}kb"
+        return f"{s / 1024:.1f}kb"
     else:
-        return f"{s/(1024*1024):.1f}Mb"
+        return f"{s / (1024 * 1024):.1f}Mb"
 
 
 def get_bounding_box(font):
@@ -335,7 +335,7 @@ def get_font_glyph_data(font):
 
 def check_bit_entry(ttFont, table, attr, expected, bitmask, bitname):
     from fontbakery.message import Message
-    from fontbakery.status import PASS, FAIL
+    from fontbakery.status import FAIL, PASS
 
     value = getattr(ttFont[table], attr)
     name_str = f"{table} {attr} {bitname} bit"
@@ -354,9 +354,9 @@ class BadCertificateSetupException(Exception):
 
 
 def download_file(url):
-    from urllib.request import urlopen
-    from urllib.error import URLError
     from io import BytesIO
+    from urllib.error import URLError
+    from urllib.request import urlopen
 
     try:
         return BytesIO(urlopen(url).read())
@@ -631,7 +631,7 @@ class IndentedParagraph:
         left = _Segment(" " * self.left, style) if self.left else None
         first = _Segment(" " * self.first, style) if self.left else None
         right = (
-            [_Segment(f'{" " * self.right}', style), _Segment.line()]
+            [_Segment(f"{' ' * self.right}", style), _Segment.line()]
             if self.right
             else [_Segment.line()]
         )

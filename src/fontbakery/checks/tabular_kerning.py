@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 from fontbakery.utils import mark_glyphs
 
 
@@ -24,9 +24,10 @@ from fontbakery.utils import mark_glyphs
 )
 def check_tabular_kerning(ttFont):
     """Check tabular widths don't have kerning."""
-    from vharfbuzz import Vharfbuzz
-    import uharfbuzz as hb
     import unicodedata
+
+    import uharfbuzz as hb
+    from vharfbuzz import Vharfbuzz
 
     EXCLUDE = [
         "\u0600",  # Arabic
@@ -34,11 +35,11 @@ def check_tabular_kerning(ttFont):
         "\u0602",  # Arabic
         "\u0603",  # Arabic
         "\u0604",  # Arabic
-        "\u06DD",  # Arabic
+        "\u06dd",  # Arabic
         "\u0890",  # Arabic
         "\u0891",  # Arabic
         "\u0605",  # Arabic
-        "\u08E2",  # Arabic
+        "\u08e2",  # Arabic
         "\u2044",  # General Punctuation
         "\u2215",  # Mathematical Operators
     ]
@@ -231,7 +232,10 @@ def check_tabular_kerning(ttFont):
                         ):
                             pass
                         else:
-                            yield FAIL, Message(
-                                "has-tabular-kerning",
-                                f"Kerning between {a} and {b} is {kerning}, should be 0",
+                            yield (
+                                FAIL,
+                                Message(
+                                    "has-tabular-kerning",
+                                    f"Kerning between {a} and {b} is {kerning}, should be 0",
+                                ),
                             )

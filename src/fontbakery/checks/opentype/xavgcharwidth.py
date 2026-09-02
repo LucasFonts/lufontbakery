@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, INFO, PASS, WARN, FATAL
+from fontbakery.prelude import FAIL, FATAL, INFO, PASS, WARN, Message, check
 
 
 @check(
@@ -27,9 +27,12 @@ def check_xavgcharwidth(ttFont):
     if ttFont["OS/2"].version >= 3:
         calculation_rule = "the average of the widths of all glyphs in the font"
         if not ttFont["hmtx"].metrics:  # May contain just '.notdef', which is valid.
-            yield FATAL, Message(
-                "missing-glyphs",
-                "Found no glyph width data in the hmtx table!",
+            yield (
+                FATAL,
+                Message(
+                    "missing-glyphs",
+                    "Found no glyph width data in the hmtx table!",
+                ),
             )
             return
 
@@ -85,9 +88,12 @@ def check_xavgcharwidth(ttFont):
         }
         glyph_order = ttFont.getGlyphOrder()
         if not all(character in glyph_order for character in weightFactors):
-            yield FATAL, Message(
-                "missing-glyphs",
-                "Font is missing the required latin lowercase letters and/or space.",
+            yield (
+                FATAL,
+                Message(
+                    "missing-glyphs",
+                    "Font is missing the required latin lowercase letters and/or space.",
+                ),
             )
             return
 
@@ -104,20 +110,26 @@ def check_xavgcharwidth(ttFont):
     if current_value == expected_value or difference == 1:
         yield PASS, "OS/2 xAvgCharWidth value is correct."
     elif difference < ACCEPTABLE_ERROR:
-        yield INFO, Message(
-            "xAvgCharWidth-close",
-            f"OS/2 xAvgCharWidth is {current_value} but it should be"
-            f" {expected_value} which corresponds to {calculation_rule}."
-            f" These are similar values, which"
-            f" may be a symptom of the slightly different"
-            f" calculation of the xAvgCharWidth value in"
-            f" font editors. There's further discussion on"
-            f" this at https://github.com/fonttools/fontbakery"
-            f"/issues/1622",
+        yield (
+            INFO,
+            Message(
+                "xAvgCharWidth-close",
+                f"OS/2 xAvgCharWidth is {current_value} but it should be"
+                f" {expected_value} which corresponds to {calculation_rule}."
+                f" These are similar values, which"
+                f" may be a symptom of the slightly different"
+                f" calculation of the xAvgCharWidth value in"
+                f" font editors. There's further discussion on"
+                f" this at https://github.com/fonttools/fontbakery"
+                f"/issues/1622",
+            ),
         )
     else:
-        yield WARN, Message(
-            "xAvgCharWidth-wrong",
-            f"OS/2 xAvgCharWidth is {current_value} but it should be"
-            f" {expected_value} which corresponds to {calculation_rule}.",
+        yield (
+            WARN,
+            Message(
+                "xAvgCharWidth-wrong",
+                f"OS/2 xAvgCharWidth is {current_value} but it should be"
+                f" {expected_value} which corresponds to {calculation_rule}.",
+            ),
         )

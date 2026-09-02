@@ -4,7 +4,7 @@ from fontbakery.constants import (
     ALL_HANGUL_SYLLABLES_CODEPOINTS,
     MODERN_HANGUL_SYLLABLES_CODEPOINTS,
 )
-from fontbakery.prelude import check, Message, FAIL, WARN, PASS
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 
 
 def _quick_and_dirty_glyph_is_empty(font, glyph_name):
@@ -94,10 +94,13 @@ def check_empty_letters(ttFont):
             and (category in letter_categories)
             and (unicode_val not in invisible_letters)
         ):
-            yield FAIL, Message(
-                "empty-letter",
-                f"U+{unicode_val:04X} should be visible, "
-                f"but its glyph ({glyph_name!r}) is empty.",
+            yield (
+                FAIL,
+                Message(
+                    "empty-letter",
+                    f"U+{unicode_val:04X} should be visible, "
+                    f"but its glyph ({glyph_name!r}) is empty.",
+                ),
             )
             passed = False
 
@@ -105,7 +108,10 @@ def check_empty_letters(ttFont):
         yield PASS, "No empty glyphs for letters found."
 
     elif num_blank_hangul_glyphs:
-        yield WARN, Message(
-            "empty-hangul-letter",
-            f"Found {num_blank_hangul_glyphs} empty hangul glyph(s).",
+        yield (
+            WARN,
+            Message(
+                "empty-hangul-letter",
+                f"Found {num_blank_hangul_glyphs} empty hangul glyph(s).",
+            ),
         )

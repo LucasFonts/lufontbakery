@@ -1,6 +1,6 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
 from fontbakery.codetesting import (
     TEST_FILE,
     assert_PASS,

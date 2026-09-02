@@ -1,7 +1,7 @@
 import freetype
 from freetype.ft_errors import FT_Exception
 
-from fontbakery.prelude import PASS, FAIL, Message, check
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -22,8 +22,12 @@ def check_freetype_rasterizer(font):
         face.load_char("✅")  # any character can be used here
 
     except FT_Exception as err:
-        yield FAIL, Message(
-            "freetype-crash", f"Font caused FreeType to crash with this error: {err}"
+        yield (
+            FAIL,
+            Message(
+                "freetype-crash",
+                f"Font caused FreeType to crash with this error: {err}",
+            ),
         )
     else:
         yield PASS, "Font can be rasterized by FreeType."

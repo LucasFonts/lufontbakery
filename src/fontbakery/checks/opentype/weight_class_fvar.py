@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -20,8 +20,11 @@ def check_weight_class_fvar(ttFont):
     os2_value = ttFont["OS/2"].usWeightClass
 
     if os2_value != int(fvar_value):
-        yield FAIL, Message(
-            "bad-weight-class",
-            f"OS/2 usWeightClass is '{os2_value}', "
-            f"but should match fvar default value '{fvar_value}'.",
+        yield (
+            FAIL,
+            Message(
+                "bad-weight-class",
+                f"OS/2 usWeightClass is '{os2_value}', "
+                f"but should match fvar default value '{fvar_value}'.",
+            ),
         )

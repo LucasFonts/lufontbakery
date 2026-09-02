@@ -1,6 +1,6 @@
 import unicodedata
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import markdown_table
 
 
@@ -74,8 +74,11 @@ def check_case_mapping(ttFont):
             missing_counterparts_table.append(row)
 
     if missing_counterparts_table:
-        yield FAIL, Message(
-            "missing-case-counterparts",
-            f"The following glyphs lack their case-swapping counterparts:\n\n"
-            f"{markdown_table(missing_counterparts_table)}\n\n",
+        yield (
+            FAIL,
+            Message(
+                "missing-case-counterparts",
+                f"The following glyphs lack their case-swapping counterparts:\n\n"
+                f"{markdown_table(missing_counterparts_table)}\n\n",
+            ),
         )

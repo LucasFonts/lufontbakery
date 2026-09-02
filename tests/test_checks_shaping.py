@@ -3,13 +3,14 @@ import os
 import tempfile
 
 from conftest import check_id
-from fontbakery.status import FAIL, WARN
+
 from fontbakery.codetesting import (
-    assert_PASS,
-    assert_SKIP,
-    assert_results_contain,
     TEST_FILE,
+    assert_PASS,
+    assert_results_contain,
+    assert_SKIP,
 )
+from fontbakery.status import FAIL, WARN
 
 
 @check_id("shaping/regression")

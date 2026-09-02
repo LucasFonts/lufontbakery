@@ -1,6 +1,6 @@
-from fontbakery.prelude import check
 from fontbakery.checks.vendorspecific.microsoft import check_repertoire
 from fontbakery.checks.vendorspecific.microsoft.character_repertoires import OGL2
+from fontbakery.prelude import check
 
 
 # FIXME: There's no way to run this check, as it is not included in any profile!

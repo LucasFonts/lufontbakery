@@ -1,5 +1,5 @@
 from fontbakery.checks.vendorspecific.googlefonts.conditions import expected_font_names
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -36,8 +36,11 @@ def check_weightclass(font, ttFonts):
     )
     if font.is_variable_font:
         if not has_expected_value:
-            yield FAIL, Message(
-                "bad-value", fail_message.format(style_name, expected_value, value)
+            yield (
+                FAIL,
+                Message(
+                    "bad-value", fail_message.format(style_name, expected_value, value)
+                ),
             )
     # overrides for static Thin and ExtaLight fonts
     # for static ttfs, we don't mind if Thin is 250 and ExtraLight is 275.
@@ -46,25 +49,36 @@ def check_weightclass(font, ttFonts):
     # for static otfs, Thin must be 250 and ExtraLight must be 275
     elif "Thin" in style_name:
         if font.is_ttf and value not in [100, 250]:
-            yield FAIL, Message(
-                "bad-value", fail_message.format(style_name, expected_value, value)
+            yield (
+                FAIL,
+                Message(
+                    "bad-value", fail_message.format(style_name, expected_value, value)
+                ),
             )
         if font.is_cff and value != 250:
-            yield FAIL, Message(
-                "bad-value", fail_message.format(style_name, 250, value)
+            yield (
+                FAIL,
+                Message("bad-value", fail_message.format(style_name, 250, value)),
             )
 
     elif "ExtraLight" in style_name:
         if font.is_ttf and value not in [200, 275]:
-            yield FAIL, Message(
-                "bad-value", fail_message.format(style_name, expected_value, value)
+            yield (
+                FAIL,
+                Message(
+                    "bad-value", fail_message.format(style_name, expected_value, value)
+                ),
             )
         if font.is_cff and value != 275:
-            yield FAIL, Message(
-                "bad-value", fail_message.format(style_name, 275, value)
+            yield (
+                FAIL,
+                Message("bad-value", fail_message.format(style_name, 275, value)),
             )
 
     elif not has_expected_value:
-        yield FAIL, Message(
-            "bad-value", fail_message.format(style_name, expected_value, value)
+        yield (
+            FAIL,
+            Message(
+                "bad-value", fail_message.format(style_name, expected_value, value)
+            ),
         )

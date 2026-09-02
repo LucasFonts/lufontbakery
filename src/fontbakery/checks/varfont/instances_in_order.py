@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import bullet_list
 
 
@@ -33,8 +33,11 @@ def check_varfont_instances_in_order(ttFont, config):
     for lst in sublists:
         wght_values = [i["wght"] for i in lst]
         if wght_values != sorted(wght_values):
-            yield FAIL, Message(
-                "instances-not-in-order",
-                "The fvar table instances are not in ascending order of weight:\n"
-                + bullet_list(config, lst),
+            yield (
+                FAIL,
+                Message(
+                    "instances-not-in-order",
+                    "The fvar table instances are not in ascending order of weight:\n"
+                    + bullet_list(config, lst),
+                ),
             )

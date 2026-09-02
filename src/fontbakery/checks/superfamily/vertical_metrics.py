@@ -55,9 +55,12 @@ def check_superfamily_vertical_metrics(superfamily_ttFonts):
         for k in warn:
             s = ["{}: {}".format(k, v) for k, v in vmetrics[k].items()]
             s = "\n".join(s)
-            yield WARN, Message(
-                "superfamily-vertical-metrics",
-                f"{k} is not the same across the super-family:\n{s}",
+            yield (
+                WARN,
+                Message(
+                    "superfamily-vertical-metrics",
+                    f"{k} is not the same across the super-family:\n{s}",
+                ),
             )
     else:
         yield PASS, "Vertical metrics are the same across the super-family."

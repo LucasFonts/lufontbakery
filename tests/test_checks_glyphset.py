@@ -1,11 +1,11 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
     portable_path,
-    TEST_FILE,
 )
 from fontbakery.status import FAIL
 from fontbakery.utils import can_shape, remove_cmap_entry

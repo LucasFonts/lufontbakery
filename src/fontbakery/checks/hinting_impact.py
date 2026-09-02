@@ -1,12 +1,12 @@
 import os
-from io import BytesIO
 import tempfile
+from io import BytesIO
 
 from dehinter.font import dehint
 from fontTools.subset import main as pyftsubset
 from fontTools.ttLib import TTFont
 
-from fontbakery.prelude import check, Message, INFO
+from fontbakery.prelude import INFO, Message, check
 from fontbakery.testable import Font
 from fontbakery.utils import filesize_formatting
 
@@ -78,14 +78,17 @@ def check_hinting_impact(font):
     dehinted_size = filesize_formatting(dehinted)
     increase = filesize_formatting(increase)
 
-    yield INFO, Message(
-        "size-impact",
-        f"Hinting filesize impact:\n"
-        f"\n"
-        f" |               | {font.file}     |\n"
-        f" |:------------- | ---------------:|\n"
-        f" | Dehinted Size | {dehinted_size} |\n"
-        f" | Hinted Size   | {hinted_size}   |\n"
-        f" | Increase      | {increase}      |\n"
-        f" | Change        | {change:.1f} %  |\n",
+    yield (
+        INFO,
+        Message(
+            "size-impact",
+            f"Hinting filesize impact:\n"
+            f"\n"
+            f" |               | {font.file}     |\n"
+            f" |:------------- | ---------------:|\n"
+            f" | Dehinted Size | {dehinted_size} |\n"
+            f" | Hinted Size   | {hinted_size}   |\n"
+            f" | Increase      | {increase}      |\n"
+            f" | Change        | {change:.1f} %  |\n",
+        ),
     )

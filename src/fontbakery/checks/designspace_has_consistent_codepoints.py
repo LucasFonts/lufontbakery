@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, PASS, Message
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -31,10 +31,13 @@ def check_designspace_has_consistent_codepoints(designSpace, config):
                     f" {g.name}={default_unicodes[g.name]}"
                 )
     if failures:
-        yield FAIL, Message(
-            "inconsistent-codepoints",
-            f"Unicode assignments were not consistent:\n\n"
-            f"{bullet_list(config, failures)}",
+        yield (
+            FAIL,
+            Message(
+                "inconsistent-codepoints",
+                f"Unicode assignments were not consistent:\n\n"
+                f"{bullet_list(config, failures)}",
+            ),
         )
     else:
         yield PASS, "Unicode assignments were consistent."

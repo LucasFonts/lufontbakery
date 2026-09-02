@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -21,10 +21,13 @@ from fontbakery.prelude import check, Message, FAIL
 def check_varfont_has_HVAR(ttFont):
     """Check that variable fonts have an HVAR table."""
     if "HVAR" not in ttFont.keys():
-        yield FAIL, Message(
-            "lacks-HVAR",
-            "All variable fonts on the Google Fonts collection"
-            " must have a properly set HVAR table in order"
-            " to avoid costly text-layout operations on"
-            " certain platforms.",
+        yield (
+            FAIL,
+            Message(
+                "lacks-HVAR",
+                "All variable fonts on the Google Fonts collection"
+                " must have a properly set HVAR table in order"
+                " to avoid costly text-layout operations on"
+                " certain platforms.",
+            ),
         )

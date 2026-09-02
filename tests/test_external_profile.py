@@ -1,7 +1,7 @@
+import fontbakery.profiles.opentype
 from fontbakery.checkrunner import CheckRunner
 from fontbakery.codetesting import TEST_FILE
 from fontbakery.fonts_profile import profile_factory, setup_context
-import fontbakery.profiles.opentype
 
 
 def check_filter(item_type, item_id, item):

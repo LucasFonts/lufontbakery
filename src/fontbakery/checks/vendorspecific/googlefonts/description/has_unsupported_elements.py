@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FATAL
+from fontbakery.prelude import FATAL, Message, check
 from fontbakery.utils import exit_with_install_instructions
 
 
@@ -52,9 +52,12 @@ def check_description_has_unsupported_elements(
         if found:
             found = map(r"\<{}\>".format, found)
             found = ", ".join(found)
-            yield FATAL, Message(
-                "unsupported-elements",
-                f"{file} contains unsupported html element(s). Please remove: {found}",
+            yield (
+                FATAL,
+                Message(
+                    "unsupported-elements",
+                    f"{file} contains unsupported html element(s). Please remove: {found}",
+                ),
             )
 
         parsed = html.fromstring(doc)
@@ -63,7 +66,10 @@ def check_description_has_unsupported_elements(
         for video in parsed.iterfind(".//video"):
             bad_video = bad_video or not video.get("src")
         if bad_video:
-            yield FATAL, Message(
-                "video-tag-needs-src",
-                "{file} contains a video tag with no src attribute.",
+            yield (
+                FATAL,
+                Message(
+                    "video-tag-needs-src",
+                    "{file} contains a video tag with no src attribute.",
+                ),
             )

@@ -1,7 +1,7 @@
 from fontTools.pens.boundsPen import BoundsPen
 
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery.checks.iso15008.utils import DISCLAIMER
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -24,10 +24,13 @@ def check_iso15008_proportions(ttFont):
     """Check if 0.65 => (H width / H height) => 0.80"""
     glyphset = ttFont.getGlyphSet()
     if "H" not in glyphset:
-        yield FAIL, Message(
-            "glyph-not-present",
-            "There was no 'H' glyph in the font,"
-            " so the proportions could not be tested",
+        yield (
+            FAIL,
+            Message(
+                "glyph-not-present",
+                "There was no 'H' glyph in the font,"
+                " so the proportions could not be tested",
+            ),
         )
         return
 
@@ -36,8 +39,11 @@ def check_iso15008_proportions(ttFont):
     (xMin, yMin, xMax, yMax) = pen.bounds
     proportion = (xMax - xMin) / (yMax - yMin)
     if not 0.65 <= proportion <= 0.80:
-        yield FAIL, Message(
-            "invalid-proportion",
-            f"The proportion of H width to H height ({proportion})"
-            f"does not conform to the expected range of 0.65-0.80",
+        yield (
+            FAIL,
+            Message(
+                "invalid-proportion",
+                f"The proportion of H width to H height ({proportion})"
+                f"does not conform to the expected range of 0.65-0.80",
+            ),
         )

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, WARN, FAIL
+from fontbakery.prelude import FAIL, PASS, WARN, check
 
 
 @check(
@@ -24,9 +24,12 @@ def check_STAT_axis_values(ttFont):
             key = (axis_index, axis_value)
             if key in axis_values_format1:
                 failed = True
-                yield FAIL, (
-                    f"axis value {axis_value} (format 1) "
-                    f"for axis #{axis_index} is not unique"
+                yield (
+                    FAIL,
+                    (
+                        f"axis value {axis_value} (format 1) "
+                        f"for axis #{axis_index} is not unique"
+                    ),
                 )
             axis_values_format1.add(key)
     if not failed:

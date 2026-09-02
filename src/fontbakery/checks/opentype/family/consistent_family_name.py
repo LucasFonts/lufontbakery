@@ -1,10 +1,10 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import (
     NameID,
     PlatformID,
     WindowsEncodingID,
     WindowsLanguageID,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -41,9 +41,10 @@ def check_consistent_font_family_name(ttFonts):
     family. Checks Typographic Family name (nameID 16) if present, otherwise uses Font
     Family name (nameID 1)
     """
-    from fontbakery.utils import get_name_entry_strings
-    from collections import defaultdict
     import os
+    from collections import defaultdict
+
+    from fontbakery.utils import get_name_entry_strings
 
     name_dict = defaultdict(list)
     for ttFont in ttFonts:

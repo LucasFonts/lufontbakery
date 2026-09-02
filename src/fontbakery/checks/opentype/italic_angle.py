@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, PASS, WARN
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 
 
 @check(
@@ -16,9 +16,10 @@ from fontbakery.prelude import check, Message, FAIL, PASS, WARN
 def check_italic_angle(ttFont, style):
     """Checking post.italicAngle value."""
     import math
+    from copy import deepcopy
+
     from beziers.path import BezierPath, Line, Point
     from fontTools.pens.boundsPen import BoundsPen
-    from copy import deepcopy
 
     # This check modifies the font file with `.draw(boundspen)`
     # so here we'll work with a copy of the object so that we
@@ -100,13 +101,16 @@ def check_italic_angle(ttFont, style):
     if calculated_italic_angle is None:
         if value > 0:
             passed = False
-            yield WARN, Message(
-                "positive",
-                (
-                    "The value of post.italicAngle is positive, which"
-                    " is likely a mistake and should become negative"
-                    " for right-leaning Italics. If this font is"
-                    " left-leaning, ignore this warning."
+            yield (
+                WARN,
+                Message(
+                    "positive",
+                    (
+                        "The value of post.italicAngle is positive, which"
+                        " is likely a mistake and should become negative"
+                        " for right-leaning Italics. If this font is"
+                        " left-leaning, ignore this warning."
+                    ),
                 ),
             )
     else:
@@ -114,35 +118,44 @@ def check_italic_angle(ttFont, style):
         # We allow a 0.1° tolerance
         if calculated_italic_angle < 0.1 and value > 0:
             passed = False
-            yield WARN, Message(
-                "positive",
-                f"The value of post.italicAngle is positive, which"
-                f" is likely a mistake and should become negative"
-                f" for right-leaning Italics.\n"
-                f"post.italicAngle: {value}\n"
-                f"angle calculated from outlines:"
-                f" {calculated_italic_angle:.1f})",
+            yield (
+                WARN,
+                Message(
+                    "positive",
+                    f"The value of post.italicAngle is positive, which"
+                    f" is likely a mistake and should become negative"
+                    f" for right-leaning Italics.\n"
+                    f"post.italicAngle: {value}\n"
+                    f"angle calculated from outlines:"
+                    f" {calculated_italic_angle:.1f})",
+                ),
             )
         if calculated_italic_angle > 0.1 and value < 0:
             passed = False
-            yield WARN, Message(
-                "negative",
-                f"The value of post.italicAngle is negative, which"
-                f" is likely a mistake and should become positive"
-                f" for left-leaning Italics.\n"
-                f"post.italicAngle: {value}\n"
-                f"angle calculated from outlines:"
-                f" {calculated_italic_angle:.1f})",
+            yield (
+                WARN,
+                Message(
+                    "negative",
+                    f"The value of post.italicAngle is negative, which"
+                    f" is likely a mistake and should become positive"
+                    f" for left-leaning Italics.\n"
+                    f"post.italicAngle: {value}\n"
+                    f"angle calculated from outlines:"
+                    f" {calculated_italic_angle:.1f})",
+                ),
             )
 
     # Checking that italicAngle > 90
     if abs(value) > 90:
         passed = False
-        yield FAIL, Message(
-            "over-90-degrees",
-            (
-                "The value of post.italicAngle is over 90°, which"
-                " is surely a mistake."
+        yield (
+            FAIL,
+            Message(
+                "over-90-degrees",
+                (
+                    "The value of post.italicAngle is over 90°, which"
+                    " is surely a mistake."
+                ),
             ),
         )
 
@@ -150,20 +163,26 @@ def check_italic_angle(ttFont, style):
     # Also note we invert the value to check it in a clear way
     if abs(value) > 30:
         passed = False
-        yield WARN, Message(
-            "over-30-degrees",
-            (
-                f"The value of post.italicAngle ({value}) is very high"
-                f" (over -30° or 30°) and should be confirmed."
+        yield (
+            WARN,
+            Message(
+                "over-30-degrees",
+                (
+                    f"The value of post.italicAngle ({value}) is very high"
+                    f" (over -30° or 30°) and should be confirmed."
+                ),
             ),
         )
     elif abs(value) > 20:
         passed = False
-        yield WARN, Message(
-            "over-20-degrees",
-            (
-                f"The value of post.italicAngle ({value}) seems very high"
-                f" (over -20° or 20°) and should be confirmed."
+        yield (
+            WARN,
+            Message(
+                "over-20-degrees",
+                (
+                    f"The value of post.italicAngle ({value}) seems very high"
+                    f" (over -20° or 20°) and should be confirmed."
+                ),
             ),
         )
 
@@ -171,25 +190,34 @@ def check_italic_angle(ttFont, style):
     if "Italic" in style:
         if ttFont_copy["post"].italicAngle == 0:
             passed = False
-            yield FAIL, Message(
-                "zero-italic",
-                "Font is italic, so post.italicAngle should be non-zero.",
+            yield (
+                FAIL,
+                Message(
+                    "zero-italic",
+                    "Font is italic, so post.italicAngle should be non-zero.",
+                ),
             )
     else:
         if ttFont_copy["post"].italicAngle != 0:
             passed = False
-            yield FAIL, Message(
-                "non-zero-upright",
-                "Font is not italic, so post.italicAngle should be equal to zero.",
+            yield (
+                FAIL,
+                Message(
+                    "non-zero-upright",
+                    "Font is not italic, so post.italicAngle should be equal to zero.",
+                ),
             )
 
     if bad_glyphs:
         passed = False
-        yield WARN, Message(
-            "empty-glyphs",
-            (
-                "The following glyphs were present but did not contain any outlines: "
-                + ", ".join(bad_glyphs)
+        yield (
+            WARN,
+            Message(
+                "empty-glyphs",
+                (
+                    "The following glyphs were present but did not contain any outlines: "
+                    + ", ".join(bad_glyphs)
+                ),
             ),
         )
 

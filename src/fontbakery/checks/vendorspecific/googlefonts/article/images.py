@@ -1,6 +1,6 @@
 import os
 
-from fontbakery.prelude import check, Message, FATAL, FAIL, WARN, PASS
+from fontbakery.prelude import FAIL, FATAL, PASS, WARN, Message, check
 
 
 @check(
@@ -22,6 +22,7 @@ def check_article_images(config, family_directory):
     """Validate size, and resolution of article images,
     and ensure article page has minimum length and includes visual assets."""
     from bs4 import BeautifulSoup
+
     from fontbakery.utils import bullet_list, image_dimensions
 
     MAX_WIDTH = 2048
@@ -45,9 +46,12 @@ def check_article_images(config, family_directory):
     article_path = os.path.join(article_dir, "ARTICLE.en_us.html")
 
     if not os.path.exists(article_path):
-        yield WARN, Message(
-            "lacks-article",
-            f"Family metadata at {family_directory} does not have an article.\n",
+        yield (
+            WARN,
+            Message(
+                "lacks-article",
+                f"Family metadata at {family_directory} does not have an article.\n",
+            ),
         )
         return
 
@@ -68,18 +72,24 @@ def check_article_images(config, family_directory):
                 missing_files.append(src)
 
     if word_count < 100 or char_count < 500:
-        yield WARN, Message(
-            "length-requirements-not-met",
-            "Article page is too short!",
+        yield (
+            WARN,
+            Message(
+                "length-requirements-not-met",
+                "Article page is too short!",
+            ),
         )
 
     if not visuals:
         yield WARN, Message("missing-visual-asset", "Article page lacks visual assets.")
 
     if missing_files:
-        yield FATAL, Message(
-            "missing-visual-file",
-            f"Visual asset files are missing:\n{bullet_list(config, missing_files)}",
+        yield (
+            FATAL,
+            Message(
+                "missing-visual-file",
+                f"Visual asset files are missing:\n{bullet_list(config, missing_files)}",
+            ),
         )
 
     all_image_files = [
@@ -101,10 +111,13 @@ def check_article_images(config, family_directory):
 
         filesize = os.stat(filename).st_size
         if filesize > maxsize:
-            yield FAIL, Message(
-                "filesize",
-                f"`{filename}` has `{filesize} bytes`, but the maximum filesize"
-                f" for {imagetype} images is `{maxsize} bytes`.",
+            yield (
+                FAIL,
+                Message(
+                    "filesize",
+                    f"`{filename}` has `{filesize} bytes`, but the maximum filesize"
+                    f" for {imagetype} images is `{maxsize} bytes`.",
+                ),
             )
 
         dim = image_dimensions(filename)
@@ -114,10 +127,13 @@ def check_article_images(config, family_directory):
 
         w, h = dim
         if w > MAX_WIDTH or h > MAX_HEIGHT:
-            yield FAIL, Message(
-                "image-too-large",
-                f"Image is too large: `{w} x {h} pixels`\n\n"
-                f"Max resolution allowed: `{MAX_WIDTH} x {MAX_HEIGHT} pixels`",
+            yield (
+                FAIL,
+                Message(
+                    "image-too-large",
+                    f"Image is too large: `{w} x {h} pixels`\n\n"
+                    f"Max resolution allowed: `{MAX_WIDTH} x {MAX_HEIGHT} pixels`",
+                ),
             )
 
     yield PASS, "ok"

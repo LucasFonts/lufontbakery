@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, check
 
 
 @check(
@@ -20,8 +20,9 @@ def check_fstype(ttFont):
     required_value = 8
     value = ttFont["OS/2"].fsType
     if value != required_value:
-        yield FAIL, (
-            f"OS/2 fsType must be set to {required_value}, found {value} instead."
+        yield (
+            FAIL,
+            (f"OS/2 fsType must be set to {required_value}, found {value} instead."),
         )
     else:
         yield PASS, "OS/2 fsType is properly set."

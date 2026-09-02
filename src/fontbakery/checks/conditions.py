@@ -25,8 +25,8 @@ def are_ttf(collection):
 
 @condition(Font)
 def variable_font_filename(font):
-    from fontbakery.utils import get_name_entry_strings
     from fontbakery.constants import MacStyle, NameID
+    from fontbakery.utils import get_name_entry_strings
 
     ttFont = font.ttFont
     familynames = get_name_entry_strings(ttFont, NameID.FONT_FAMILY_NAME)
@@ -547,8 +547,8 @@ def outlines_dict(font):
 
 @condition(Ufo)
 def ufo_font(ufo):
-    from fontTools.ufoLib.errors import UFOLibError
     import defcon
+    from fontTools.ufoLib.errors import UFOLibError
 
     try:
         return defcon.Font(ufo.file)
@@ -564,8 +564,8 @@ def designSpace(designspace):
     'an object to read, write and edit
     interpolation systems for typefaces'.
     """
-    from fontTools.designspaceLib import DesignSpaceDocument
     import defcon
+    from fontTools.designspaceLib import DesignSpaceDocument
 
     if designspace:
         DS = DesignSpaceDocument.fromfile(designspace.file)

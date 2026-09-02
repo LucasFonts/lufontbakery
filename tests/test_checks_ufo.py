@@ -2,15 +2,15 @@ import os
 
 import defcon
 import pytest
-
 from conftest import check_id
-from fontbakery.status import FAIL, WARN
+
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
     assert_SKIP,
-    TEST_FILE,
 )
+from fontbakery.status import FAIL, WARN
 
 
 @pytest.fixture

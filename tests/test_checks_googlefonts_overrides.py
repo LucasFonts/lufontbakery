@@ -1,6 +1,6 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
 from fontbakery.codetesting import (
     TEST_FILE,
     MockFont,
@@ -133,7 +133,9 @@ def test_check_alt_caron(check):
 
     ttFont = TTFont(TEST_FILE("annie/AnnieUseYourTelescope-Regular.ttf"))
     assert_results_contain(
-        check(ttFont), FAIL, "bad-mark"  # deviation from universal profile
+        check(ttFont),
+        FAIL,
+        "bad-mark",  # deviation from universal profile
     )
 
     assert_results_contain(check(ttFont), FAIL, "wrong-mark")

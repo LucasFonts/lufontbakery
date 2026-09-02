@@ -19,19 +19,18 @@ from typing import Iterable, Optional
 import defcon
 
 from fontbakery.checkrunner import CheckRunner
-from fontbakery.fonts_profile import (
-    profile_factory,
-    load_all_checks,
-    setup_context,
-    checks_by_id,
-)
-from fontbakery.status import PASS, DEBUG, INFO, ERROR, SKIP
 from fontbakery.configuration import Configuration
+from fontbakery.fonts_profile import (
+    checks_by_id,
+    load_all_checks,
+    profile_factory,
+    setup_context,
+)
 from fontbakery.message import Message
-from fontbakery.profile import Profile
-from fontbakery.profile import Section
-from fontbakery.testable import FILE_TYPES, CheckRunContext, Font, GlyphsFile, Ufo
+from fontbakery.profile import Profile, Section
 from fontbakery.result import Subresult
+from fontbakery.status import DEBUG, ERROR, INFO, PASS, SKIP
+from fontbakery.testable import FILE_TYPES, CheckRunContext, Font, GlyphsFile, Ufo
 
 PATH_TEST_DATA = "data/test/"
 PATH_TEST_DATA_GLYPHS_FILES = f"{PATH_TEST_DATA}glyphs_files/"

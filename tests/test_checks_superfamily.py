@@ -1,17 +1,17 @@
 import os
 
-from fontTools.ttLib import TTFont
 import pytest
-
 from conftest import check_id
-from fontbakery.status import INFO, WARN
+from fontTools.ttLib import TTFont
+
 from fontbakery.codetesting import (
-    assert_PASS,
-    assert_SKIP,
-    assert_results_contain,
-    MockFont,
     TEST_FILE,
+    MockFont,
+    assert_PASS,
+    assert_results_contain,
+    assert_SKIP,
 )
+from fontbakery.status import INFO, WARN
 
 
 @pytest.fixture

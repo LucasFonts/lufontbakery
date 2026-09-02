@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL, Message
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -22,8 +22,11 @@ def check_name_empty_records(ttFont):
                     name_record.nameID,
                 ]
             )
-            yield FAIL, Message(
-                "empty-record",
-                f'"name" table record with key={name_key} is'
-                f" empty and should be removed.",
+            yield (
+                FAIL,
+                Message(
+                    "empty-record",
+                    f'"name" table record with key={name_key} is'
+                    f" empty and should be removed.",
+                ),
             )

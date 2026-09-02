@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 from fontbakery.utils import get_name_entry_strings
 
 
@@ -28,49 +28,64 @@ def check_fvar_axis_ranges_correct(ttFont, ital_axis, slnt_axis):
         if "wght" in instance.coordinates:
             value = instance.coordinates["wght"]
             if value < 1 or value > 1000:
-                yield FAIL, Message(
-                    "wght-out-of-range",
-                    f"Instance {name} has wght coordinate"
-                    f" of {value}, expected between 1 and 1000",
+                yield (
+                    FAIL,
+                    Message(
+                        "wght-out-of-range",
+                        f"Instance {name} has wght coordinate"
+                        f" of {value}, expected between 1 and 1000",
+                    ),
                 )
                 break
 
         if "wdth" in instance.coordinates:
             value = instance.coordinates["wdth"]
             if value < 1:
-                yield FAIL, Message(
-                    "wdth-out-of-range",
-                    f"Instance {name} has wdth coordinate"
-                    f" of {value}, expected at least 1",
+                yield (
+                    FAIL,
+                    Message(
+                        "wdth-out-of-range",
+                        f"Instance {name} has wdth coordinate"
+                        f" of {value}, expected at least 1",
+                    ),
                 )
                 break
 
             if value > 1000:
-                yield WARN, Message(
-                    "wdth-greater-than-1000",
-                    f"Instance {name} has wdth coordinate"
-                    f" of {value}, which is valid but unusual",
+                yield (
+                    WARN,
+                    Message(
+                        "wdth-greater-than-1000",
+                        f"Instance {name} has wdth coordinate"
+                        f" of {value}, which is valid but unusual",
+                    ),
                 )
                 break
 
     if ital_axis:
         if not (ital_axis.minValue == 0 and ital_axis.maxValue == 1):
-            yield FAIL, Message(
-                "invalid-ital-range",
-                f'The range of values for the "ital" axis in this font is'
-                f" {ital_axis.minValue} to {ital_axis.maxValue}."
-                f" The italic axis range must be 0 to 1, where Roman is 0 and Italic 1."
-                f' If you prefer a bigger variation range consider using the "Slant"'
-                f' axis instead of "Italic".',
+            yield (
+                FAIL,
+                Message(
+                    "invalid-ital-range",
+                    f'The range of values for the "ital" axis in this font is'
+                    f" {ital_axis.minValue} to {ital_axis.maxValue}."
+                    f" The italic axis range must be 0 to 1, where Roman is 0 and Italic 1."
+                    f' If you prefer a bigger variation range consider using the "Slant"'
+                    f' axis instead of "Italic".',
+                ),
             )
 
     if slnt_axis:
         if not (slnt_axis.minValue < 0 and slnt_axis.maxValue >= 0):
-            yield WARN, Message(
-                "unusual-slnt-range",
-                f'The range of values for the "slnt" axis in this font only allows'
-                f" positive coordinates (from {slnt_axis.minValue} to"
-                f" {slnt_axis.maxValue}), indicating that this may be a back slanted"
-                f' design, which is rare. If that\'s not the case, then the "slant"'
-                f" axis should be a range of negative values instead.",
+            yield (
+                WARN,
+                Message(
+                    "unusual-slnt-range",
+                    f'The range of values for the "slnt" axis in this font only allows'
+                    f" positive coordinates (from {slnt_axis.minValue} to"
+                    f" {slnt_axis.maxValue}), indicating that this may be a back slanted"
+                    f' design, which is rare. If that\'s not the case, then the "slant"'
+                    f" axis should be a range of negative values instead.",
+                ),
             )

@@ -4,25 +4,25 @@ from unittest.mock import patch
 
 import pytest
 
+from fontbakery.codetesting import TEST_FILE
 from fontbakery.constants import (
-    NO_COLORS_THEME,
     DARK_THEME,
     LIGHT_THEME,
+    NO_COLORS_THEME,
 )
 from fontbakery.utils import (
+    all_kerning,
     apple_terminal_bg_is_white,
     bullet_list,
     exit_with_install_instructions,
     get_apple_terminal_bg_color,
     get_theme,
     is_negated,
+    iterate_lookup_list_with_extensions,
     pretty_print_list,
     split_camel_case,
     unindent_and_unwrap_rationale,
-    all_kerning,
-    iterate_lookup_list_with_extensions,
 )
-from fontbakery.codetesting import TEST_FILE
 
 
 def test_exit_with_install_instructions():
@@ -273,10 +273,7 @@ MORE_MSG = "\n\nUse -F or --full-lists to disable shortening of long lists."
         (
             _make_values(12),
             6,
-            (
-                "item 1, item 2, item 3, item 4, item 5, item 6"
-                f" and 6 more.{MORE_MSG}"
-            ),
+            (f"item 1, item 2, item 3, item 4, item 5, item 6 and 6 more.{MORE_MSG}"),
         ),
         (
             _make_values(13),
@@ -298,10 +295,7 @@ MORE_MSG = "\n\nUse -F or --full-lists to disable shortening of long lists."
         (
             _make_values(13),
             6,
-            (
-                "item 1, item 2, item 3, item 4, item 5, item 6"
-                f" and 7 more.{MORE_MSG}"
-            ),
+            (f"item 1, item 2, item 3, item 4, item 5, item 6 and 7 more.{MORE_MSG}"),
         ),
     ],
 )

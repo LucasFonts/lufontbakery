@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -23,12 +23,12 @@ def check_empty_glyph_on_gid1_for_colrv0(ttFont):
         " a glyph with no contours is on GID 1 right after the `.notdef` glyph."
         " This could be the space glyph."
     )
-    from fontTools.pens.areaPen import AreaPen
-
     # This check modifies the font file with `.draw(pen)`
     # so here we'll work with a copy of the object so that we
     # do not affect other checks:
     from copy import deepcopy
+
+    from fontTools.pens.areaPen import AreaPen
 
     ttFont_copy = deepcopy(ttFont)
 
@@ -40,8 +40,11 @@ def check_empty_glyph_on_gid1_for_colrv0(ttFont):
     area = pen.value
 
     if "COLR" in ttFont_copy.keys() and ttFont_copy["COLR"].version == 0 and area != 0:
-        yield FAIL, Message(
-            "gid1-has-contours",
-            "This is a COLR font. As a workaround for a rendering bug in"
-            " Windows 10, it needs an empty glyph to be in GID 1. " + SUGGESTED_FIX,
+        yield (
+            FAIL,
+            Message(
+                "gid1-has-contours",
+                "This is a COLR font. As a workaround for a rendering bug in"
+                " Windows 10, it needs an empty glyph to be in GID 1. " + SUGGESTED_FIX,
+            ),
         )

@@ -1,12 +1,12 @@
 import math
 
-from fontbakery.prelude import check, Message, PASS, WARN
-from fontbakery.utils import bullet_list
 from fontbakery.checks.outline_settings import (
     FALSE_POSITIVE_CUTOFF,
     SHORT_PATH_ABSOLUTE_EPSILON,
     SHORT_PATH_EPSILON,
 )
+from fontbakery.prelude import PASS, WARN, Message, check
+from fontbakery.utils import bullet_list
 
 
 @check(
@@ -45,17 +45,21 @@ def check_outline_short_segments(ttFont, outlines_dict, config):
                     warnings.append(f"{display_name} contains a short segment {seg}")
                 prev_was_line = len(seg) == 2
         if len(warnings) > FALSE_POSITIVE_CUTOFF:
-            yield PASS, (
-                "So many short segments were found that this was probably by design."
+            yield (
+                PASS,
+                ("So many short segments were found that this was probably by design."),
             )
             return
 
     if warnings:
         formatted_list = bullet_list(config, warnings, bullet="*")
-        yield WARN, Message(
-            "found-short-segments",
-            f"The following glyphs have segments which seem very short:\n\n"
-            f"{formatted_list}",
+        yield (
+            WARN,
+            Message(
+                "found-short-segments",
+                f"The following glyphs have segments which seem very short:\n\n"
+                f"{formatted_list}",
+            ),
         )
     else:
         yield PASS, "No short segments were found."

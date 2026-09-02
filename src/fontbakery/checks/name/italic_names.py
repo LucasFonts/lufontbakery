@@ -1,5 +1,5 @@
 from fontbakery.constants import NameID
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 
 
 @check(
@@ -25,32 +25,45 @@ def check_name_italic_names(ttFont, style):
     else:
         # Name ID 1 (Family Name)
         if "Italic" in get_name(NameID.FONT_FAMILY_NAME):
-            yield FAIL, Message(
-                "bad-familyname", "Name ID 1 (Family Name) must not contain 'Italic'."
+            yield (
+                FAIL,
+                Message(
+                    "bad-familyname",
+                    "Name ID 1 (Family Name) must not contain 'Italic'.",
+                ),
             )
 
         # Name ID 2 (Subfamily Name)
         subfamily_name = get_name(NameID.FONT_SUBFAMILY_NAME)
         if subfamily_name not in ("Italic", "Bold Italic"):
-            yield FAIL, Message(
-                "bad-subfamilyname",
-                "Name ID 2 (Subfamily Name) does not conform to specs."
-                " Only R/I/B/BI are allowed.\n"
-                f"Got: '{subfamily_name}'.",
+            yield (
+                FAIL,
+                Message(
+                    "bad-subfamilyname",
+                    "Name ID 2 (Subfamily Name) does not conform to specs."
+                    " Only R/I/B/BI are allowed.\n"
+                    f"Got: '{subfamily_name}'.",
+                ),
             )
 
         # Name ID 16 (Typographic Family Name)
         if get_name(NameID.TYPOGRAPHIC_FAMILY_NAME):
             if "Italic" in get_name(NameID.TYPOGRAPHIC_FAMILY_NAME):
-                yield FAIL, Message(
-                    "bad-typographicfamilyname",
-                    "Name ID 16 (Typographic Family Name) must not contain 'Italic'.",
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-typographicfamilyname",
+                        "Name ID 16 (Typographic Family Name) must not contain 'Italic'.",
+                    ),
                 )
 
         # Name ID 17 (Typographic Subfamily Name)
         if get_name(NameID.TYPOGRAPHIC_SUBFAMILY_NAME):
             if not get_name(NameID.TYPOGRAPHIC_SUBFAMILY_NAME).endswith("Italic"):
-                yield FAIL, Message(
-                    "bad-typographicsubfamilyname",
-                    "Name ID 17 (Typographic Subfamily Name) must contain 'Italic'.",
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-typographicsubfamilyname",
+                        "Name ID 17 (Typographic Subfamily Name) must contain 'Italic'.",
+                    ),
                 )

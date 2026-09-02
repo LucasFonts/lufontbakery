@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -18,7 +18,10 @@ def check_metadata_unique_weight_style_pairs(family_metadata):
         styleweight = f"{f.style}:{f.weight}"
         pairs[styleweight] = 1
     if len(set(pairs.keys())) != len(family_metadata.fonts):
-        yield FAIL, Message(
-            "duplicated",
-            "Found duplicated style:weight pair in METADATA.pb fonts field.",
+        yield (
+            FAIL,
+            Message(
+                "duplicated",
+                "Found duplicated style:weight pair in METADATA.pb fonts field.",
+            ),
         )

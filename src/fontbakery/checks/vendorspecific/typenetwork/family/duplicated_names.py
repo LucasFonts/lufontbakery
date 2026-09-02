@@ -1,9 +1,9 @@
-from fontbakery.prelude import check, Message, PASS, FAIL
 from fontbakery.constants import (
     PlatformID,
     WindowsEncodingID,
     WindowsLanguageID,
 )
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -76,19 +76,25 @@ def check_family_duplicated_names(ttFonts):
         duplicate_fullNamesString = "".join(
             f"* {inst}\n" for inst in sorted(duplicate_fullNames)
         )
-        yield FAIL, Message(
-            "duplicate-full-names",
-            "Following full names are duplicate:\n\n" f"{duplicate_fullNamesString}",
+        yield (
+            FAIL,
+            Message(
+                "duplicate-full-names",
+                f"Following full names are duplicate:\n\n{duplicate_fullNamesString}",
+            ),
         )
 
     if duplicate_postscriptNames:
         duplicate_postscriptNamesString = "".join(
             f"* {inst}\n" for inst in sorted(duplicate_postscriptNames)
         )
-        yield FAIL, Message(
-            "duplicate-postscript-names",
-            "Following postscript names are duplicate:\n\n"
-            f"{duplicate_postscriptNamesString}",
+        yield (
+            FAIL,
+            Message(
+                "duplicate-postscript-names",
+                "Following postscript names are duplicate:\n\n"
+                f"{duplicate_postscriptNamesString}",
+            ),
         )
 
     if not duplicate_fullNames and not duplicate_postscriptNames:

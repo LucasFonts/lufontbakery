@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from fontbakery.profile import Section
-from fontbakery.status import Status, PASS
 from fontbakery.callable import FontBakeryCheck
 from fontbakery.message import Message
+from fontbakery.profile import Section
+from fontbakery.status import PASS, Status
 
 
 @dataclass

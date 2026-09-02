@@ -1,5 +1,5 @@
 from fontbakery.constants import NameID
-from fontbakery.prelude import check, FAIL, Message
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import get_family_name, get_subfamily_name
 
 
@@ -16,10 +16,13 @@ def _check_name_length_req(family_name, subfamily_name):
     )
 
     if len(logfont) > 31:
-        yield FAIL, Message(
-            "long-name",
-            f"Family + subfamily name, '{logfont}', is too long: "
-            f"{len(logfont)} characters; must be 31 or less",
+        yield (
+            FAIL,
+            Message(
+                "long-name",
+                f"Family + subfamily name, '{logfont}', is too long: "
+                f"{len(logfont)} characters; must be 31 or less",
+            ),
         )
 
 

@@ -1,6 +1,6 @@
-from fontbakery.prelude import check, Message, INFO, FAIL
-from fontbakery.constants import PlatformID, WindowsEncodingID, WindowsLanguageID
 from fontbakery.checks.vendorspecific.googlefonts.utils import GFAxisRegistry
+from fontbakery.constants import PlatformID, WindowsEncodingID, WindowsLanguageID
+from fontbakery.prelude import FAIL, INFO, Message, check
 
 
 @check(
@@ -27,8 +27,9 @@ def check_STAT_axisregistry_names(ttFont):
         return
     axis_value_array = ttFont["STAT"].table.AxisValueArray
     if not axis_value_array:
-        yield FAIL, Message(
-            "missing-axis-values", "STAT table is missing Axis Value Records"
+        yield (
+            FAIL,
+            Message("missing-axis-values", "STAT table is missing Axis Value Records"),
         )
         return
 
@@ -81,26 +82,35 @@ def check_STAT_axisregistry_names(ttFont):
                 is_value = axis_value.NominalValue
             if name not in expected_names:
                 expected_names = ", ".join(expected_names)
-                yield FAIL, Message(
-                    "invalid-name",
-                    f"On the font variation axis '{axis.AxisTag}',"
-                    f" the name '{name_entry.toUnicode()}'"
-                    f" is not among the expected ones ({expected_names}) according"
-                    " to the Google Fonts Axis Registry.",
+                yield (
+                    FAIL,
+                    Message(
+                        "invalid-name",
+                        f"On the font variation axis '{axis.AxisTag}',"
+                        f" the name '{name_entry.toUnicode()}'"
+                        f" is not among the expected ones ({expected_names}) according"
+                        " to the Google Fonts Axis Registry.",
+                    ),
                 )
             elif is_value != fallbacks[name_entry.toUnicode()]:
-                yield FAIL, Message(
-                    "bad-coordinate",
-                    f"Axis Value for '{axis.AxisTag}':'{name_entry.toUnicode()}' is"
-                    f" expected to be '{fallbacks[name_entry.toUnicode()]}' but this"
-                    f" font has '{name_entry.toUnicode()}'='{axis_value.Value}'.",
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-coordinate",
+                        f"Axis Value for '{axis.AxisTag}':'{name_entry.toUnicode()}' is"
+                        f" expected to be '{fallbacks[name_entry.toUnicode()]}' but this"
+                        f" font has '{name_entry.toUnicode()}'='{axis_value.Value}'.",
+                    ),
                 )
 
     if format4_entries:
-        yield INFO, Message(
-            "format-4",
-            "The GF Axis Registry does not currently contain fallback names"
-            " for the combination of values for more than a single axis,"
-            " which is what these 'format 4' entries are designed to describe,"
-            " so this check will ignore them for now.",
+        yield (
+            INFO,
+            Message(
+                "format-4",
+                "The GF Axis Registry does not currently contain fallback names"
+                " for the combination of values for more than a single axis,"
+                " which is what these 'format 4' entries are designed to describe,"
+                " so this check will ignore them for now.",
+            ),
         )

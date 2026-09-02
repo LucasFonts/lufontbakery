@@ -10,8 +10,9 @@ domains as well.
 Domain specific knowledge should be encoded only in the Profile (Checks,
 Conditions) and MAYBE in *customized* reporters e.g. subclasses.
 """
-from fontbakery.result import CheckResult
+
 from fontbakery.reporters import FontbakeryReporter
+from fontbakery.result import CheckResult
 
 
 class SerializeReporter(FontbakeryReporter):

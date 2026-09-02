@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -18,7 +18,10 @@ from fontbakery.prelude import check, Message, FAIL
 def check_varfont_unsupported_axes(font):
     """Ensure VFs do not contain (yet) the ital axis."""
     if font.ital_axis:
-        yield FAIL, Message(
-            "unsupported-ital",
-            'The "ital" axis is not yet well supported on Google Chrome.',
+        yield (
+            FAIL,
+            Message(
+                "unsupported-ital",
+                'The "ital" axis is not yet well supported on Google Chrome.',
+            ),
         )

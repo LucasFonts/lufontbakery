@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, WARN, Message
 from fontbakery.constants import UNICODERANGE_DATA
+from fontbakery.prelude import WARN, Message, check
 from fontbakery.utils import (
     chars_in_range,
     compute_unicoderange_bits,
@@ -36,9 +36,12 @@ def check_unicode_range_bits(ttFont):
                 if num_chars == 0:
                     set_unset = "0"
                     num_chars = "none"
-                yield WARN, Message(
-                    "bad-range-bit",
-                    f'UnicodeRange bit {bit} "{range_name}" should be'
-                    f" {set_unset} because cmap has {num_chars} of"
-                    f" the {range_size} codepoints in this range.",
+                yield (
+                    WARN,
+                    Message(
+                        "bad-range-bit",
+                        f'UnicodeRange bit {bit} "{range_name}" should be'
+                        f" {set_unset} because cmap has {num_chars} of"
+                        f" the {range_size} codepoints in this range.",
+                    ),
                 )

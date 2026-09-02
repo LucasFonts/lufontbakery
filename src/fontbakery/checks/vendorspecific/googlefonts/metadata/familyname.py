@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import show_inconsistencies
 
 
@@ -20,9 +20,12 @@ def check_metadata_familyname(family_metadata, config):
     for font in family_metadata.fonts:
         names[font.name].append(font.filename)
     if len(names) > 1:
-        yield FAIL, Message(
-            "inconsistency",
-            "METADATA.pb: family name value is inconsistent across the family.\n"
-            "The following name values were found:\n\n"
-            + show_inconsistencies(names, config),
+        yield (
+            FAIL,
+            Message(
+                "inconsistency",
+                "METADATA.pb: family name value is inconsistent across the family.\n"
+                "The following name values were found:\n\n"
+                + show_inconsistencies(names, config),
+            ),
         )

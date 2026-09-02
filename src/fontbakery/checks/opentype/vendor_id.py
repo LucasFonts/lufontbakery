@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 
 
 @check(
@@ -14,11 +14,14 @@ def check_vendor_id(config, ttFont):
     """Checking OS/2 achVendID against configuration."""
 
     if "vendor_id" not in config:
-        yield SKIP, (
-            "Add the `vendor_id` key to a `fontbakery.yaml` file"
-            " on your font project directory to enable this check.\n"
-            "You'll also need to use the `--configuration` flag when"
-            " invoking fontbakery."
+        yield (
+            SKIP,
+            (
+                "Add the `vendor_id` key to a `fontbakery.yaml` file"
+                " on your font project directory to enable this check.\n"
+                "You'll also need to use the `--configuration` flag when"
+                " invoking fontbakery."
+            ),
         )
         return
 
@@ -33,8 +36,11 @@ def check_vendor_id(config, ttFont):
     font_vendor_id = ttFont["OS/2"].achVendID
 
     if config_vendor_id != font_vendor_id:
-        yield FAIL, Message(
-            "bad-vendor-id",
-            f"OS/2 VendorID is '{font_vendor_id}',"
-            f" but should be '{config_vendor_id}'.",
+        yield (
+            FAIL,
+            Message(
+                "bad-vendor-id",
+                f"OS/2 VendorID is '{font_vendor_id}',"
+                f" but should be '{config_vendor_id}'.",
+            ),
         )

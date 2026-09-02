@@ -4,7 +4,7 @@ from fontbakery.constants import (
     WindowsEncodingID,
     WindowsLanguageID,
 )
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import can_shape
 
 
@@ -29,7 +29,10 @@ def check_render_own_name(ttFont):
         .toUnicode()
     )
     if not can_shape(ttFont, menu_name):
-        yield FAIL, Message(
-            "render-own-name",
-            f".notdef glyphs were found when attempting to render {menu_name}",
+        yield (
+            FAIL,
+            Message(
+                "render-own-name",
+                f".notdef glyphs were found when attempting to render {menu_name}",
+            ),
         )

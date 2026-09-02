@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -32,10 +32,13 @@ def check_colorfont_tables(font, ttFont):
 
     if "COLR" in ttFont:
         if ttFont["COLR"].version == 0 and "SVG " in ttFont:
-            yield FAIL, Message(
-                "drop-svg",
-                "Font has a COLR v0 table, which is already widely supported,"
-                " so the SVG table isn't needed.",
+            yield (
+                FAIL,
+                Message(
+                    "drop-svg",
+                    "Font has a COLR v0 table, which is already widely supported,"
+                    " so the SVG table isn't needed.",
+                ),
             )
 
         elif (
@@ -43,25 +46,34 @@ def check_colorfont_tables(font, ttFont):
             and "SVG " not in ttFont
             and not font.is_variable_font
         ):
-            yield FAIL, Message(
-                "add-svg",
-                "Font has COLRv1 but no SVG table; for CORLv1, we require"
-                " that an SVG table is present to support environments where"
-                " the former is not supported yet.\n" + NANOEMOJI_ADVICE,
+            yield (
+                FAIL,
+                Message(
+                    "add-svg",
+                    "Font has COLRv1 but no SVG table; for CORLv1, we require"
+                    " that an SVG table is present to support environments where"
+                    " the former is not supported yet.\n" + NANOEMOJI_ADVICE,
+                ),
             )
 
     if "SVG " in ttFont:
         if font.is_variable_font:
-            yield FAIL, Message(
-                "variable-svg",
-                "This is a variable font and SVG does not support"
-                " OpenType Variations.\n"
-                "Please remove the SVG table from this font.",
+            yield (
+                FAIL,
+                Message(
+                    "variable-svg",
+                    "This is a variable font and SVG does not support"
+                    " OpenType Variations.\n"
+                    "Please remove the SVG table from this font.",
+                ),
             )
 
         if "COLR" not in ttFont:
-            yield FAIL, Message(
-                "add-colr",
-                "Font only has an SVG table."
-                " Please add a COLR table as well.\n" + NANOEMOJI_ADVICE,
+            yield (
+                FAIL,
+                Message(
+                    "add-colr",
+                    "Font only has an SVG table."
+                    " Please add a COLR table as well.\n" + NANOEMOJI_ADVICE,
+                ),
             )

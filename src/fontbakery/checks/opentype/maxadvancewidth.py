@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -29,9 +29,12 @@ def check_maxadvancewidth(ttFont):
             hmtx_advance_width_max = max(g[0], hmtx_advance_width_max)
 
     if hmtx_advance_width_max != hhea_advance_width_max:
-        yield FAIL, Message(
-            "mismatch",
-            f"AdvanceWidthMax mismatch:"
-            f" expected {hmtx_advance_width_max} (from hmtx);"
-            f" got {hhea_advance_width_max} (from hhea)",
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f"AdvanceWidthMax mismatch:"
+                f" expected {hmtx_advance_width_max} (from hmtx);"
+                f" got {hhea_advance_width_max} (from hhea)",
+            ),
         )

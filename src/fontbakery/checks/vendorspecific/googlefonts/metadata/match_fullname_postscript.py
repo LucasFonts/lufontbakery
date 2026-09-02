@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -23,8 +23,11 @@ def check_metadata_match_fullname_postscript(font_metadata):
     post_script_name = regex.sub("", font_metadata.post_script_name)
     fullname = regex.sub("", font_metadata.full_name)
     if fullname != post_script_name:
-        yield FAIL, Message(
-            "mismatch",
-            f'METADATA.pb font full_name = "{font_metadata.full_name}" does not match'
-            f' post_script_name = "{font_metadata.post_script_name}"',
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f'METADATA.pb font full_name = "{font_metadata.full_name}" does not match'
+                f' post_script_name = "{font_metadata.post_script_name}"',
+            ),
         )

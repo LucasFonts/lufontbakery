@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, FAIL
+from fontbakery.prelude import FAIL, check
 
 
 @check(

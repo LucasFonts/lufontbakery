@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -26,8 +26,11 @@ def check_metadata_menu_and_latin(family_metadata):
         else:
             missing = f'"{missing[0]}"'
 
-        yield FAIL, Message(
-            "missing",
-            f'Subsets "menu" and "latin" are mandatory,'
-            f" but METADATA.pb is missing {missing}.",
+        yield (
+            FAIL,
+            Message(
+                "missing",
+                f'Subsets "menu" and "latin" are mandatory,'
+                f" but METADATA.pb is missing {missing}.",
+            ),
         )

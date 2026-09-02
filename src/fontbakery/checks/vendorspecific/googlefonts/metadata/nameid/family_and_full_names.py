@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import get_name_entry_strings
 
 
@@ -32,19 +32,25 @@ def check_metadata_nameid_family_and_full_names(ttFont, font_metadata):
     # FIXME: common condition/name-id check to other checks.
 
     if font_fullname != font_metadata.full_name:
-        yield FAIL, Message(
-            "fullname-mismatch",
-            (
-                f'METADATA.pb: Fullname "{font_metadata.full_name}"'
-                f' does not match name table entry "{font_fullname}"!'
+        yield (
+            FAIL,
+            Message(
+                "fullname-mismatch",
+                (
+                    f'METADATA.pb: Fullname "{font_metadata.full_name}"'
+                    f' does not match name table entry "{font_fullname}"!'
+                ),
             ),
         )
 
     elif font_familyname != font_metadata.name:
-        yield FAIL, Message(
-            "familyname-mismatch",
-            (
-                f'METADATA.pb Family name "{font_metadata.name}"'
-                f' does not match name table entry "{font_familyname}"!'
+        yield (
+            FAIL,
+            Message(
+                "familyname-mismatch",
+                (
+                    f'METADATA.pb Family name "{font_metadata.name}"'
+                    f' does not match name table entry "{font_familyname}"!'
+                ),
             ),
         )

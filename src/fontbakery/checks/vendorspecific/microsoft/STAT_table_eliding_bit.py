@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, WARN, FAIL
+from fontbakery.prelude import FAIL, PASS, WARN, check
 
 
 @check(
@@ -24,9 +24,12 @@ def check_STAT_table_eliding_bit(ttFont):
             value_name = name_table.getName(value_name_id, 3, 1, 0x409).toUnicode()
             if value_name == "Regular" and axis_value_flags & 0x0002 == 0:
                 failed = True
-                yield FAIL, (
-                    f"axis value {value_name} "
-                    f"(format {axis_value_record.Format}) is not elided"
+                yield (
+                    FAIL,
+                    (
+                        f"axis value {value_name} "
+                        f"(format {axis_value_record.Format}) is not elided"
+                    ),
                 )
     if not failed:
         yield PASS, "STAT table eliding bit is valid"

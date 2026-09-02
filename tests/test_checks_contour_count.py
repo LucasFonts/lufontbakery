@@ -1,13 +1,13 @@
-from fontTools.ttLib import TTFont
 import pytest
-
 from conftest import check_id
-from fontbakery.status import FAIL, WARN, SKIP
+from fontTools.ttLib import TTFont
+
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
+from fontbakery.status import FAIL, SKIP, WARN
 
 
 @pytest.fixture

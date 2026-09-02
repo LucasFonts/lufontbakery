@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import exit_with_install_instructions
 
 
@@ -29,29 +29,39 @@ def check_description_valid_html(descfile, description_and_article):
 
     for source, content in description_and_article.items():
         if "<html>" in content or "</html>" in content:
-            yield FAIL, Message(
-                "html-tag",
-                f"{source} should not have an \\<html\\> tag,"
-                f" since it should only be a snippet that will"
-                f" later be included in the Google Fonts"
-                f" font family specimen webpage.",
+            yield (
+                FAIL,
+                Message(
+                    "html-tag",
+                    f"{source} should not have an \\<html\\> tag,"
+                    f" since it should only be a snippet that will"
+                    f" later be included in the Google Fonts"
+                    f" font family specimen webpage.",
+                ),
             )
 
         try:
             html.fromstring("<html>" + content + "</html>")
         except Exception as e:
-            yield FAIL, Message(
-                "malformed-snippet",
-                f"{source} does not look like a proper HTML snippet."
-                f" Please look for syntax errors."
-                f" Maybe the following parser error message can help"
-                f" you find what's wrong:\n"
-                f"----------------\n"
-                f"{e}\n"
-                f"----------------\n",
+            yield (
+                FAIL,
+                Message(
+                    "malformed-snippet",
+                    f"{source} does not look like a proper HTML snippet."
+                    f" Please look for syntax errors."
+                    f" Maybe the following parser error message can help"
+                    f" you find what's wrong:\n"
+                    f"----------------\n"
+                    f"{e}\n"
+                    f"----------------\n",
+                ),
             )
 
         if "<p>" not in content or "</p>" not in content:
-            yield FAIL, Message(
-                "lacks-paragraph", f"{descfile} does not include an HTML \\<p\\> tag."
+            yield (
+                FAIL,
+                Message(
+                    "lacks-paragraph",
+                    f"{descfile} does not include an HTML \\<p\\> tag.",
+                ),
             )

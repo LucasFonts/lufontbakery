@@ -1,5 +1,5 @@
 from fontbakery.constants import NameID
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 # FIXME! This looks suspiciously similar to the now deprecated
@@ -40,17 +40,23 @@ def check_metadata_nameid_font_name(ttFont, style, font_metadata):
 
     nameid = NameID.FONT_FAMILY_NAME
     if len(font_familynames) == 0:
-        yield FAIL, Message(
-            "lacks-entry",
-            f"This font lacks a {NameID(nameid).name} entry"
-            f" (nameID = {nameid}) in the name table.",
+        yield (
+            FAIL,
+            Message(
+                "lacks-entry",
+                f"This font lacks a {NameID(nameid).name} entry"
+                f" (nameID = {nameid}) in the name table.",
+            ),
         )
     else:
         for font_familyname in font_familynames:
             if font_familyname != font_metadata.name:
-                yield FAIL, Message(
-                    "mismatch",
-                    f"Unmatched familyname in font:"
-                    f' TTF has familyname = "{font_familyname}" while'
-                    f' METADATA.pb has font.name = "{font_metadata.name}".',
+                yield (
+                    FAIL,
+                    Message(
+                        "mismatch",
+                        f"Unmatched familyname in font:"
+                        f' TTF has familyname = "{font_familyname}" while'
+                        f' METADATA.pb has font.name = "{font_metadata.name}".',
+                    ),
                 )

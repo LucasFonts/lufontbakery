@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 
 
 @check(
@@ -36,8 +36,11 @@ def check_use_typo_metrics(fonts):
             bad_fonts.append(font.file)
 
     if bad_fonts:
-        yield FAIL, Message(
-            "missing-os2-fsselection-bit7",
-            f"OS/2.fsSelection bit 7 (USE_TYPO_METRICS) was"
-            f"NOT set in the following fonts: {bad_fonts}.",
+        yield (
+            FAIL,
+            Message(
+                "missing-os2-fsselection-bit7",
+                f"OS/2.fsSelection bit 7 (USE_TYPO_METRICS) was"
+                f"NOT set in the following fonts: {bad_fonts}.",
+            ),
         )

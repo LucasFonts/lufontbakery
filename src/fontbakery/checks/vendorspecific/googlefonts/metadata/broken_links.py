@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -67,28 +67,37 @@ def check_metadata_broken_links(family_metadata):
                                 requests.codes.ok,
                                 requests.codes.too_many_requests,
                             ]:
-                                yield WARN, Message(
-                                    "bad-github-url",
-                                    f"Could not fetch '{link}'.\n\n"
-                                    f"But '{alternate_link}' seems to be good."
-                                    f" Please consider using that instead.\n",
+                                yield (
+                                    WARN,
+                                    Message(
+                                        "bad-github-url",
+                                        f"Could not fetch '{link}'.\n\n"
+                                        f"But '{alternate_link}' seems to be good."
+                                        f" Please consider using that instead.\n",
+                                    ),
                                 )
                                 good = True
                     if not good:
                         broken_links.append(f"{link} (status code: {code})")
             except requests.exceptions.Timeout:
-                yield WARN, Message(
-                    "timeout",
-                    f"Timed out while attempting to access: '{link}'."
-                    f" Please verify if that's a broken link.",
+                yield (
+                    WARN,
+                    Message(
+                        "timeout",
+                        f"Timed out while attempting to access: '{link}'."
+                        f" Please verify if that's a broken link.",
+                    ),
                 )
             except requests.exceptions.RequestException:
                 broken_links.append(link)
 
     if len(broken_links) > 0:
         broken_links_list = "\n\t".join(broken_links)
-        yield FAIL, Message(
-            "broken-links",
-            f"The following links are broken in the METADATA.pb file:\n"
-            f"\t{broken_links_list}",
+        yield (
+            FAIL,
+            Message(
+                "broken-links",
+                f"The following links are broken in the METADATA.pb file:\n"
+                f"\t{broken_links_list}",
+            ),
         )

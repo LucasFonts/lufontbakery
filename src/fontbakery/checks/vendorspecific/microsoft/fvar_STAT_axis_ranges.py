@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, WARN, FAIL
+from fontbakery.prelude import FAIL, PASS, WARN, check
 
 
 @check(
@@ -31,9 +31,12 @@ def check_fvar_STAT_axis_ranges(ttFont):
                 for axis_index, axis_value in stat_axis_value_record.AxisValue.items():
                     if axis_index >= stat_design_axis_count:
                         failed = True
-                        yield FAIL, (
-                            f"axis index {axis_index} (format 4) "
-                            f"is greater than STAT axis count {stat_design_axis_count}"
+                        yield (
+                            FAIL,
+                            (
+                                f"axis index {axis_index} (format 4) "
+                                f"is greater than STAT axis count {stat_design_axis_count}"
+                            ),
                         )
                     stat_axis = stat_design_axis[axis_index].AxisTag
                     stat_coord_set.add((stat_axis, axis_value))
@@ -52,18 +55,24 @@ def check_fvar_STAT_axis_ranges(ttFont):
                         axis_value = stat_axis_value_record.Value
                         if axis_index >= stat_design_axis_count:
                             failed = True
-                            yield FAIL, (
-                                f"axis index {axis_index} (format {stat_axis_value_record.Format}) "
-                                f"is greater than STAT axis count {stat_design_axis_count}"
+                            yield (
+                                FAIL,
+                                (
+                                    f"axis index {axis_index} (format {stat_axis_value_record.Format}) "
+                                    f"is greater than STAT axis count {stat_design_axis_count}"
+                                ),
                             )
                         stat_axis = stat_design_axis[axis_index].AxisTag
                         if instance_axis == stat_axis and instance_value == axis_value:
                             if found_instance_axis:
                                 failed = True
-                                yield FAIL, (
-                                    f"axis value {instance_value} "
-                                    f"(format {stat_axis_value_record.Format}) "
-                                    f"for axis {instance_axis} is not unique"
+                                yield (
+                                    FAIL,
+                                    (
+                                        f"axis value {instance_value} "
+                                        f"(format {stat_axis_value_record.Format}) "
+                                        f"for axis {instance_axis} is not unique"
+                                    ),
                                 )
                             found_instance_axis = True
                     # format 2
@@ -74,9 +83,12 @@ def check_fvar_STAT_axis_ranges(ttFont):
                         # axis_nominal_value = stat_axis_value_record.NominalValue
                         if axis_index >= stat_design_axis_count:
                             failed = True
-                            yield FAIL, (
-                                f"axis index {axis_index} (format 2) "
-                                f"is greater than STAT axis count {stat_design_axis_count}"
+                            yield (
+                                FAIL,
+                                (
+                                    f"axis index {axis_index} (format 2) "
+                                    f"is greater than STAT axis count {stat_design_axis_count}"
+                                ),
                             )
                         stat_axis = stat_design_axis[axis_index].AxisTag
                         if (
@@ -85,16 +97,22 @@ def check_fvar_STAT_axis_ranges(ttFont):
                         ):
                             if found_instance_axis:
                                 failed = True
-                                yield FAIL, (
-                                    f"axis value {instance_value} (format 2) "
-                                    f"for axis {instance_axis} is not unique"
+                                yield (
+                                    FAIL,
+                                    (
+                                        f"axis value {instance_value} (format 2) "
+                                        f"for axis {instance_axis} is not unique"
+                                    ),
                                 )
                             found_instance_axis = True
                 if not found_instance_axis:
                     failed = True
-                    yield FAIL, (
-                        f"axis value {instance_value} "
-                        f"for axis {instance_axis} not found in STAT table"
+                    yield (
+                        FAIL,
+                        (
+                            f"axis value {instance_value} "
+                            f"for axis {instance_axis} not found in STAT table"
+                        ),
                     )
     if not failed:
         yield PASS, "fvar axis ranges found in STAT table"

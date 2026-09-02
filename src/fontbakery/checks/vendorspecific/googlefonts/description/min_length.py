@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -17,7 +17,10 @@ from fontbakery.prelude import check, Message, FAIL
 def check_description_min_length(description):
     """DESCRIPTION.en_us.html must have more than 200 bytes."""
     if len(description) <= 200:
-        yield FAIL, Message(
-            "too-short",
-            "DESCRIPTION.en_us.html must have size larger than 200 bytes.",
+        yield (
+            FAIL,
+            Message(
+                "too-short",
+                "DESCRIPTION.en_us.html must have size larger than 200 bytes.",
+            ),
         )

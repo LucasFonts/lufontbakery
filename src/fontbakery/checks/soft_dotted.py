@@ -4,7 +4,7 @@ from beziers.path import BezierPath
 from fontTools import unicodedata
 from vharfbuzz import Vharfbuzz
 
-from fontbakery.prelude import check, Message, PASS, WARN, SKIP
+from fontbakery.prelude import PASS, SKIP, WARN, Message, check
 
 
 @check(
@@ -82,8 +82,9 @@ def check_soft_dotted(ttFont):
         if len(outlines_dict[ord("i")]) == len(outlines_dict[ord("ı")]):
             unclear = True
     if unclear:
-        yield SKIP, (
-            "It is not clear if the soft dotted characters have glyphs with dots."
+        yield (
+            SKIP,
+            ("It is not clear if the soft dotted characters have glyphs with dots."),
         )
         return
 
@@ -139,7 +140,10 @@ def check_soft_dotted(ttFont):
     if fail_unchanged_strings or warn_unchanged_strings:
         yield WARN, Message("soft-dotted", message)
     else:
-        yield PASS, (
-            "All soft dotted characters seem to lose their dot when combined with"
-            " a mark above."
+        yield (
+            PASS,
+            (
+                "All soft dotted characters seem to lose their dot when combined with"
+                " a mark above."
+            ),
         )

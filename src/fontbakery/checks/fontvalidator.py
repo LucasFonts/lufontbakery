@@ -1,7 +1,7 @@
-from pathlib import Path
 import tempfile
+from pathlib import Path
 
-from fontbakery.prelude import check, ERROR, FAIL, INFO, PASS, WARN, Message
+from fontbakery.prelude import ERROR, FAIL, INFO, PASS, WARN, Message, check
 from fontbakery.utils import exit_with_install_instructions
 
 
@@ -166,17 +166,23 @@ def check_fontvalidator(font, config):
                 ("Table Test:", "Progress: Validating glyph with index")
             )
         ]
-        yield INFO, Message(
-            "fontval-returned-error",
-            (
-                "Microsoft Font Validator returned an error code."
-                " Output follows :\n\n{}\n"
-            ).format("\n".join(filtered_output)),
+        yield (
+            INFO,
+            Message(
+                "fontval-returned-error",
+                (
+                    "Microsoft Font Validator returned an error code."
+                    " Output follows :\n\n{}\n"
+                ).format("\n".join(filtered_output)),
+            ),
         )
     except (OSError, IOError) as error:
-        yield ERROR, Message(
-            "fontval-not-available",
-            "Mono runtime and/or Microsoft Font Validator are not available!",
+        yield (
+            ERROR,
+            Message(
+                "fontval-not-available",
+                "Mono runtime and/or Microsoft Font Validator are not available!",
+            ),
         )
         raise error
 
@@ -196,7 +202,7 @@ def check_fontvalidator(font, config):
                     num_similar = len(details) - 10
                     details = details[:10]
                     details.append(
-                        f"NOTE: {num_similar} other similar" " results were hidden!"
+                        f"NOTE: {num_similar} other similar results were hidden!"
                     )
                 details = "\n\t- " + "\n\t- ".join(details)
             return f"MS-FonVal: {msg} DETAILS: {details}"

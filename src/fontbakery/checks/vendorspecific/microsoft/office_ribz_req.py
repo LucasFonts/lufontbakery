@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, FAIL
+from fontbakery.prelude import FAIL, PASS, check
 from fontbakery.utils import get_subfamily_name
 
 
@@ -23,9 +23,12 @@ def check_office_ribz_req(ttFont):
         yield FAIL, "Name ID 2 (sub family) missing"
 
     if subfamily_name not in {"Regular", "Italic", "Bold", "Bold Italic"}:
-        yield FAIL, (
-            f"Name ID 2 (subfamily) invalid: {subfamily_name}; "
-            f"must be one of 'Regular', 'Italic', 'Bold' or 'Bold Italic'"
+        yield (
+            FAIL,
+            (
+                f"Name ID 2 (subfamily) invalid: {subfamily_name}; "
+                f"must be one of 'Regular', 'Italic', 'Bold' or 'Bold Italic'"
+            ),
         )
     else:
         yield PASS, "Name ID 2 (subfamily) OK"

@@ -1,7 +1,7 @@
 import fractions
 
-from fontbakery.prelude import check, Message, FAIL, WARN
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 def parse_version_string(name: str) -> float:
@@ -68,35 +68,45 @@ def check_font_version(ttFont):
             try:
                 name_version = parse_version_string(record.toUnicode())
                 if abs(name_version - head_version) > fail_tolerance:
-                    yield FAIL, Message(
-                        "mismatch",
-                        f'head version is "{float(head_version):.5f}"'
-                        f" while name version string (for"
-                        f" platform {record.platformID},"
-                        f" encoding {record.platEncID}) is"
-                        f' "{record.toUnicode()}".',
+                    yield (
+                        FAIL,
+                        Message(
+                            "mismatch",
+                            f'head version is "{float(head_version):.5f}"'
+                            f" while name version string (for"
+                            f" platform {record.platformID},"
+                            f" encoding {record.platEncID}) is"
+                            f' "{record.toUnicode()}".',
+                        ),
                     )
                 elif abs(name_version - head_version) > warn_tolerance:
-                    yield WARN, Message(
-                        "near-mismatch",
-                        f'head version is "{float(head_version):.5f}"'
-                        f" while name version string (for"
-                        f" platform {record.platformID},"
-                        f" encoding {record.platEncID}) is"
-                        f' "{record.toUnicode()}".'
-                        f" This matches to 3 decimal places, but"
-                        f" is not as accurate as possible.",
+                    yield (
+                        WARN,
+                        Message(
+                            "near-mismatch",
+                            f'head version is "{float(head_version):.5f}"'
+                            f" while name version string (for"
+                            f" platform {record.platformID},"
+                            f" encoding {record.platEncID}) is"
+                            f' "{record.toUnicode()}".'
+                            f" This matches to 3 decimal places, but"
+                            f" is not as accurate as possible.",
+                        ),
                     )
             except ValueError:
-                yield FAIL, Message(
-                    "parse",
-                    f"name version string for"
-                    f" platform {record.platformID},"
-                    f" encoding {record.platEncID}"
-                    f' ("{record.toUnicode()}"),'
-                    f" could not be parsed.",
+                yield (
+                    FAIL,
+                    Message(
+                        "parse",
+                        f"name version string for"
+                        f" platform {record.platformID},"
+                        f" encoding {record.platEncID}"
+                        f' ("{record.toUnicode()}"),'
+                        f" could not be parsed.",
+                    ),
                 )
     else:
-        yield FAIL, Message(
-            "missing", "There is no name ID 5 (version string) in the font."
+        yield (
+            FAIL,
+            Message("missing", "There is no name ID 5 (version string) in the font."),
         )

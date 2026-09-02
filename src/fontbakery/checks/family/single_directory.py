@@ -1,10 +1,10 @@
 import os
 
 from fontbakery.prelude import (
-    check,
-    Message,
-    PASS,
     FAIL,
+    PASS,
+    Message,
+    check,
 )
 
 
@@ -31,10 +31,13 @@ def check_family_single_directory(fonts):
     if len(directories) == 1:
         yield PASS, "All files are in the same directory."
     else:
-        yield FAIL, Message(
-            "single-directory",
-            "Not all fonts passed in the command line are in the"
-            " same directory. This may lead to bad results as the tool"
-            " will interpret all font files as belonging to a single"
-            f" font family. The detected directories are: {directories}",
+        yield (
+            FAIL,
+            Message(
+                "single-directory",
+                "Not all fonts passed in the command line are in the"
+                " same directory. This may lead to bad results as the tool"
+                " will interpret all font files as belonging to a single"
+                f" font family. The detected directories are: {directories}",
+            ),
         )

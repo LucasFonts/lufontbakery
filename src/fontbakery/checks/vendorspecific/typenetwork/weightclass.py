@@ -1,5 +1,5 @@
+from fontbakery.prelude import FAIL, INFO, PASS, Message, check, condition
 from fontbakery.testable import Font
-from fontbakery.prelude import check, condition, Message, PASS, FAIL, INFO
 
 
 @condition(Font)
@@ -102,8 +102,9 @@ def check_weightclass(font, tn_expected_os2_weight):
 
             if os2_value != int(fvar_value):
                 failed = True
-                yield FAIL, Message(
-                    "bad-value", fail_message.format(os2_value, fvar_value)
+                yield (
+                    FAIL,
+                    Message("bad-value", fail_message.format(os2_value, fvar_value)),
                 )
         else:
             if os2_value != 400:
@@ -117,28 +118,36 @@ def check_weightclass(font, tn_expected_os2_weight):
     else:
         if not expected_value:
             failed = True
-            yield INFO, Message(
-                "no-value", no_value_message.format(os2_value, weight_name)
+            yield (
+                INFO,
+                Message("no-value", no_value_message.format(os2_value, weight_name)),
             )
 
         elif "thin" in weight_name.split(" "):
             if os2_value not in expected_value:
                 failed = True
-                yield FAIL, Message(
-                    "bad-value", fail_message.format(os2_value, expected_value)
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-value", fail_message.format(os2_value, expected_value)
+                    ),
                 )
 
         elif "extralight" in weight_name.split(" "):
             if os2_value not in expected_value:
                 failed = True
-                yield FAIL, Message(
-                    "bad-value", fail_message.format(os2_value, expected_value)
+                yield (
+                    FAIL,
+                    Message(
+                        "bad-value", fail_message.format(os2_value, expected_value)
+                    ),
                 )
 
         elif os2_value != expected_value:
             failed = True
-            yield FAIL, Message(
-                "bad-value", fail_message.format(os2_value, expected_value)
+            yield (
+                FAIL,
+                Message("bad-value", fail_message.format(os2_value, expected_value)),
             )
 
     if not failed:

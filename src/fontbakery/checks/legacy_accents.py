@@ -1,4 +1,4 @@
-from fontbakery.prelude import PASS, FAIL, Message, check
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -45,9 +45,12 @@ def check_legacy_accents(ttFont):
         if reverseCmap[name].intersection(LEGACY_ACCENTS):
             if hmtx[name][0] == 0:
                 passed = False
-                yield FAIL, Message(
-                    "legacy-accents-width",
-                    f'Width of legacy accent "{name}" is zero; should be positive.',
+                yield (
+                    FAIL,
+                    Message(
+                        "legacy-accents-width",
+                        f'Width of legacy accent "{name}" is zero; should be positive.',
+                    ),
                 )
 
     # Check whether legacy accents appear in GDEF as marks.
@@ -59,10 +62,13 @@ def check_legacy_accents(ttFont):
             if reverseCmap[name].intersection(LEGACY_ACCENTS):
                 if name in class_def and class_def[name] == 3:
                     passed = False
-                    yield FAIL, Message(
-                        "legacy-accents-gdef",
-                        f'Legacy accent "{name}" is defined in GDEF'
-                        f" as a mark (class 3).",
+                    yield (
+                        FAIL,
+                        Message(
+                            "legacy-accents-gdef",
+                            f'Legacy accent "{name}" is defined in GDEF'
+                            f" as a mark (class 3).",
+                        ),
                     )
 
     if passed:

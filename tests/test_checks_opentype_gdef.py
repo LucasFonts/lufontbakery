@@ -1,15 +1,16 @@
 from io import BytesIO
+
+from conftest import check_id
 from fontTools.ttLib import TTFont, newTable
 from fontTools.ttLib.tables import otTables
 
-from conftest import check_id
-from fontbakery.status import WARN
 from fontbakery.codetesting import (
-    assert_PASS,
-    assert_SKIP,
-    assert_results_contain,
     TEST_FILE,
+    assert_PASS,
+    assert_results_contain,
+    assert_SKIP,
 )
+from fontbakery.status import WARN
 
 
 def get_test_font():

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -39,11 +39,14 @@ def check_family_tnum_horizontal_metrics(RIBBI_ttFonts):
                 most_common_width = width
 
         del tnum_widths[most_common_width]
-        yield FAIL, Message(
-            "inconsistent-widths",
-            f"The most common tabular glyph width is"
-            f" {most_common_width}. But there are other"
-            f" tabular glyphs with different widths"
-            f" such as the following ones:\n"
-            "\t{tnum_widths}.",
+        yield (
+            FAIL,
+            Message(
+                "inconsistent-widths",
+                f"The most common tabular glyph width is"
+                f" {most_common_width}. But there are other"
+                f" tabular glyphs with different widths"
+                f" such as the following ones:\n"
+                "\t{tnum_widths}.",
+            ),
         )

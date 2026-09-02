@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, SKIP
+from fontbakery.prelude import FAIL, SKIP, Message, check
 
 
 @check(
@@ -31,7 +31,10 @@ def check_varfont_same_size_instance_records(ttFont):
     # it means that some instance records have postscriptNameID values while
     # others do not.
     if len(font_ps_nameids_not_provided) != 1:
-        yield FAIL, Message(
-            "different-size-instance-records",
-            "Instance records don't all have the same size.",
+        yield (
+            FAIL,
+            Message(
+                "different-size-instance-records",
+                "Instance records don't all have the same size.",
+            ),
         )

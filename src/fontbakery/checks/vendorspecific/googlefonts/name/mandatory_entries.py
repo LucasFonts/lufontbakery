@@ -1,8 +1,8 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import (
     RIBBI_STYLE_NAMES,
     NameID,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -35,7 +35,10 @@ def check_name_mandatory_entries(ttFont, style):
     # The font must have at least these name IDs:
     for nameId in required_nameIDs:
         if len(get_name_entry_strings(ttFont, nameId)) == 0:
-            yield FAIL, Message(
-                "missing-entry",
-                f"Font lacks entry with nameId={nameId} ({NameID(nameId).name})",
+            yield (
+                FAIL,
+                Message(
+                    "missing-entry",
+                    f"Font lacks entry with nameId={nameId} ({NameID(nameId).name})",
+                ),
             )

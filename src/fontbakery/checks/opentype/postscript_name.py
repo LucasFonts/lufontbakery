@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, Message, check
 from fontbakery.utils import markdown_table
 
 
@@ -15,6 +15,7 @@ from fontbakery.utils import markdown_table
 def check_postscript_name(ttFont):
     """PostScript name follows OpenType specification requirements?"""
     import re
+
     from fontbakery.utils import get_name_entry_strings
 
     bad_entries = []
@@ -35,8 +36,11 @@ def check_postscript_name(ttFont):
             )
 
     if len(bad_entries) > 0:
-        yield FAIL, Message(
-            "bad-psname-entries",
-            f"PostScript name does not follow requirements:\n\n"
-            f"{markdown_table(bad_entries)}",
+        yield (
+            FAIL,
+            Message(
+                "bad-psname-entries",
+                f"PostScript name does not follow requirements:\n\n"
+                f"{markdown_table(bad_entries)}",
+            ),
         )

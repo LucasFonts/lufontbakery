@@ -1,4 +1,4 @@
-from fontbakery.prelude import PASS, FAIL, Message, check
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -20,16 +20,22 @@ def check_sfnt_version(ttFont, is_ttf, is_cff, is_cff2):
     sfnt_version = ttFont.sfntVersion
 
     if is_ttf and sfnt_version != "\x00\x01\x00\x00":
-        yield FAIL, Message(
-            "wrong-sfnt-version-ttf",
-            "Font with TrueType outlines has incorrect sfntVersion value:"
-            f" '{sfnt_version}'",
+        yield (
+            FAIL,
+            Message(
+                "wrong-sfnt-version-ttf",
+                "Font with TrueType outlines has incorrect sfntVersion value:"
+                f" '{sfnt_version}'",
+            ),
         )
 
     elif (is_cff or is_cff2) and sfnt_version != "OTTO":
-        yield FAIL, Message(
-            "wrong-sfnt-version-cff",
-            f"Font with CFF data has incorrect sfntVersion value: '{sfnt_version}'",
+        yield (
+            FAIL,
+            Message(
+                "wrong-sfnt-version-cff",
+                f"Font with CFF data has incorrect sfntVersion value: '{sfnt_version}'",
+            ),
         )
 
     else:

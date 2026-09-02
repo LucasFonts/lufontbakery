@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -21,7 +21,10 @@ def check_metadata_includes_production_subsets(family_metadata, production_metad
     missing_subsets = prod_subsets - local_subsets
     if len(missing_subsets) > 0:
         missing_subsets = ", ".join(sorted(missing_subsets))
-        yield FAIL, Message(
-            "missing-subsets",
-            f"The following subsets are missing [{missing_subsets}]",
+        yield (
+            FAIL,
+            Message(
+                "missing-subsets",
+                f"The following subsets are missing [{missing_subsets}]",
+            ),
         )

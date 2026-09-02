@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -23,11 +23,14 @@ def check_cjk_not_enough_glyphs(font):
         else:
             num_CJK_glyphs = f"There are only {cjk_glyph_count} CJK glyphs"
 
-        yield WARN, Message(
-            "cjk-not-enough-glyphs",
-            f"{num_CJK_glyphs} when there needs to be at least 150"
-            f" in order to support the smallest CJK writing system, Kana.\n"
-            f"The following CJK glyphs were found:\n"
-            f"{cjk_glyphs}\n"
-            f"Please check that these glyphs have the correct unicodes.",
+        yield (
+            WARN,
+            Message(
+                "cjk-not-enough-glyphs",
+                f"{num_CJK_glyphs} when there needs to be at least 150"
+                f" in order to support the smallest CJK writing system, Kana.\n"
+                f"The following CJK glyphs were found:\n"
+                f"{cjk_glyphs}\n"
+                f"Please check that these glyphs have the correct unicodes.",
+            ),
         )

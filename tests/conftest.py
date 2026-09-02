@@ -1,5 +1,6 @@
 import importlib
 import sys
+
 import pytest
 
 from fontbakery.codetesting import CheckTester, checks_by_id

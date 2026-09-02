@@ -1,10 +1,10 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import (
     NameID,
     PlatformID,
     WindowsEncodingID,
     WindowsLanguageID,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -20,6 +20,7 @@ from fontbakery.constants import (
 def check_family_max_4_fonts_per_family_name(ttFonts):
     """Verify that each group of fonts with the same nameID 1 has maximum of 4 fonts."""
     from collections import Counter
+
     from fontbakery.utils import get_name_entry_strings
 
     family_names = []
@@ -40,7 +41,10 @@ def check_family_max_4_fonts_per_family_name(ttFonts):
     counter = Counter(family_names)
     for family_name, count in counter.items():
         if count > 4:
-            yield FAIL, Message(
-                "too-many",
-                f"Family '{family_name}' has {count} fonts" f" (should be 4 or fewer).",
+            yield (
+                FAIL,
+                Message(
+                    "too-many",
+                    f"Family '{family_name}' has {count} fonts (should be 4 or fewer).",
+                ),
             )

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -15,7 +15,10 @@ def check_family_consistent_upm(ttFonts):
     for ttFont in ttFonts:
         upm_set.add(ttFont["head"].unitsPerEm)
     if len(upm_set) > 1:
-        yield FAIL, Message(
-            "inconsistent-upem",
-            f"Fonts have different units per em: {sorted(upm_set)}.",
+        yield (
+            FAIL,
+            Message(
+                "inconsistent-upem",
+                f"Fonts have different units per em: {sorted(upm_set)}.",
+            ),
         )

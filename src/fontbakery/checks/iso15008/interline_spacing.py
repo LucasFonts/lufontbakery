@@ -1,10 +1,10 @@
 from fontTools.pens.boundsPen import BoundsPen
 
-from fontbakery.prelude import check, FAIL, Message
 from fontbakery.checks.iso15008.utils import (
-    stem_width,
     DISCLAIMER,
+    stem_width,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -28,10 +28,13 @@ def check_iso15008_interline_spacing(ttFont):
     """Check if spacing between lines is adequate for display use"""
     glyphset = ttFont.getGlyphSet()
     if "h" not in glyphset or "g" not in glyphset:
-        yield FAIL, Message(
-            "glyph-not-present",
-            "There was no 'g'/'h' glyph in the font,"
-            " so the spacing could not be tested",
+        yield (
+            FAIL,
+            Message(
+                "glyph-not-present",
+                "There was no 'g'/'h' glyph in the font,"
+                " so the spacing could not be tested",
+            ),
         )
         return
 
@@ -52,8 +55,11 @@ def check_iso15008_interline_spacing(ttFont):
     if width is None:
         yield FAIL, Message("no-stem-width", "Could not determine stem width")
     elif linegap < width:
-        yield FAIL, Message(
-            "bad-interline-spacing",
-            f"The interline space {linegap} should"
-            f" be more than the stem width {width}",
+        yield (
+            FAIL,
+            Message(
+                "bad-interline-spacing",
+                f"The interline space {linegap} should"
+                f" be more than the stem width {width}",
+            ),
         )

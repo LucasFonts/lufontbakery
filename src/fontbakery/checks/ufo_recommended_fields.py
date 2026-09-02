@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, PASS, WARN, Message
+from fontbakery.prelude import PASS, WARN, Message, check
 
 
 @check(
@@ -26,9 +26,12 @@ def check_ufo_recommended_fields(ufo_font):
             recommended_fields.append(field)
 
     if recommended_fields:
-        yield WARN, Message(
-            "missing-recommended-fields",
-            f"Recommended field(s) missing: {recommended_fields}",
+        yield (
+            WARN,
+            Message(
+                "missing-recommended-fields",
+                f"Recommended field(s) missing: {recommended_fields}",
+            ),
         )
     else:
         yield PASS, "Recommended fields present."

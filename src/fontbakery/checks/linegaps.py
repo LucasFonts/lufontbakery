@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, FAIL, WARN
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 
 
 @check(

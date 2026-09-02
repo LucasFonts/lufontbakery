@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -29,9 +29,12 @@ def check_nested_components(ttFont, config):
                 bad_glyphs.append(glyph_name)
     if bad_glyphs:
         formatted_list = "\t* " + pretty_print_list(config, bad_glyphs, sep="\n\t* ")
-        yield FAIL, Message(
-            "found-nested-components",
-            f"The following glyphs have components which"
-            f" themselves are component glyphs:\n"
-            f"{formatted_list}",
+        yield (
+            FAIL,
+            Message(
+                "found-nested-components",
+                f"The following glyphs have components which"
+                f" themselves are component glyphs:\n"
+                f"{formatted_list}",
+            ),
         )

@@ -1,10 +1,10 @@
 import re
 
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.checks.vendorspecific.googlefonts.constants import (
     DESCRIPTION_OF_EXPECTED_COPYRIGHT_STRING_FORMATTING,
     EXPECTED_COPYRIGHT_PATTERN,
 )
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -23,10 +23,13 @@ def check_license_OFL_copyright(license_contents):
 
     string = license_contents.strip().split("\n")[0].lower()
     if not re.search(EXPECTED_COPYRIGHT_PATTERN, string):
-        yield FAIL, Message(
-            "bad-format",
-            f"First line in license file is:\n\n"
-            f'"{string}"\n\n'
-            f"which does not match the expected format, similar to:\n\n"
-            f'"Copyright 2022 The Familyname Project Authors (git url)"',
+        yield (
+            FAIL,
+            Message(
+                "bad-format",
+                f"First line in license file is:\n\n"
+                f'"{string}"\n\n'
+                f"which does not match the expected format, similar to:\n\n"
+                f'"Copyright 2022 The Familyname Project Authors (git url)"',
+            ),
         )

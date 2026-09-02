@@ -1,12 +1,12 @@
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
 from fontbakery.codetesting import (
+    TEST_FILE,
     assert_PASS,
     assert_results_contain,
-    TEST_FILE,
 )
-from fontbakery.status import DEBUG, INFO, WARN, ERROR, SKIP, PASS, FAIL
+from fontbakery.status import DEBUG, ERROR, FAIL, INFO, PASS, SKIP, WARN
 
 check_statuses = (ERROR, FAIL, SKIP, PASS, WARN, INFO, DEBUG)
 

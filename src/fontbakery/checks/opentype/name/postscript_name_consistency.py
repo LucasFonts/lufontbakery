@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -22,9 +22,12 @@ def check_name_postscript_name_consistency(ttFont):
             postscript_names.add(postscript_name)
 
     if len(postscript_names) > 1:
-        yield FAIL, Message(
-            "inconsistency",
-            f'Entries in the "name" table for ID 6'
-            f" (PostScript name) are not consistent."
-            f" Names found: {sorted(postscript_names)}.",
+        yield (
+            FAIL,
+            Message(
+                "inconsistency",
+                f'Entries in the "name" table for ID 6'
+                f" (PostScript name) are not consistent."
+                f" Names found: {sorted(postscript_names)}.",
+            ),
         )

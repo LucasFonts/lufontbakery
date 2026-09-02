@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, disable, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check, disable
 
 
 # FIXME!
@@ -22,9 +22,12 @@ def check_production_encoded_glyphs(ttFont, api_gfonts_ttFont):
         hex_codepoints = [
             "0x" + hex(c).upper()[2:].zfill(4) for c in sorted(missing_codepoints)
         ]
-        yield FAIL, Message(
-            "lost-glyphs",
-            f"Font is missing the following glyphs"
-            f" from the previous release"
-            f" [{', '.join(hex_codepoints)}]",
+        yield (
+            FAIL,
+            Message(
+                "lost-glyphs",
+                f"Font is missing the following glyphs"
+                f" from the previous release"
+                f" [{', '.join(hex_codepoints)}]",
+            ),
         )

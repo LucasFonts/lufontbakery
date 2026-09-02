@@ -1,10 +1,10 @@
 from fontTools.ttLib import TTFont
 
 from fontbakery.codetesting import (
+    TEST_FILE,
+    CheckTester,
     assert_PASS,
     assert_results_contain,
-    CheckTester,
-    TEST_FILE,
 )
 from fontbakery.status import WARN
 

@@ -1,25 +1,25 @@
 import os
 
+from conftest import check_id
 from fontTools.ttLib import TTFont
 
-from conftest import check_id
+from fontbakery.codetesting import (
+    TEST_FILE,
+    assert_PASS,
+    assert_results_contain,
+    portable_path,
+)
 from fontbakery.constants import (
+    MacintoshEncodingID,
+    MacintoshLanguageID,
     NameID,
     PlatformID,
     WindowsEncodingID,
     WindowsLanguageID,
-    MacintoshEncodingID,
-    MacintoshLanguageID,
 )
 from fontbakery.message import Message
-from fontbakery.status import INFO, WARN, PASS, FAIL, SKIP
 from fontbakery.result import Subresult
-from fontbakery.codetesting import (
-    assert_PASS,
-    assert_results_contain,
-    portable_path,
-    TEST_FILE,
-)
+from fontbakery.status import FAIL, INFO, PASS, SKIP, WARN
 
 
 @check_id("opentype/name/empty_records")
@@ -48,7 +48,8 @@ def test_check_monospace(check):
     """Checking correctness of monospaced metadata."""
 
     import string
-    from fontbakery.constants import PANOSE_Proportion, IsFixedWidth
+
+    from fontbakery.constants import IsFixedWidth, PANOSE_Proportion
 
     # This check has a large number of code-paths
     # We'll make sure to test them all here.

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -18,9 +18,12 @@ def check_metadata_valid_post_script_name_values(font_metadata, font_familynames
     metadata_psname = "".join(font_metadata.post_script_name.split("-"))
     if not any(psname in metadata_psname for psname in possible_psnames):
         possible_psnames = ", ".join(possible_psnames)
-        yield FAIL, Message(
-            "mismatch",
-            f"METADATA.pb"
-            f' postScriptName ("{font_metadata.post_script_name}")'
-            f' does not match correct font name format ("{possible_psnames}").',
+        yield (
+            FAIL,
+            Message(
+                "mismatch",
+                f"METADATA.pb"
+                f' postScriptName ("{font_metadata.post_script_name}")'
+                f' does not match correct font name format ("{possible_psnames}").',
+            ),
         )

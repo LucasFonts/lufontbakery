@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from fontbakery.prelude import check, Message, WARN, PASS
+from fontbakery.prelude import PASS, WARN, Message, check
 from fontbakery.utils import bullet_list
 
 
@@ -175,11 +175,14 @@ def unreachable_glyphs(ttFont, config):
                 all_glyphs -= set(base_glyph.getComponentNames(ttFont["glyf"]))
 
     if all_glyphs:
-        yield WARN, Message(
-            "unreachable-glyphs",
-            "The following glyphs could not be reached"
-            " by codepoint or substitution rules:\n\n"
-            f"{bullet_list(config, sorted(all_glyphs))}\n",
+        yield (
+            WARN,
+            Message(
+                "unreachable-glyphs",
+                "The following glyphs could not be reached"
+                " by codepoint or substitution rules:\n\n"
+                f"{bullet_list(config, sorted(all_glyphs))}\n",
+            ),
         )
     else:
         yield PASS, "Font did not contain any unreachable glyphs"

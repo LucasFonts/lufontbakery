@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -19,15 +19,21 @@ def check_cjk_vertical_metrics_regressions(regular_ttFont, regular_remote_style)
     ttFont = regular_ttFont
 
     if not ttFont:
-        yield FAIL, Message(
-            "couldnt-find-local-regular",
-            "Could not identify a local Regular style font",
+        yield (
+            FAIL,
+            Message(
+                "couldnt-find-local-regular",
+                "Could not identify a local Regular style font",
+            ),
         )
         return
     if not gf_ttFont:
-        yield FAIL, Message(
-            "couldnt-find-remote-regular",
-            "Could not identify a Regular style font hosted on Google Fonts",
+        yield (
+            FAIL,
+            Message(
+                "couldnt-find-remote-regular",
+                "Could not identify a Regular style font hosted on Google Fonts",
+            ),
         )
         return
 
@@ -46,7 +52,10 @@ def check_cjk_vertical_metrics_regressions(regular_ttFont, regular_remote_style)
         gf_val = math.ceil(getattr(gf_ttFont[tbl], attrib) * upm_scale)
         f_val = math.ceil(getattr(ttFont[tbl], attrib))
         if gf_val != f_val:
-            yield FAIL, Message(
-                "cjk-metric-regression",
-                f" {tbl} {attrib} is {f_val}" f" when it should be {gf_val}",
+            yield (
+                FAIL,
+                Message(
+                    "cjk-metric-regression",
+                    f" {tbl} {attrib} is {f_val} when it should be {gf_val}",
+                ),
             )

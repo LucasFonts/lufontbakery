@@ -1,9 +1,9 @@
-from fontbakery.prelude import check, WARN
 from fontbakery.checks.vendorspecific.microsoft import check_repertoire
 from fontbakery.checks.vendorspecific.microsoft.character_repertoires import (
     WGL4_OPTIONAL,
     WGL4_REQUIRED,
 )
+from fontbakery.prelude import WARN, check
 
 
 # FIXME: There's no way to run this check, as it is not included in any profile!

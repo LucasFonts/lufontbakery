@@ -1,5 +1,5 @@
-from fontbakery.prelude import check, Message, FAIL
 from fontbakery.constants import NameID
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -17,7 +17,10 @@ def check_name_familyname_first_char(ttFont):
     for familyname in get_name_entry_strings(ttFont, NameID.FONT_FAMILY_NAME):
         digits = map(str, range(0, 10))
         if familyname[0] in digits:
-            yield FAIL, Message(
-                "begins-with-digit",
-                f"Font family name '{familyname}' begins with a digit!",
+            yield (
+                FAIL,
+                Message(
+                    "begins-with-digit",
+                    f"Font family name '{familyname}' begins with a digit!",
+                ),
             )

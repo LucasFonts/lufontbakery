@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN, FAIL
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -30,9 +30,12 @@ def check_caret_slope(ttFont):
     run = ttFont["hhea"].caretSlopeRun
     rise = ttFont["hhea"].caretSlopeRise
     if rise == 0:
-        yield FAIL, Message(
-            "zero-rise",
-            "caretSlopeRise must not be zero. Set it to 1 for upright fonts.",
+        yield (
+            FAIL,
+            Message(
+                "zero-rise",
+                "caretSlopeRise must not be zero. Set it to 1 for upright fonts.",
+            ),
         )
         return
     hheaItalicAngle = math.degrees(math.atan(-run / rise))
@@ -43,12 +46,15 @@ def check_caret_slope(ttFont):
         expectedCaretSlopeRise = upm
 
     if abs(postItalicAngle - hheaItalicAngle) > 0.1:
-        yield WARN, Message(
-            "caretslope-mismatch",
-            "hhea.caretSlopeRise and hhea.caretSlopeRun"
-            " do not match with post.italicAngle.\n"
-            f"Got: caretSlopeRise {ttFont['hhea'].caretSlopeRise}"
-            f" and caretSlopeRun {ttFont['hhea'].caretSlopeRun}\n"
-            f"Expected: caretSlopeRise {expectedCaretSlopeRise}"
-            f" and caretSlopeRun {expectedCaretSlopeRun}",
+        yield (
+            WARN,
+            Message(
+                "caretslope-mismatch",
+                "hhea.caretSlopeRise and hhea.caretSlopeRun"
+                " do not match with post.italicAngle.\n"
+                f"Got: caretSlopeRise {ttFont['hhea'].caretSlopeRise}"
+                f" and caretSlopeRun {ttFont['hhea'].caretSlopeRun}\n"
+                f"Expected: caretSlopeRise {expectedCaretSlopeRise}"
+                f" and caretSlopeRun {expectedCaretSlopeRun}",
+            ),
         )

@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, WARN, SKIP
+from fontbakery.prelude import SKIP, WARN, Message, check
 from fontbakery.utils import get_mark_class_glyphnames
 
 
@@ -37,15 +37,21 @@ def check_gdef_spacing_marks(ttFont, config):
                 if glyphname not in cmap.values()
             ]
             formatted_list = "\t " + pretty_print_list(config, sorted(glyphs), sep=", ")
-            yield WARN, Message(
-                "spacing-mark-glyphs",
-                f"The following glyphs seem to be spacing (because they have width > 0"
-                f" on the hmtx table) so they may be in the GDEF mark glyph class"
-                f" by mistake, or they should have zero width instead:\n"
-                f"{formatted_list}",
+            yield (
+                WARN,
+                Message(
+                    "spacing-mark-glyphs",
+                    f"The following glyphs seem to be spacing (because they have width > 0"
+                    f" on the hmtx table) so they may be in the GDEF mark glyph class"
+                    f" by mistake, or they should have zero width instead:\n"
+                    f"{formatted_list}",
+                ),
             )
     else:
-        yield SKIP, (
-            'Font does not declare an optional "GDEF" table'
-            " or has any GDEF glyph class definition."
+        yield (
+            SKIP,
+            (
+                'Font does not declare an optional "GDEF" table'
+                " or has any GDEF glyph class definition."
+            ),
         )

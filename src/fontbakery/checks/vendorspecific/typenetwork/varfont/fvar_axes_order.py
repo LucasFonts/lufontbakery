@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, WARN, SKIP, INFO
+from fontbakery.prelude import INFO, PASS, SKIP, WARN, Message, check
 
 
 @check(
@@ -33,20 +33,26 @@ def check_varfont_fvar_axes_order(ttFont):
         filtered = [axis for axis in prefferedOrder if axis in fontRegisteredAxes]
 
         if filtered != fontRegisteredAxes:
-            yield WARN, Message(
-                "axes-incorrect-order",
-                "Font’s registered axes are not in a correct order to get good"
-                "instances sorting on Adobe apps.\n\n"
-                f"Current order is {fontRegisteredAxes}, but it should be {filtered}",
+            yield (
+                WARN,
+                Message(
+                    "axes-incorrect-order",
+                    "Font’s registered axes are not in a correct order to get good"
+                    "instances sorting on Adobe apps.\n\n"
+                    f"Current order is {fontRegisteredAxes}, but it should be {filtered}",
+                ),
             )
         else:
             yield PASS, "Font’s axes follow the preferred sorting."
 
         if customAxes:
-            yield INFO, Message(
-                "custom-axes",
-                "The font has custom axes with the indicated order:\n\n"
-                f"{customAxes}\n\n"
-                "Its order can depend on the kind of variation and the subfamily"
-                "groups that may create.",
+            yield (
+                INFO,
+                Message(
+                    "custom-axes",
+                    "The font has custom axes with the indicated order:\n\n"
+                    f"{customAxes}\n\n"
+                    "Its order can depend on the kind of variation and the subfamily"
+                    "groups that may create.",
+                ),
             )

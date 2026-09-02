@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -29,8 +29,11 @@ def check_metadata_escaped_strings(metadata_file):
             if len(segments) >= 3:
                 a_string = segments[1]
                 if "\\" in a_string:
-                    yield FAIL, Message(
-                        "escaped-strings",
-                        f"Found escaped chars at '{a_string}'."
-                        f" Please use an unicode string instead.",
+                    yield (
+                        FAIL,
+                        Message(
+                            "escaped-strings",
+                            f"Found escaped chars at '{a_string}'."
+                            f" Please use an unicode string instead.",
+                        ),
                     )

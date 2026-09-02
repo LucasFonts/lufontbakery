@@ -1,5 +1,6 @@
 import os
-from fontbakery.prelude import check, Message, PASS, FAIL
+
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -60,8 +61,11 @@ def check_family_vertical_metrics(ttFonts):
             for k in failed:
                 s = ["{}: {}".format(k, v) for k, v in vmetrics[k].items()]
                 s = "\n".join(s)
-                yield FAIL, Message(
-                    f"{k}-mismatch", f"{k} is not the same across the family:\n{s}"
+                yield (
+                    FAIL,
+                    Message(
+                        f"{k}-mismatch", f"{k} is not the same across the family:\n{s}"
+                    ),
                 )
         else:
             yield PASS, "Vertical metrics are the same across the family."

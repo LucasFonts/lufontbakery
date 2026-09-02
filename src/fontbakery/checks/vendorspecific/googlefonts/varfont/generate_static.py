@@ -40,9 +40,12 @@ def check_varfont_generate_static(ttFont):
             font.save(instance)
             yield PASS, "fontTools.varLib.mutator generated a static font instance"
     except Exception as e:
-        yield FAIL, Message(
-            "varlib-mutator",
-            f"fontTools.varLib.mutator failed"
-            f" to generated a static font instance\n"
-            f"{repr(e)}",
+        yield (
+            FAIL,
+            Message(
+                "varlib-mutator",
+                f"fontTools.varLib.mutator failed"
+                f" to generated a static font instance\n"
+                f"{repr(e)}",
+            ),
         )

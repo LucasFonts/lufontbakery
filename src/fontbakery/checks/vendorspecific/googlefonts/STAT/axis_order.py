@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, INFO, SKIP
+from fontbakery.prelude import INFO, SKIP, Message, check
 
 
 @check(
@@ -15,6 +15,7 @@ from fontbakery.prelude import check, Message, INFO, SKIP
 def check_STAT_axis_order(fonts):
     """Check axis ordering on the STAT table."""
     from collections import Counter
+
     from fontTools.ttLib import TTLibError
 
     no_stat = 0
@@ -30,8 +31,11 @@ def check_STAT_axis_order(fonts):
                 summary.append("-".join(sorted(order.keys(), key=order.get)))
             else:
                 no_stat += 1
-                yield SKIP, Message(
-                    "missing-STAT", f"This font does not have a STAT table: {font}"
+                yield (
+                    SKIP,
+                    Message(
+                        "missing-STAT", f"This font does not have a STAT table: {font}"
+                    ),
                 )
         except (TTLibError, AttributeError):
             yield INFO, Message("bad-font", f"Something wrong with {font}")
@@ -41,16 +45,12 @@ def check_STAT_axis_order(fonts):
     elif no_stat == len(fonts):
         percentage = "All"
     else:
-        percentage = f"{100.0*no_stat/len(fonts):.2f}%"
+        percentage = f"{100.0 * no_stat / len(fonts):.2f}%"
 
     msg = f"{percentage} of the fonts lack a STAT table.\n"
 
     if len(Counter(summary).most_common()) > 0:
         report = "\n\t".join(map(str, Counter(summary).most_common()))
-        msg += (
-            f"\n"
-            f"\tAnd these are the most common STAT axis orderings:\n"
-            f"\t{report}"
-        )
+        msg += f"\n\tAnd these are the most common STAT axis orderings:\n\t{report}"
 
     yield INFO, Message("summary", msg)

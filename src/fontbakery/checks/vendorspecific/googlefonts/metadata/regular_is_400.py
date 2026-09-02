@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -17,8 +17,11 @@ def check_metadata_regular_is_400(family_metadata):
             badfonts.append(f"{f.filename} (weight: {f.weight})")
     if len(badfonts) > 0:
         badfonts = ", ".join(badfonts)
-        yield FAIL, Message(
-            "not-400",
-            f"METADATA.pb: Regular font weight must be 400."
-            f" Please fix these: {badfonts}",
+        yield (
+            FAIL,
+            Message(
+                "not-400",
+                f"METADATA.pb: Regular font weight must be 400."
+                f" Please fix these: {badfonts}",
+            ),
         )

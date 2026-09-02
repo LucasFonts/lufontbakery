@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -26,7 +26,10 @@ def check_family_control_chars(ttFont):
 
     if bad_glyphs:
         bad = ", ".join(bad_glyphs)
-        yield FAIL, Message(
-            "unacceptable",
-            f"The following unacceptable control characters were identified:\n{bad}",
+        yield (
+            FAIL,
+            Message(
+                "unacceptable",
+                f"The following unacceptable control characters were identified:\n{bad}",
+            ),
         )

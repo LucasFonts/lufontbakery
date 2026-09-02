@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, PASS, FAIL, WARN
+from fontbakery.prelude import FAIL, PASS, WARN, Message, check
 
 
 @check(
@@ -49,16 +49,22 @@ def check_vertical_metrics(ttFont):
 
     if useTypoMetric:
         if not hheaAscent_equals_typoAscent:
-            yield FAIL, Message(
-                "ascender",
-                f"OS/2 sTypoAscender ({ttFont['OS/2'].sTypoAscender})"
-                f" and hhea ascent ({ttFont['hhea'].ascent}) must be equal.",
+            yield (
+                FAIL,
+                Message(
+                    "ascender",
+                    f"OS/2 sTypoAscender ({ttFont['OS/2'].sTypoAscender})"
+                    f" and hhea ascent ({ttFont['hhea'].ascent}) must be equal.",
+                ),
             )
         elif not hheaDescent_equals_typoDescent:
-            yield FAIL, Message(
-                "descender",
-                f"OS/2 sTypoDescender ({ttFont['OS/2'].sTypoDescender})"
-                f" and hhea descent ({ttFont['hhea'].descent}) must be equal.",
+            yield (
+                FAIL,
+                Message(
+                    "descender",
+                    f"OS/2 sTypoDescender ({ttFont['OS/2'].sTypoDescender})"
+                    f" and hhea descent ({ttFont['hhea'].descent}) must be equal.",
+                ),
             )
         elif ttFont["OS/2"].sTypoLineGap != 0:
             yield FAIL, Message("hhea", "typo lineGap is not equal to 0.")
@@ -67,36 +73,51 @@ def check_vertical_metrics(ttFont):
         else:
             yield PASS, "Typo and hhea metrics are equal."
     else:
-        yield WARN, Message(
-            "metrics-recommendation",
-            "OS/2 fsSelection USE_TYPO_METRICS is not enabled.\n\n"
-            "Type Networks recommends to enable it and follow the vertical metrics"
-            " scheme where basically hhea matches typo metrics. Read in more detail"
-            " about it in our vertical metrics guide.",
+        yield (
+            WARN,
+            Message(
+                "metrics-recommendation",
+                "OS/2 fsSelection USE_TYPO_METRICS is not enabled.\n\n"
+                "Type Networks recommends to enable it and follow the vertical metrics"
+                " scheme where basically hhea matches typo metrics. Read in more detail"
+                " about it in our vertical metrics guide.",
+            ),
         )
 
         if hheaAscent_equals_typoAscent and hheaDescent_equals_winDescent:
-            yield FAIL, Message(
-                "useTypoMetricsDisabled",
-                "OS/2.fsSelection bit 7 (USE_TYPO_METRICS) is not enabled",
+            yield (
+                FAIL,
+                Message(
+                    "useTypoMetricsDisabled",
+                    "OS/2.fsSelection bit 7 (USE_TYPO_METRICS) is not enabled",
+                ),
             )
         elif not hheaAscent_equals_winAscent:
-            yield FAIL, Message(
-                "ascender",
-                f"hhea ascent ({ttFont['hhea'].ascent})"
-                f" and OS/2 win ascent ({ttFont['OS/2'].usWinAscent}) must be equal.",
+            yield (
+                FAIL,
+                Message(
+                    "ascender",
+                    f"hhea ascent ({ttFont['hhea'].ascent})"
+                    f" and OS/2 win ascent ({ttFont['OS/2'].usWinAscent}) must be equal.",
+                ),
             )
         elif not hheaDescent_equals_winDescent:
-            yield FAIL, Message(
-                "descender",
-                f"hhea descent ({ttFont['hhea'].descent})"
-                f" and OS/2 win ascent ({ttFont['OS/2'].usWinDescent}) must be equal.",
+            yield (
+                FAIL,
+                Message(
+                    "descender",
+                    f"hhea descent ({ttFont['hhea'].descent})"
+                    f" and OS/2 win ascent ({ttFont['OS/2'].usWinDescent}) must be equal.",
+                ),
             )
         elif typoMetricsSum != hheaMetricsSum:
-            yield FAIL, Message(
-                "typo-and-hhea-sum",
-                f"OS/2 typo metrics sum ({typoMetricsSum}) must be"
-                f" equal to win metrics sum ({hheaMetricsSum})",
+            yield (
+                FAIL,
+                Message(
+                    "typo-and-hhea-sum",
+                    f"OS/2 typo metrics sum ({typoMetricsSum}) must be"
+                    f" equal to win metrics sum ({hheaMetricsSum})",
+                ),
             )
         else:
             yield PASS, "hhea and Win metrics are equal and useTypoMetrics is disabled."

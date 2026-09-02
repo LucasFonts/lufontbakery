@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, WARN, SKIP
+from fontbakery.prelude import FAIL, SKIP, WARN, Message, check
 
 
 def get_STAT_axis(ttFont, tag):
@@ -22,18 +22,24 @@ def get_STAT_axis_value(ttFont, tag):
 
 def check_has_ital(font):
     if "STAT" not in font.ttFont:
-        yield SKIP, Message(
-            "no-stat",
-            f"Font {font.file} has no STAT table",
+        yield (
+            SKIP,
+            Message(
+                "no-stat",
+                f"Font {font.file} has no STAT table",
+            ),
         )
         return
 
     if "ital" not in [
         axis.AxisTag for axis in font.ttFont["STAT"].table.DesignAxisRecord.Axis
     ]:
-        yield FAIL, Message(
-            "missing-ital-axis",
-            f"Font {font.file} lacks an 'ital' axis in the STAT table.",
+        yield (
+            FAIL,
+            Message(
+                "missing-ital-axis",
+                f"Font {font.file} lacks an 'ital' axis in the STAT table.",
+            ),
         )
 
 
@@ -48,10 +54,13 @@ def check_ital_is_binary_and_last(font, is_italic):
     tags = [axis.AxisTag for axis in font.ttFont["STAT"].table.DesignAxisRecord.Axis]
     ital_pos = tags.index("ital")
     if ital_pos != len(tags) - 1:
-        yield WARN, Message(
-            "ital-axis-not-last",
-            f"Font {font.file} has 'ital' axis in position"
-            f" {ital_pos + 1} of {len(tags)}.",
+        yield (
+            WARN,
+            Message(
+                "ital-axis-not-last",
+                f"Font {font.file} has 'ital' axis in position"
+                f" {ital_pos + 1} of {len(tags)}.",
+            ),
         )
 
     value, flags, linked_value = get_STAT_axis_value(font.ttFont, "ital")
@@ -67,26 +76,35 @@ def check_ital_is_binary_and_last(font, is_italic):
         expected_flags = 0x0002  # ElidableAxisValueName
 
     if value != expected_value:
-        yield WARN, Message(
-            "wrong-ital-axis-value",
-            f"{font.file} has STAT table 'ital' axis with wrong value."
-            f" Expected: {expected_value}, got '{value}'",
+        yield (
+            WARN,
+            Message(
+                "wrong-ital-axis-value",
+                f"{font.file} has STAT table 'ital' axis with wrong value."
+                f" Expected: {expected_value}, got '{value}'",
+            ),
         )
 
     if flags != expected_flags:
-        yield WARN, Message(
-            "wrong-ital-axis-flag",
-            f"{font.file} has STAT table 'ital' axis with wrong flags."
-            f" Expected: {expected_flags}, got '{flags}'",
+        yield (
+            WARN,
+            Message(
+                "wrong-ital-axis-flag",
+                f"{font.file} has STAT table 'ital' axis with wrong flags."
+                f" Expected: {expected_flags}, got '{flags}'",
+            ),
         )
 
     # If we are Roman, check for the linked value
     if not is_italic:
         if linked_value != 1.0:  # Roman should be linked to a fully-italic.
-            yield WARN, Message(
-                "wrong-ital-axis-linkedvalue",
-                f"{font.file} has STAT table 'ital' axis with wrong linked value."
-                f" Expected: 1.0, got '{linked_value}'",
+            yield (
+                WARN,
+                Message(
+                    "wrong-ital-axis-linkedvalue",
+                    f"{font.file} has STAT table 'ital' axis with wrong linked value."
+                    f" Expected: 1.0, got '{linked_value}'",
+                ),
             )
 
 
@@ -163,9 +181,12 @@ def check_STAT_ital_axis(fonts, config):
             yield from check_ital_is_binary_and_last(roman, False)
             yield from check_ital_is_binary_and_last(italic, True)
         elif italic:
-            yield FAIL, Message(
-                "missing-roman",
-                f"Italic font {italic.file} has no matching Roman font.",
+            yield (
+                FAIL,
+                Message(
+                    "missing-roman",
+                    f"Italic font {italic.file} has no matching Roman font.",
+                ),
             )
         elif roman:
             yield from check_ital_is_binary_and_last(roman, False)

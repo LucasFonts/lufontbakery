@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL
+from fontbakery.prelude import FAIL, Message, check
 
 
 @check(
@@ -25,9 +25,12 @@ def check_repo_zip_files(family_directory, config):
 
     if zip_files:
         files_list = pretty_print_list(config, zip_files, sep="\n\t* ")
-        yield FAIL, Message(
-            "zip-files",
-            f"Please do not host ZIP files on the project repository."
-            f" These files were detected:\n"
-            f"\t* {files_list}",
+        yield (
+            FAIL,
+            Message(
+                "zip-files",
+                f"Please do not host ZIP files on the project repository."
+                f" These files were detected:\n"
+                f"\t* {files_list}",
+            ),
         )

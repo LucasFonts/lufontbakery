@@ -1,4 +1,4 @@
-from fontbakery.prelude import check, Message, FAIL, PASS
+from fontbakery.prelude import FAIL, PASS, Message, check
 
 
 @check(
@@ -14,9 +14,12 @@ from fontbakery.prelude import check, Message, FAIL, PASS
 def check_rupee(ttFont):
     """Ensure indic fonts have the Indian Rupee Sign glyph."""
     if 0x20B9 not in ttFont["cmap"].getBestCmap().keys():
-        yield FAIL, Message(
-            "missing-rupee",
-            "Please add a glyph for Indian Rupee Sign (₹) at codepoint U+20B9.",
+        yield (
+            FAIL,
+            Message(
+                "missing-rupee",
+                "Please add a glyph for Indian Rupee Sign (₹) at codepoint U+20B9.",
+            ),
         )
     else:
         yield PASS, "Looks good!"
