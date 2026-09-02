@@ -1,10 +1,9 @@
 ---
 name: Check improvement proposal
 about: Suggest improvements to an existing check
-title: '[Check ID] situation'
-labels: 'Check improvement proposal'
-assignees: ''
-
+title: "[Check ID] situation"
+labels: "Check improvement proposal"
+assignees: ""
 ---
 
 (**NOTE:** Please include the check-id in the issue's title.)

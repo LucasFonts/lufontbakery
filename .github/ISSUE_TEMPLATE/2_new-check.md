@@ -1,26 +1,22 @@
 ---
 name: New check proposal
 about: Describe a font problem that you wished FontBakery could detect
-title: 'New check: subject'
-labels: 'New check proposal'
-assignees: ''
-
+title: "New check: subject"
+labels: "New check proposal"
+assignees: ""
 ---
 
 ## What needs to be checked?
 
 (Provide a short, one line sentence, describing what needs to be checked)
 
-
-## Detailed description of the problem 
+## Detailed description of the problem
 
 (Describe which applications, operating systems and/or text rendering engines are affected by the problem. This description will likely be reused for the check's rationale text)
-
 
 ## Resources and steps needed to reproduce the problem
 
 (Provide the steps and files for reproducing the problem. We will need them for developing the proposed check and for including them in tests that validate the codebase)
-
 
 ## Suggested profile
 

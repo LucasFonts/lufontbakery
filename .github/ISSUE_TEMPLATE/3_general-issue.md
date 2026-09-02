@@ -1,7 +1,6 @@
 ---
 name: General issue
 about: Report other problems or suggest improvements that are not specific to a single check
-
 ---
 
 ## Observed behaviour
