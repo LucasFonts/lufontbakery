@@ -164,6 +164,7 @@ doc = [
 test = [
   "pytest-cov >= 7.1.0",
   "pytest >= 9.1.1",
+  "requests_mock >= 1.12.1",
   "tox-gh >= 1.8.0",
   "tox-uv >= 1.36.0",
   "tox >= 4.61.2",
