@@ -15,9 +15,10 @@
 
 {% for result in check.logs |sort(attribute="status") %}
 {% if not result is omitted %}
-* {{result.status | emoticon }} **{{result.status}}** {{result.message.message | markdown}} {%if result.message.code%}[code: {{result.message.code}}]{%endif%}
-{% endif %}
-{% endfor %}
+
+- {{result.status | emoticon }} **{{result.status}}** {{result.message.message | markdown}} {%if result.message.code%}[code: {{result.message.code}}]{%endif%}
+  {% endif %}
+  {% endfor %}
 
 </div>
 </details>

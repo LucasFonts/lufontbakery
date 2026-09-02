@@ -6,7 +6,7 @@ This has several subcommands, described in the help function:
 
     $ fontbakery -h
     usage: fontbakery [-h] [--list-subcommands] subcommand
-    
+
     Run fontbakery subcommands:
         build-contributors
         check-adobefonts
@@ -19,18 +19,18 @@ This has several subcommands, described in the help function:
         check-ufo
         check-universal
         generate-glyphdata
-    
-    Subcommands have their own help messages. These are usually 
+
+    Subcommands have their own help messages. These are usually
     accessible with the -h/--help flag positioned after the subcommand.
     I.e.: fontbakery subcommand -h
-    
+
     positional arguments:
       subcommand          the subcommand to execute
-    
+
     optional arguments:
       -h, --help          show this help message and exit
-      --list-subcommands  print the list of subcommands to stdout, separated 
-                          by a space character. This is usually only used to 
+      --list-subcommands  print the list of subcommands to stdout, separated
+                          by a space character. This is usually only used to
                           generate the shell completion code.
 
 ## fontbakery check-universal
@@ -49,9 +49,7 @@ Usage is analogous to the Google Fonts profile described below.
 
 ## fontbakery check-googlefonts
 
-This is the command used by foundries checking their projects for Google Fonts 
-
-
+This is the command used by foundries checking their projects for Google Fonts
 
 It runs the checks that we use in the [`profiles/googlefonts.py` Python script](https://github.com/fonttools/fontbakery/blob/main/Lib/fontbakery/profiles/googlefonts.py)
 
@@ -70,17 +68,16 @@ To save a json formatted report (where check results are saved to `report.json`)
 
 Run hand picked checks for all fonts in the `google/fonts` repository:
 
-
     $ fontbakery check-googlefonts \
         -c opentype/xavgcharwidth \
         -c opentype/font_version \
         -n -o "*check" -g "*check" \
         path/to/fonts/{apache,ofl,ufl}/*/*.ttf
 
-* `-c` selects a check by id
-* `-n` turns off the progress bar
-* `-o "*check"` change execution order to run each check for all fonts instead of all checks for each font.
-* `-g "*check"` creates a summary report per check
+- `-c` selects a check by id
+- `-n` turns off the progress bar
+- `-o "*check"` change execution order to run each check for all fonts instead of all checks for each font.
+- `-g "*check"` creates a summary report per check
 
 Here's the output of `fontbakery check-googlefonts -h`:
 
@@ -154,7 +151,6 @@ Here's the output of `fontbakery check-googlefonts -h`:
       -j, --auto-jobs       Use the auto detected cpu count (= 2) as number of worker processes
                             in multi-processing. This is equivalent to : `--jobs 2`
 
-
 Note: on Windows, color and progress bar output is disabled because the standard Windows terminal displays the escape characters instead. Pull Requests to fix this are welcome.
 
 If you need to generate a list of all issues in a font family collection, the FontBakery repo has a small script to do so for the Google Fonts collection. Feel free to use that snippet and adapt it to the directory structure of your collection.
@@ -195,7 +191,7 @@ explicit_checks = [
 - Instead of using `--order` to specify the check order, a list of checks can be provided using the `custom_order` key.
 
 Additionally, the configuration file can be used to replace the status of
-particular checks. To do this, you will need to know the *message ID*,
+particular checks. To do this, you will need to know the _message ID_,
 which is reported with the result. For example, when the
 `mandatory_glyphs` check reports that the `.notdef`
 glyph does not contain any outlines, it reports the message ID `empty` and

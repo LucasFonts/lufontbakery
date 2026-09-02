@@ -18,7 +18,7 @@ This variable is a dictionary with the following keys:
 - `sections`: A dictionary mapping section names to a list of check IDs.
 - `include_profiles`: A list of other profile names to include.
 - `exclude_checks`: A list of check IDs to exclude.
-- `overrides`: A dictionary mapping check IDs to a list of *overrides*.
+- `overrides`: A dictionary mapping check IDs to a list of _overrides_.
 - `configuration_defaults`: A dictionary mapping check IDs to a namespace of configuration variables.
 - `check_definitions`: A list of Python modules containing additional check implementations.
 
@@ -59,7 +59,7 @@ PROFILE = {
 }
 ```
 
-There may also be checks that you want to run, but for your purposes you would like a different level of severity to the original implementation; for example, the "universal" profile (a set of commonly agreed best-practices for font development) will FAIL a font if it has transformed components in the `glyf` table - something which can cause rendering errors in some environments. Arguably that's not a bug in the font but in the renderer, so you might decide only to receive a WARNing about it. To do this, you add an *override* like so:
+There may also be checks that you want to run, but for your purposes you would like a different level of severity to the original implementation; for example, the "universal" profile (a set of commonly agreed best-practices for font development) will FAIL a font if it has transformed components in the `glyf` table - something which can cause rendering errors in some environments. Arguably that's not a bug in the font but in the renderer, so you might decide only to receive a WARNing about it. To do this, you add an _override_ like so:
 
 ```python
   "overrides": {
@@ -102,9 +102,9 @@ If in your profile you want to check for something we don't currently add a chec
 
 A check implementation is a Python function. To create a private check implementation that you don't want to share with the rest of the world (even though we gave you this amazing font QA tool for absolutely free), you can add the `check_definitions` key to your profile variable; this is a list of Python modules to load for checks. Then you can add your Python function to this new module.
 
-To create your own *public* check implementation, simply either add a new file to the `fontbakery.checks` package (all files in this package are loaded and executed by the check runner) or add a new function to an existing file which contains similar or related checks.
+To create your own _public_ check implementation, simply either add a new file to the `fontbakery.checks` package (all files in this package are loaded and executed by the check runner) or add a new function to an existing file which contains similar or related checks.
 
-A file containing checks usually begins by including the *prelude*, a Python package with a bunch of helpful imports:
+A file containing checks usually begins by including the _prelude_, a Python package with a bunch of helpful imports:
 
 ```
 from fontbakery.prelude import check, Message, INFO, PASS, FAIL, WARN
@@ -194,7 +194,7 @@ def check_has_FNRD_table(font: Font):
     ...
 ```
 
-This is better, but it still doesn't explain why `check_has_FNRD_table(ttFont)` works. But here's where the check runner gets clever and does something called "dependency injection": instead of taking a parameter `font` to get a `Font` object, your check can declare a parameter *with the same name as any condition* (that is, any method on the "testable" object) and the check will be called with the result of that condition as the parameter.
+This is better, but it still doesn't explain why `check_has_FNRD_table(ttFont)` works. But here's where the check runner gets clever and does something called "dependency injection": instead of taking a parameter `font` to get a `Font` object, your check can declare a parameter _with the same name as any condition_ (that is, any method on the "testable" object) and the check will be called with the result of that condition as the parameter.
 
 That's how we got `ttFont` to feed us a `TTFont` object: it noticed the parameter naming, figured that we wanted to call the `.ttFont` condition, did that under the hood, and handed the result to the check.
 
@@ -202,7 +202,7 @@ Of course, this is a short-cut and has the danger of getting things wrong. If bo
 
 This is why in general you should follow the [Zen of Python](https://peps.python.org/pep-0020/) ("Explicit is better than implicit, simple is better than complex") and use `font` and `ufo` as parameters, and then call the conditions on them as methods rather than using the "clever" dependency injection mechanism.
 
-But given that it is *extremely* common for font-based checks to operate off a `TTFont` object, the mechanism turns out to be very helpful and it's a well-known convention, so it's there if you want it.
+But given that it is _extremely_ common for font-based checks to operate off a `TTFont` object, the mechanism turns out to be very helpful and it's a well-known convention, so it's there if you want it.
 
 ### Running on all the testables
 
@@ -244,7 +244,7 @@ But this is... exceptional. The more you keep things simple, the better for ever
 
 ### Skipping checks
 
-Coming back to the question of why these cached "questions to ask" are called "conditions": the initial use of them was to be able to make checks conditional on certain situations. So a `Font` has condition methods like `.is_variable_font`, `.is_cff` and so on. If a check decorator specifies these condition names in its metadata, *the check will only be run on those testables for which the condition method returns true*:
+Coming back to the question of why these cached "questions to ask" are called "conditions": the initial use of them was to be able to make checks conditional on certain situations. So a `Font` has condition methods like `.is_variable_font`, `.is_cff` and so on. If a check decorator specifies these condition names in its metadata, _the check will only be run on those testables for which the condition method returns true_:
 
 ```python
 @check(
@@ -264,7 +264,7 @@ for font in testables.font:
         yield "SKIP", "Unfulfilled condition: is_cff"
 ```
 
-You can match multiple conditions, and again these can be methods on the individual testable or on the `CheckRunContext` object, and *all* have to return a true value for the check to run. One useful condition on the `CheckRunContext` is `.network`, which tells you if network checks are enabled or disabled on the command line. Checks which use the Internet should declare the `network` condition.
+You can match multiple conditions, and again these can be methods on the individual testable or on the `CheckRunContext` object, and _all_ have to return a true value for the check to run. One useful condition on the `CheckRunContext` is `.network`, which tells you if network checks are enabled or disabled on the command line. Checks which use the Internet should declare the `network` condition.
 
 ```python
 @check(

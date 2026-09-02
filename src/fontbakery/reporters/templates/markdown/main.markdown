@@ -3,11 +3,14 @@
 fontbakery version: {{fb_version}}
 
 {% if deprecation_warning %}
+
 ### DEPRECATION WARNING
+
 {{deprecation_warning}}
 {% endif %}
 
 {% if fatal_checks %}
+
 ## Checks with FATAL results
 
 These must be addressed first.
@@ -17,6 +20,7 @@ These must be addressed first.
 {% endfor %}
 {% endif %}
 {% if experimental_checks %}
+
 ## Experimental checks
 
 These won't break the CI job for now, but will become effective after some time if nobody raises any concern.
@@ -27,9 +31,13 @@ These won't break the CI job for now, but will become effective after some time 
 {% endif %}
 {% if other_checks %}
 {% if experimental_checks or fatal_checks %}
+
 ## All other checks
+
 {% else %}
+
 ## Check results
+
 {% endif %}
 
 {% for filename, checks in other_checks.items() %}
@@ -38,6 +46,7 @@ These won't break the CI job for now, but will become effective after some time 
 {% endif %}
 
 {% if total > 0 %}
+
 ### Summary
 
 | {%for level in summary.keys() %}{{level | emoticon }} {{level}} | {%endfor%}
@@ -50,5 +59,6 @@ These won't break the CI job for now, but will become effective after some time 
 **Note:** The following loglevels were omitted in this report:
 
 {% for level in omitted %}
-* {{level}}{% endfor %}
-{% endif %}
+
+- {{level}}{% endfor %}
+  {% endif %}

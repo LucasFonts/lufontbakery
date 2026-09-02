@@ -11,7 +11,7 @@ See also: [Fontspector](https://github.com/fonttools/fontspector) (the Rust port
 For a quick overview, check out the [list of checks](https://fontbakery.readthedocs.io/en/latest/fontbakery/profiles/index.html) currently offered.
 And for a full written introduction [check out our documentation at Read The Docs.](https://fontbakery.readthedocs.io/en/stable)
 
-For video introductions, see the [TypeCon 2018](https://www.youtube.com/watch?v=5S3cN3VHfBg) and [ATypI 2020](https://www.youtube.com/watch?v=6OKE6p9E0eY)  FontBakery presentations.
+For video introductions, see the [TypeCon 2018](https://www.youtube.com/watch?v=5S3cN3VHfBg) and [ATypI 2020](https://www.youtube.com/watch?v=6OKE6p9E0eY) FontBakery presentations.
 
 Font Bakery has an active community of contributors from foundries around the world, including Adobe Fonts, Dalton Maag, Type Network, and Google Fonts.
 
@@ -51,7 +51,7 @@ See the guide to [Getting Started as a Contributor](https://fontbakery.readthedo
 
 ## History
 
-The project was initiated by Dave Crossland in 2013 to accelerate the onboarding process for Google Fonts. 
+The project was initiated by Dave Crossland in 2013 to accelerate the onboarding process for Google Fonts.
 In 2017 Lasse Fister and Felipe Sanches rewrote it into a modern, modular architecture suitable for both individuals and large distributors.
 Felipe has maintained the check contents since 2016.
 
@@ -60,11 +60,11 @@ A UI and a cloud system that scales up for checking 1,000s of font files super f
 See his [TypoLabs 2018 talk on YouTube](https://www.youtube.com/watch?v=Kqhzg89zKYw) and its [presentation deck](https://docs.google.com/presentation/d/14dU3cUXelwvpVokhKYmJ6jT51AASDaOFyEUSdxb0RAg/).
 However, the project was halted at the end of 2019.
 
-Most of the checks are for OpenType binary files, and project metadata files. 
+Most of the checks are for OpenType binary files, and project metadata files.
 (Currently, the Google Fonts `METADATA.pb` files are supported.)
 
 If you are developing a font project publicly with Github (or a similar host) you can set up a Continuous Integration service (such as GHActions) to run Font Bakery on each commit, so that with each update all checks will be run on your files.
 
 ## Trivia
 
-* [Advances in Continuous Integration Testing at Google](https://ai.google/research/pubs/pub46593) - 2018 presentation
+- [Advances in Continuous Integration Testing at Google](https://ai.google/research/pubs/pub46593) - 2018 presentation
