@@ -24,27 +24,26 @@ maintainers = [
 ]
 
 dependencies = [
-  "Jinja2 >= 3.0.0",  # issue #4717
+  "Jinja2 >= 3.1.6",  # issue #4717
   "PyYAML",
   "beziers >= 0.6.0, == 0.6.*",
-  "cmarkgfm >= 0.4",
+  "cmarkgfm >= 2025.10.22",
   "defcon",
-  "dehinter >= 3.1.0",  # 3.1.0 added dehinter.font.hint function
-  "fontTools[ufo] >= 4.47.0",  # varLib.interpolatableHelpers.InterpolatableProblem
+  "dehinter >= 4.0.0",  # 3.1.0 added dehinter.font.hint function
+  "fontTools[ufo] >= 4.64.0",  # varLib.interpolatableHelpers.InterpolatableProblem
   "freetype-py < 2.4.0",  # see: https://github.com/fonttools/fontbakery/issues/4143
   "munkres",
-  "opentype-sanitizer >= 9.1.0, == 9.*",
+  "opentype-sanitizer >= 9.2.0, == 9.*",
   "opentypespec >= 1.9.2",  # recognize 'sunu' script tag for Sunuwar (fontbakery/issues/5014)
-  "packaging >= 14.5",  # VERSION_PATTERN was added on v14.5 (fontbakery/issues/4792)
+  "packaging >= 26.3",  # VERSION_PATTERN was added on v14.5 (fontbakery/issues/4792)
   "pip-api",
-  "requests >= 2.19",  # issue #4718
+  "requests >= 2.34.2",
   "rich",
   "toml",
-  "typing_extensions ; python_version < '3.11'",
-  "ufo2ft >= 2.25.2",  # script lists for Unicode 14.0 were updated on v2.25.2
+  "ufo2ft >= 3.9.0",  # script lists for Unicode 14.0 were updated on v2.25.2
   "ufolint",
   "uharfbuzz",
-  "vharfbuzz >= 0.2.0",
+  "vharfbuzz >= 0.3.1",
 ]
 
 [project.scripts]
@@ -57,7 +56,7 @@ fontbakery = "fontbakery.cli:main"
 #       (this way, the maintainer only needs to edit a single entry)
 
 beautifulsoup4 = [
-  "beautifulsoup4 >= 4.7.1",
+  "beautifulsoup4 >= 4.15.0",
   # For parsing registered vendor IDs
   # googlefonts/vendor_id produces an ERROR if Beautiful Soup 4
   # version 4.0.1 to 4.6.1 or 4.7.0 is installed because of bugs in Beautiful Soup
@@ -65,7 +64,7 @@ beautifulsoup4 = [
 ]
 
 shaperglot = [
-  "shaperglot >= 1.0.0a1, == 1.*",
+  "shaperglot >= 1.2.1, == 1.*",
 ]
 
 # These Google Fonts profile dependencies contain data that is critical to
@@ -74,9 +73,9 @@ shaperglot = [
 googlefontsalwayslatest = [
   "axisregistry >= 0.4.16, == 0.4.*",
   "gflanguages >= 0.7.7, == 0.7.*",
-  "gfsubsets >= 2024.9.25",
+  "gfsubsets >= 2025.11.4",
   "glyphsets >= 1.1.0, == 1.*",
-  "shaperglot >= 1.2.0, == 1.*",
+  "shaperglot >= 1.2.1, == 1.*",
 ]
 
 # Profile-specific dependencies:
