@@ -51,6 +51,8 @@ See the guide to [Getting Started as a Contributor](https://fontbakery.readthedo
 
 ## History
 
+fontbakery was forked by LucasFonts from the original version in 2026.
+
 The project was initiated by Dave Crossland in 2013 to accelerate the onboarding process for Google Fonts.
 In 2017 Lasse Fister and Felipe Sanches rewrote it into a modern, modular architecture suitable for both individuals and large distributors.
 Felipe has maintained the check contents since 2016.
