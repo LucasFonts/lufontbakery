@@ -1,4 +1,4 @@
-from fontbakery.prelude import WARN, Message, check
+from fontbakery.prelude import FAIL, WARN, Message, check
 
 
 @check(
@@ -19,9 +19,8 @@ def check_ots(font):
     import pyots
 
     result = pyots.sanitize(font.file)
-
-    if not result.sanitized and result.messages:
-        messages = [m for m in result.messages if m]
+    messages = [m for m in result.messages if m] if result.messages else []
+    if result.sanitized:
         if messages:
             yield (
                 WARN,
@@ -31,3 +30,13 @@ def check_ots(font):
                     f"{'\n'.join(messages)}",
                 ),
             )
+    else:
+        yield (
+            FAIL,
+            Message(
+                "ots-sanitize-error",
+                f"ots-sanitize returned an error code ()."
+                # f" Output follows:\n\n{e.stderr.decode()}{e.stdout.decode()}",
+                f"{'\n'.join(messages)}",
+            ),
+        )
