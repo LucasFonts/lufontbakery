@@ -33,10 +33,10 @@ dependencies = [
   "fontTools[ufo] >= 4.64.0",  # varLib.interpolatableHelpers.InterpolatableProblem
   "freetype-py < 2.4.0",  # see: https://github.com/fonttools/fontbakery/issues/4143
   "munkres",
-  "opentype-sanitizer >= 9.2.0, == 9.*",
   "opentypespec >= 1.9.2",  # recognize 'sunu' script tag for Sunuwar (fontbakery/issues/5014)
   "packaging >= 26.3",  # VERSION_PATTERN was added on v14.5 (fontbakery/issues/4792)
   "pip-api",
+  "pyots >= 9.3.0, == 9.*",
   "requests >= 2.34.2",
   "rich",
   "toml",

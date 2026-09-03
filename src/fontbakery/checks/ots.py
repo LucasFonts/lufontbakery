@@ -1,4 +1,4 @@
-from fontbakery.prelude import FAIL, WARN, Message, check
+from fontbakery.prelude import WARN, Message, check
 
 
 @check(
@@ -16,27 +16,18 @@ from fontbakery.prelude import FAIL, WARN, Message, check
 )
 def check_ots(font):
     """Checking with ots-sanitize."""
-    import ots
+    import pyots
 
-    try:
-        process = ots.sanitize(font.file, check=True, capture_output=True)
+    result = pyots.sanitize(font.file)
 
-    except ots.CalledProcessError as e:
-        yield (
-            FAIL,
-            Message(
-                "ots-sanitize-error",
-                f"ots-sanitize returned an error code ({e.returncode})."
-                f" Output follows:\n\n{e.stderr.decode()}{e.stdout.decode()}",
-            ),
-        )
-    else:
-        if process.stderr:
+    if not result.sanitized and result.messages:
+        messages = [m for m in result.messages if m]
+        if messages:
             yield (
                 WARN,
                 Message(
                     "ots-sanitize-warn",
                     "ots-sanitize passed this file, however warnings were printed:\n\n"
-                    f"{process.stderr.decode()}",
+                    f"{'\n'.join(messages)}",
                 ),
             )
