@@ -1,6 +1,3 @@
-from glyphsets import get_glyphsets_fulfilled, languages_per_glyphset
-from shaperglot import Checker, Languages
-
 from fontbakery.prelude import FAIL, WARN, Message, check
 from fontbakery.utils import markdown_table
 
@@ -19,6 +16,9 @@ from fontbakery.utils import markdown_table
 )
 def check_glyphsets_shape_languages(ttFont, config):
     """Shapes languages in all GF glyphsets."""
+
+    from glyphsets import get_glyphsets_fulfilled, languages_per_glyphset
+    from shaperglot import Checker, Languages
 
     def table_of_results(level, results):
         from fontbakery.utils import pretty_print_list
