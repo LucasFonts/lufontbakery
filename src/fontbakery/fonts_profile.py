@@ -18,6 +18,8 @@ from fontbakery.errors import ValueValidationError
 from fontbakery.profile import Profile, Section
 from fontbakery.testable import FILE_TYPES, CheckRunContext, TTCFont
 
+logger = logging.getLogger(__name__)
+
 ITERARGS = {val.singular: val.plural for val in FILE_TYPES}
 
 
@@ -45,9 +47,8 @@ def setup_context(files):
                     context.testables.append(filetype(file))
                     accepted = True
             if not accepted:
-                logging.info(
-                    "Skipping '{}' as it does not seem to be accepted by this profile.",
-                    file,
+                logger.info(
+                    f"Skipping '{file}' as it does not seem to be accepted by this profile."
                 )
     if not context.testables:
         raise ValueValidationError("No applicable files found")
