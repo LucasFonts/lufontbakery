@@ -100,7 +100,7 @@ def load_all_checks(package=fontbakery.checks):
         try:
             module = importlib.import_module(import_path)
         except ImportError as e:
-            warnings.warn("Failed to load %s: %s" % (import_path, e))
+            warnings.warn(f"Failed to load {import_path}: {e}")
             continue
         load_checks_from_module(module)
 
@@ -127,7 +127,7 @@ def profile_factory(module):
     if not checks_loaded:
         load_all_checks()
         checks_loaded = True
-    profile_data = getattr(module, "PROFILE")
+    profile_data = module.PROFILE
     sections = {}
 
     for check_definition in profile_data.get("check_definitions", []):
