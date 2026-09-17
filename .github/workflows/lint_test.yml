@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0 # unshallow fetch for setuptools-scm (otherwise the version is always 0.1.dev1)
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: astral-sh/setup-uv@v10.0.1
+        uses: astral-sh/setup-uv@v10.1.0
         with:
           python-version: ${{ matrix.python }}
 
