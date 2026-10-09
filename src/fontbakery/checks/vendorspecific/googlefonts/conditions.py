@@ -543,10 +543,11 @@ def is_claiming_to_be_cjk_font(font):
 
     os2 = font.ttFont["OS/2"]
 
-    # OS/2 code page checks
-    for _, bit in CJK_CODEPAGE_BITS.items():
-        if os2.ulCodePageRange1 & (1 << bit):
-            return True
+    if hasattr(os2, "ulCodePageRange1"):
+        # OS/2 code page checks
+        for _, bit in CJK_CODEPAGE_BITS.items():
+            if os2.ulCodePageRange1 & (1 << bit):
+                return True
 
     # OS/2 Unicode range checks
     for _, bit in CJK_UNICODE_RANGE_BITS.items():
