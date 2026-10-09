@@ -943,6 +943,7 @@ all = [
     { name = "glyphsets" },
     { name = "lxml" },
     { name = "protobuf" },
+    { name = "shaperglot" },
     { name = "stringbrewer" },
     { name = "unicodedata2" },
 ]
@@ -961,6 +962,7 @@ fontwerk = [
     { name = "gfsubsets" },
     { name = "glyphsets" },
     { name = "protobuf" },
+    { name = "shaperglot" },
     { name = "stringbrewer" },
     { name = "unicodedata2" },
 ]
@@ -973,6 +975,7 @@ googlefonts = [
     { name = "gfsubsets" },
     { name = "glyphsets" },
     { name = "protobuf" },
+    { name = "shaperglot" },
     { name = "stringbrewer" },
     { name = "unicodedata2" },
 ]
@@ -981,6 +984,7 @@ googlefontsalwayslatest = [
     { name = "gflanguages" },
     { name = "gfsubsets" },
     { name = "glyphsets" },
+    { name = "shaperglot" },
 ]
 notofonts = [
     { name = "axisregistry" },
@@ -991,6 +995,7 @@ notofonts = [
     { name = "gfsubsets" },
     { name = "glyphsets" },
     { name = "protobuf" },
+    { name = "shaperglot" },
     { name = "stringbrewer" },
     { name = "unicodedata2" },
 ]
@@ -999,6 +1004,7 @@ shaperglot = [
 ]
 typenetwork = [
     { name = "beautifulsoup4" },
+    { name = "shaperglot" },
     { name = "unicodedata2" },
 ]
 
@@ -1059,6 +1065,8 @@ requires-dist = [
     { name = "lufontbakery", extras = ["googlefontsalwayslatest"], marker = "extra == 'googlefonts'" },
     { name = "lufontbakery", extras = ["iso15008"], marker = "extra == 'all'" },
     { name = "lufontbakery", extras = ["notofonts"], marker = "extra == 'all'" },
+    { name = "lufontbakery", extras = ["shaperglot"], marker = "extra == 'googlefonts'" },
+    { name = "lufontbakery", extras = ["shaperglot"], marker = "extra == 'typenetwork'" },
     { name = "lufontbakery", extras = ["typenetwork"], marker = "extra == 'all'" },
     { name = "lxml", marker = "extra == 'fontval'" },
     { name = "munkres" },
@@ -1070,6 +1078,7 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "requests", specifier = ">=2.34.2" },
     { name = "rich" },
+    { name = "shaperglot", marker = "extra == 'googlefontsalwayslatest'", specifier = "==1.*,>=1.2.2" },
     { name = "shaperglot", marker = "extra == 'shaperglot'", specifier = "==1.*,>=1.2.2" },
     { name = "stringbrewer", marker = "extra == 'googlefonts'" },
     { name = "toml" },
