@@ -25,10 +25,10 @@ maintainers = [
 
 dependencies = [
   "Jinja2 >= 3.1.6",  # issue #4717
-  "PyYAML",
+  "PyYAML >= 6.0.3",
   "beziers >= 0.6.0, == 0.6.*",
   "cmarkgfm >= 2025.10.22",
-  "defcon",
+  "defcon >= 0.12.2",
   "dehinter >= 4.0.0",  # 3.1.0 added dehinter.font.hint function
   "fontTools[ufo] >= 4.64.0",  # varLib.interpolatableHelpers.InterpolatableProblem
   "freetype-py < 2.4.0",  # see: https://github.com/fonttools/fontbakery/issues/4143
@@ -148,11 +148,11 @@ all = [
 [dependency-groups]
 dev = [
   "fontbakery[all]",
-  "mypy >= 2.3.1",
-  "ruff >= 0.16.5",
-  "types-jsonschema >= 4.26.0.20260518",
+  "mypy >= 2.4.0",
+  "ruff >= 0.16.10",
+  "types-jsonschema >= 4.26.0.20261006",
   "types-python-dateutil >= 2.9.0.20260807",
-  "types-pyyaml >= 6.0.12.20260815",
+  "types-pyyaml >= 6.0.12.20260906",
 ]
 doc = [
   "m2r >= 0.3.1",
