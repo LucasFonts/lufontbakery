@@ -64,7 +64,7 @@ beautifulsoup4 = [
 ]
 
 shaperglot = [
-  "shaperglot >= 1.2.1, == 1.*",
+  "shaperglot >= 1.2.2, == 1.*",
 ]
 
 # These Google Fonts profile dependencies contain data that is critical to
@@ -75,7 +75,7 @@ googlefontsalwayslatest = [
   "gflanguages >= 0.7.7, == 0.7.*",
   "gfsubsets >= 2025.11.4",
   "glyphsets >= 1.1.0, == 1.*",
-  "shaperglot >= 1.2.1, == 1.*",
+  "shaperglot >= 1.2.2, == 1.*",
 ]
 
 # Profile-specific dependencies:
