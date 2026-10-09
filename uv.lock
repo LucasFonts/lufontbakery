@@ -1043,7 +1043,7 @@ requires-dist = [
     { name = "dehinter", specifier = ">=4.0.0" },
     { name = "fonttools", extras = ["lxml", "unicode"], marker = "extra == 'googlefonts'" },
     { name = "fonttools", extras = ["ufo"], specifier = ">=4.64.0" },
-    { name = "freetype-py", specifier = "<2.4.0" },
+    { name = "freetype-py", specifier = ">=2.3.0,<2.4.0" },
     { name = "gflanguages", marker = "extra == 'googlefontsalwayslatest'", specifier = "==0.7.*,>=0.7.7" },
     { name = "gfsubsets", marker = "extra == 'googlefontsalwayslatest'", specifier = ">=2025.11.4" },
     { name = "glyphsets", marker = "extra == 'googlefontsalwayslatest'", specifier = "==1.*,>=1.1.0" },
