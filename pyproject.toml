@@ -93,7 +93,7 @@ fontval = [
 ]
 
 fontwerk = [
-  "fontbakery[googlefonts]",
+  "lufontbakery[googlefonts]",
 ]
 
 googlefonts = [
@@ -113,9 +113,9 @@ googlefonts = [
 
   "unicodedata2",
 
-  "fontbakery[beautifulsoup4]",
-  "fontbakery[googlefontsalwayslatest]",
-  "fontbakery[shaperglot]",
+  "lufontbakery[beautifulsoup4]",
+  "lufontbakery[googlefontsalwayslatest]",
+  "lufontbakery[shaperglot]",
 ]
 
 iso15008 = []
@@ -123,31 +123,31 @@ iso15008 = []
 microsoft = []
 
 notofonts = [
-  "fontbakery[googlefonts]",
+  "lufontbakery[googlefonts]",
 ]
 
 typenetwork = [
   "unicodedata2",
 
-  "fontbakery[beautifulsoup4]",
-  "fontbakery[shaperglot]",
+  "lufontbakery[beautifulsoup4]",
+  "lufontbakery[shaperglot]",
 ]
 
 # Some users may want a full install of all profiles:
 
 all = [
-  "fontbakery[adobefonts]",
-  "fontbakery[fontval]",
-  "fontbakery[fontwerk]",
-  "fontbakery[googlefonts]",
-  "fontbakery[iso15008]",
-  "fontbakery[notofonts]",
-  "fontbakery[typenetwork]",
+  "lufontbakery[adobefonts]",
+  "lufontbakery[fontval]",
+  "lufontbakery[fontwerk]",
+  "lufontbakery[googlefonts]",
+  "lufontbakery[iso15008]",
+  "lufontbakery[notofonts]",
+  "lufontbakery[typenetwork]",
 ]
 
 [dependency-groups]
 dev = [
-  "fontbakery[all]",
+  "lufontbakery[all]",
   "mypy >= 2.4.0",
   "ruff >= 0.16.10",
   "types-jsonschema >= 4.26.0.20261006",
@@ -183,7 +183,7 @@ testpaths = ["tests", "src"]
 [tool.ruff]
 extend-exclude = [
   "*_pb2.py",
-  "Lib/fontbakery/prelude.py",
+  "src/fontbakery/prelude.py",
 ]
 
 [tool.ruff.lint]
@@ -191,7 +191,7 @@ future-annotations = false
 ignore = ["N999"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["lfFontTools"]
+known-first-party = ["fontbakery"]
 
 [tool.uv.build-backend]
 # data = { data = "schema/*.yaml"}
