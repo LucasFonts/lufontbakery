@@ -18,7 +18,21 @@ def check_glyphsets_shape_languages(ttFont, config):
     """Shapes languages in all GF glyphsets."""
 
     from glyphsets import get_glyphsets_fulfilled, languages_per_glyphset
-    from shaperglot import Checker, Languages
+
+    try:
+        from shaperglot import Checker, Languages
+    except:
+        yield (
+            FAIL,
+            Message(
+                "shaperglot-not-available",
+                (
+                    "Shaperglot is not available,"
+                    " so language shaping support couldn't get checked."
+                ),
+            ),
+        )
+        return
 
     def table_of_results(level, results):
         from fontbakery.utils import pretty_print_list
