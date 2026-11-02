@@ -52,4 +52,5 @@ jobs:
       - name: Ensure documentation can build (only Ubuntu/Python 3.13)
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13'
         run: |
+          uv sync -p ${{ matrix.python-version }} --managed-python --locked --group doc
           cd docs; make html
