@@ -30,7 +30,7 @@ dependencies = [
   "cmarkgfm >= 2025.10.22",
   "defcon >= 0.12.2",
   "dehinter >= 4.0.0",  # 3.1.0 added dehinter.font.hint function
-  "fontTools[ufo] >= 4.64.0, < 4.67.0",  # varLib.interpolatableHelpers.InterpolatableProblem
+  "fontTools[ufo] >= 4.67.0, < 4.69.0",  # varLib.interpolatableHelpers.InterpolatableProblem
   "freetype-py >= 2.3.0, < 2.4.0",  # see: https://github.com/fonttools/fontbakery/issues/4143
   "munkres",
   "opentypespec >= 1.9.2",  # recognize 'sunu' script tag for Sunuwar (fontbakery/issues/5014)

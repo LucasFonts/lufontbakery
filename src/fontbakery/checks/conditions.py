@@ -380,7 +380,10 @@ def _traverse_subr_call_tree(info, program, depth):
 
 
 def _analyze_cff(analysis, top_dict, private_dict, fd_index=0):
-    char_strings = top_dict.CharStrings
+    try:
+        char_strings = top_dict.CharStrings
+    except AttributeError:
+        char_strings = None
     global_subrs = top_dict.GlobalSubrs
     gsubr_bias = _get_subr_bias(len(global_subrs))
 
@@ -398,6 +401,9 @@ def _analyze_cff(analysis, top_dict, private_dict, fd_index=0):
     else:
         subrs = None
         subr_bias = None
+
+    if char_strings is None:
+        return
 
     char_list = char_strings.keys()
 
