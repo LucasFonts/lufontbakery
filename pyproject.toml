@@ -40,7 +40,7 @@ dependencies = [
   "requests >= 2.34.2",
   "rich",
   "toml",
-  "ufo2ft >= 3.9.0",  # script lists for Unicode 14.0 were updated on v2.25.2
+  "ufo2ft >= 3.10.0",  # script lists for Unicode 14.0 were updated on v2.25.2
   "ufolint",
   "uharfbuzz",
   "vharfbuzz >= 0.3.1",
@@ -171,7 +171,7 @@ test = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.12.8,<0.13"]
+requires = ["uv_build>=0.12.8,<0.14"]
 build-backend = "uv_build"
 
 [tool.pytest.ini_options]
