@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    = -P
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = uv run sphinx-build
 SPHINXPROJ    = FontBakery
 SOURCEDIR     = source
 BUILDDIR      = _build
