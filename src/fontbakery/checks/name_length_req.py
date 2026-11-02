@@ -141,7 +141,7 @@ def names_from_stat(vf, coordinates):
         to fit in a LOGFONT.
     """,
 )
-def instances_name_length_req(ttFont):
+def check_instances_name_length_req(ttFont):
     """Maximum allowed length for instance family and subfamily names."""
     fvar = ttFont["fvar"]
     for instance in fvar.instances:

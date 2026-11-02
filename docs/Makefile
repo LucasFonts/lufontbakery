@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    = -P
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = uv run sphinx-build
 SPHINXPROJ    = FontBakery
 SOURCEDIR     = source
 BUILDDIR      = _build
@@ -13,7 +13,7 @@ help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 generate:
-	python3 generate_check_listing.py
+	uv run generate_check_listing.py
 
 .PHONY: generate help Makefile
 

@@ -39,7 +39,7 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Install the project with test dependencies
-        run: uv sync --locked --group test
+        run: uv sync -p ${{ matrix.python-version }} --managed-python --locked --group test
 
       - name: Install tox
         run: uv tool install tox --with tox-uv --with tox-gh
@@ -49,7 +49,8 @@ jobs:
         env:
           TOX_GH_MAJOR_MINOR: ${{ matrix.python }}
 
-      - name: Ensure documentation can build (only Ubuntu/Python 3.10)
-        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.10'
+      - name: Ensure documentation can build (only Ubuntu/Python 3.13)
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13'
         run: |
+          uv sync -p ${{ matrix.python-version }} --managed-python --locked --group doc
           cd docs; make html

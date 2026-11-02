@@ -123,14 +123,17 @@ def test_check_cff_strings(check):
     #     ),
     # )
 
+    # FontTools 4.67 changed the behaviour of string decoding
+    # https://github.com/fonttools/fonttools/pull/4253
+
     # Out-of-ascii-range char in the FontName field will cause decode issues:
     ttFont = TTFont(TEST_FILE("unicode-decode-err/unicode-decode-err-cff.otf"))
     assert_results_contain(
         check(ttFont),
         FAIL,
-        "cff-unable-to-decode",
+        "cff-string-not-in-ascii-range",
         (
-            "Unable to decode CFF table, possibly due to out "
-            "of ASCII range strings. Please check table strings."
+            "The following CFF TopDict strings are not in the ASCII range:"
+            "- FullName: SòurceSansPro-Regular"
         ),
     )
