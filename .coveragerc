@@ -10,7 +10,7 @@ source = fontbakery
 # these are treated as equivalent when combining data
 [paths]
 source =
-    Lib/fontbakery
+    src/fontbakery
 
 [report]
 # Regexes for lines to exclude from consideration
