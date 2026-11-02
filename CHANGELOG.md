@@ -1,10 +1,11 @@
 Below are the noteworthy changes from each release.
 
-## Upcoming release v1.2.3 (2026-Oct-?)
+## 1.2.3 (2026-11-02)
 
 ### Bugfixes
 
 - Fix check condition `is_claiming_to_be_cjk_font` for OS/2 table version 0
+- Fix for FontTools v4.67+
 
 ## 1.2.2 (2026-09-03)
 
