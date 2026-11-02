@@ -39,7 +39,7 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Install the project with test dependencies
-        run: uv sync -p ${{ matrix.python }} --locked --group test
+        run: uv sync -p ${{ matrix.python-version }} --locked --group test
 
       - name: Install tox
         run: uv tool install tox --with tox-uv --with tox-gh
