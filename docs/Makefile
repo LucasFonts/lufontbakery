@@ -13,7 +13,7 @@ help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 generate:
-	python3 generate_check_listing.py
+	python generate_check_listing.py
 
 .PHONY: generate help Makefile
 
