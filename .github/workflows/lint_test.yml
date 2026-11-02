@@ -49,7 +49,7 @@ jobs:
         env:
           TOX_GH_MAJOR_MINOR: ${{ matrix.python }}
 
-      - name: Ensure documentation can build (only Ubuntu/Python 3.10)
-        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.10'
+      - name: Ensure documentation can build (only Ubuntu/Python 3.13)
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13'
         run: |
           cd docs; make html
