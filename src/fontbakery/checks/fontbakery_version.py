@@ -82,7 +82,7 @@ def check_fontbakery_version(font, config):
 
     try:
         response = requests.get(
-            "https://pypi.org/pypi/fontbakery/json", timeout=config.get("timeout")
+            "https://pypi.org/pypi/lufontbakery/json", timeout=config.get("timeout")
         )
 
     except requests.exceptions.ConnectionError as err:
@@ -99,14 +99,14 @@ def check_fontbakery_version(font, config):
         )
 
     latest = response.json()["info"]["version"]
-    installed = str(pip_api.installed_distributions()["fontbakery"].version)
+    installed = str(pip_api.installed_distributions()["lufontbakery"].version)
 
     if not is_up_to_date(installed, latest):
         return FAIL, Message(
             "outdated-fontbakery",
             f"Current FontBakery version is {installed},"
             f" while a newer {latest} is already available."
-            f" Please upgrade it with 'pip install -U fontbakery'",
+            f" Please upgrade it with 'pip install -U lufontbakery'",
         )
     else:
         return PASS, "FontBakery is up-to-date."
